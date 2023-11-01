@@ -1,3 +1,5 @@
+import "dart:js" as js;
+
 import '/archive/discount/discount_widget.dart';
 import '/basket/close_order/close_order_widget.dart';
 import '/basket/course_item/course_item_widget.dart';
@@ -340,22 +342,57 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            isDismissible: false,
-                            enableDrag: false,
-                            useSafeArea: true,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.viewInsetsOf(context),
-                                child: CloseOrderWidget(
-                                  fullPrice: widget.fullprice!,
-                                ),
-                              );
-                            },
-                          ).then((value) => safeSetState(() {}));
+                          // await showModalBottomSheet(
+                          //   isScrollControlled: true,
+                          //   backgroundColor: Colors.transparent,
+                          //   isDismissible: false,
+                          //   enableDrag: false,
+                          //   useSafeArea: true,
+                          //   context: context,
+                          //   builder: (context) {
+                          //     return Padding(
+                          //       padding: MediaQuery.viewInsetsOf(context),
+                          //       child: CloseOrderWidget(
+                          //         fullPrice: widget.fullprice!,
+                          //       ),
+                          //     );
+                          //   },
+                          // ).then((value) => safeSetState(() {}));
+                          debugPrint(
+                                                                currentUser!
+                                                                    .uid);
+                                                            debugPrint(
+                                                                FFAppState()
+                                                                    .basketTariffs
+                                                                    .map((e) =>
+                                                                        e.id)
+                                                                    .join(';'));
+                                                            js.context.callMethod(
+                                                                'showPaymentWidget',
+                                                                [
+                                                                  valueOrDefault<
+                                                                      int>(
+                                                                    functions.sum(containerTariffsRecordList
+                                                                        .where((e) => FFAppState()
+                                                                            .basketTariffs
+                                                                            .contains(e
+                                                                                .reference))
+                                                                        .toList()
+                                                                        .map((e) =>
+                                                                            e.price)
+                                                                        .toList()),
+                                                                    0,
+                                                                  ),
+                                                                  'Оплата',
+                                                                  currentUser!
+                                                                      .uid,
+                                                                  FFAppState()
+                                                                      .basketTariffs
+                                                                      .map((e) =>
+                                                                          e.id)
+                                                                      .join(
+                                                                          ';'),
+                                                                ]);
                         },
                         child: wrapWithModel(
                           model: _model.buttonModel2,
