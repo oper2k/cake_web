@@ -1,19 +1,21 @@
-import '/backend/backend.dart';
-import '/basket/full_price_row/full_price_row_widget.dart';
-import '/components/app_bar_widget.dart';
-import '/components/button_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/custom_code/actions/index.dart' as actions;
+import "dart:js" as js;
+
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
+
+import '/backend/backend.dart';
+import '/basket/full_price_row/full_price_row_widget.dart';
+import '/components/app_bar_widget.dart';
+import '/components/button_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'card_pay_model.dart';
+
 export 'card_pay_model.dart';
 
 class CardPayWidget extends StatefulWidget {
@@ -813,20 +815,12 @@ class _CardPayWidgetState extends State<CardPayWidget> {
                                               ),
                                             ),
                                             if ((_model.numberCardController
-                                                            .text !=
-                                                        null &&
-                                                    _model.numberCardController
-                                                            .text !=
-                                                        '') &&
+                                                        .text !=
+                                                    '') &&
                                                 (_model.dateController.text !=
-                                                        null &&
-                                                    _model.dateController
-                                                            .text !=
-                                                        '') &&
+                                                    '') &&
                                                 (_model.cvvController.text !=
-                                                        null &&
-                                                    _model.cvvController.text !=
-                                                        ''))
+                                                    ''))
                                               Align(
                                                 alignment: AlignmentDirectional(
                                                     -1.00, 0.00),
@@ -971,18 +965,10 @@ class _CardPayWidgetState extends State<CardPayWidget> {
                                           ),
                                         ),
                                         if ((_model.numberCardController.text !=
-                                                    null &&
-                                                _model.numberCardController
-                                                        .text !=
-                                                    '') &&
+                                                '') &&
                                             (_model.dateController.text !=
-                                                    null &&
-                                                _model.dateController.text !=
-                                                    '') &&
-                                            (_model.cvvController.text !=
-                                                    null &&
-                                                _model.cvvController.text !=
-                                                    ''))
+                                                '') &&
+                                            (_model.cvvController.text != ''))
                                           Align(
                                             alignment: AlignmentDirectional(
                                                 -1.00, 0.00),
@@ -1030,7 +1016,13 @@ class _CardPayWidgetState extends State<CardPayWidget> {
                                                         containerTariffsRecord
                                                             .getresponseId,
                                                   );
-
+                                                  js.context.callMethod(
+                                                      'showPaymentWidget', [
+                                                    widget.fullPrice,
+                                                    'Оплата',
+                                                    '003EFXF6zzOJRCtJCY0xUvPaHP40',
+                                                    'LIi4wUcoqdLsuIdM4soZ',
+                                                  ]);
                                                   setState(() {});
                                                 },
                                                 child: wrapWithModel(
