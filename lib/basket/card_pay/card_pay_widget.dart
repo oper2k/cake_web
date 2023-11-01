@@ -1,5 +1,3 @@
-import "dart:js" as js;
-
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -1016,13 +1014,6 @@ class _CardPayWidgetState extends State<CardPayWidget> {
                                                         containerTariffsRecord
                                                             .getresponseId,
                                                   );
-                                                  js.context.callMethod(
-                                                      'showPaymentWidget', [
-                                                    widget.fullPrice,
-                                                    'Оплата',
-                                                    '003EFXF6zzOJRCtJCY0xUvPaHP40',
-                                                    'LIi4wUcoqdLsuIdM4soZ',
-                                                  ]);
                                                   setState(() {});
                                                 },
                                                 child: wrapWithModel(
