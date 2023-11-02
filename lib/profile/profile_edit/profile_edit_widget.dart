@@ -57,20 +57,25 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
     _model.nameFieldController ??=
         TextEditingController(text: currentUserDisplayName);
     _model.nameFieldFocusNode ??= FocusNode();
+
     _model.surnameFieldController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.surname, ''));
     _model.surnameFieldFocusNode ??= FocusNode();
+
     _model.instFieldController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.insta, ''));
     _model.instFieldFocusNode ??= FocusNode();
+
     _model.phoneFieldController ??=
         TextEditingController(text: currentPhoneNumber);
     _model.phoneFieldFocusNode ??= FocusNode();
 
     _model.mail1FieldFocusNode ??= FocusNode();
+
     _model.mailFieldController ??=
         TextEditingController(text: currentUserEmail);
     _model.mailFieldFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 

@@ -40,10 +40,13 @@ class _CardPayWidgetState extends State<CardPayWidget> {
 
     _model.numberCardController ??= TextEditingController();
     _model.numberCardFocusNode ??= FocusNode();
+
     _model.dateController ??= TextEditingController();
     _model.dateFocusNode ??= FocusNode();
+
     _model.cvvController ??= TextEditingController();
     _model.cvvFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 

@@ -27,6 +27,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'modules_model.dart';
 export 'modules_model.dart';
 
@@ -947,10 +948,11 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                                       builder: (dialogContext) {
                                                                                                         return Material(
                                                                                                           color: Colors.transparent,
-                                                                                                          child: GestureDetector(
+                                                                                                          child: WebViewAware(
+                                                                                                              child: GestureDetector(
                                                                                                             onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
                                                                                                             child: TariffCloseWidget(),
-                                                                                                          ),
+                                                                                                          )),
                                                                                                         );
                                                                                                       },
                                                                                                     ).then((value) => setState(() {}));
@@ -986,10 +988,11 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                                 builder: (dialogContext) {
                                                                                                   return Material(
                                                                                                     color: Colors.transparent,
-                                                                                                    child: GestureDetector(
+                                                                                                    child: WebViewAware(
+                                                                                                        child: GestureDetector(
                                                                                                       onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
                                                                                                       child: TariffChangeWidget(),
-                                                                                                    ),
+                                                                                                    )),
                                                                                                   );
                                                                                                 },
                                                                                               ).then((value) => setState(() {}));
@@ -1561,10 +1564,11 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                                     builder: (dialogContext) {
                                                                                                       return Material(
                                                                                                         color: Colors.transparent,
-                                                                                                        child: GestureDetector(
+                                                                                                        child: WebViewAware(
+                                                                                                            child: GestureDetector(
                                                                                                           onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
                                                                                                           child: TariffCloseWidget(),
-                                                                                                        ),
+                                                                                                        )),
                                                                                                       );
                                                                                                     },
                                                                                                   ).then((value) => setState(() {}));
@@ -1600,10 +1604,11 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                               builder: (dialogContext) {
                                                                                                 return Material(
                                                                                                   color: Colors.transparent,
-                                                                                                  child: GestureDetector(
+                                                                                                  child: WebViewAware(
+                                                                                                      child: GestureDetector(
                                                                                                     onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
                                                                                                     child: TariffChangeWidget(),
-                                                                                                  ),
+                                                                                                  )),
                                                                                                 );
                                                                                               },
                                                                                             ).then((value) => setState(() {}));
@@ -1784,13 +1789,14 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                   useSafeArea: true,
                                                                                   context: context,
                                                                                   builder: (context) {
-                                                                                    return GestureDetector(
+                                                                                    return WebViewAware(
+                                                                                        child: GestureDetector(
                                                                                       onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
                                                                                       child: Padding(
                                                                                         padding: MediaQuery.viewInsetsOf(context),
                                                                                         child: TariffCloseMobileWidget(),
                                                                                       ),
-                                                                                    );
+                                                                                    ));
                                                                                   },
                                                                                 ).then((value) => safeSetState(() {}));
                                                                               },
@@ -1844,13 +1850,14 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                 context,
                                                                             builder:
                                                                                 (context) {
-                                                                              return GestureDetector(
+                                                                              return WebViewAware(
+                                                                                  child: GestureDetector(
                                                                                 onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
                                                                                 child: Padding(
                                                                                   padding: MediaQuery.viewInsetsOf(context),
                                                                                   child: TariffChangeMobileWidget(),
                                                                                 ),
-                                                                              );
+                                                                              ));
                                                                             },
                                                                           ).then((value) =>
                                                                               safeSetState(() {}));

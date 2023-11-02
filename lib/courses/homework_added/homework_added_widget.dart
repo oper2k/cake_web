@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'homework_added_model.dart';
 export 'homework_added_model.dart';
 
@@ -255,7 +256,9 @@ class _HomeworkAddedWidgetState extends State<HomeworkAddedWidget> {
                                                   builder: (dialogContext) {
                                                     return Material(
                                                       color: Colors.transparent,
-                                                      child: GestureDetector(
+                                                      child: WebViewAware(
+                                                          child:
+                                                              GestureDetector(
                                                         onTap: () => _model
                                                                 .unfocusNode
                                                                 .canRequestFocus
@@ -271,7 +274,7 @@ class _HomeworkAddedWidgetState extends State<HomeworkAddedWidget> {
                                                           currentLesson:
                                                               columnLessonsRecord,
                                                         ),
-                                                      ),
+                                                      )),
                                                     );
                                                   },
                                                 ).then(

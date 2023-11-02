@@ -32,6 +32,7 @@ class _SertWidgetState extends State<SertWidget> {
 
     _model.sertFieldController ??= TextEditingController();
     _model.sertFieldFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 

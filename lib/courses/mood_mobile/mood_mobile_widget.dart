@@ -14,6 +14,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'mood_mobile_model.dart';
 export 'mood_mobile_model.dart';
 
@@ -284,13 +285,14 @@ class _MoodMobileWidgetState extends State<MoodMobileWidget> {
                                             useSafeArea: true,
                                             context: context,
                                             builder: (context) {
-                                              return Padding(
+                                              return WebViewAware(
+                                                  child: Padding(
                                                 padding:
                                                     MediaQuery.viewInsetsOf(
                                                         context),
                                                 child:
                                                     TariffCloseMobileWidget(),
-                                              );
+                                              ));
                                             },
                                           ).then(
                                               (value) => safeSetState(() {}));
@@ -401,13 +403,14 @@ class _MoodMobileWidgetState extends State<MoodMobileWidget> {
                                                   useSafeArea: true,
                                                   context: context,
                                                   builder: (context) {
-                                                    return Padding(
+                                                    return WebViewAware(
+                                                        child: Padding(
                                                       padding: MediaQuery
                                                           .viewInsetsOf(
                                                               context),
                                                       child:
                                                           TariffCloseMobileWidget(),
-                                                    );
+                                                    ));
                                                   },
                                                 ).then((value) =>
                                                     safeSetState(() {}));
@@ -446,13 +449,14 @@ class _MoodMobileWidgetState extends State<MoodMobileWidget> {
                                             useSafeArea: true,
                                             context: context,
                                             builder: (context) {
-                                              return Padding(
+                                              return WebViewAware(
+                                                  child: Padding(
                                                 padding:
                                                     MediaQuery.viewInsetsOf(
                                                         context),
                                                 child:
                                                     TariffChangeMobileWidget(),
-                                              );
+                                              ));
                                             },
                                           ).then(
                                               (value) => safeSetState(() {}));

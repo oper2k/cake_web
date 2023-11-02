@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'homework_model.dart';
 export 'homework_model.dart';
 
@@ -376,8 +377,8 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                   return Material(
                                                                     color: Colors
                                                                         .transparent,
-                                                                    child:
-                                                                        GestureDetector(
+                                                                    child: WebViewAware(
+                                                                        child: GestureDetector(
                                                                       onTap: () => _model
                                                                               .unfocusNode
                                                                               .canRequestFocus
@@ -393,7 +394,7 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                         currentChat:
                                                                             rowChatsRecord,
                                                                       ),
-                                                                    ),
+                                                                    )),
                                                                   );
                                                                 },
                                                               ).then((value) =>
@@ -524,8 +525,8 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                   return Material(
                                                                     color: Colors
                                                                         .transparent,
-                                                                    child:
-                                                                        GestureDetector(
+                                                                    child: WebViewAware(
+                                                                        child: GestureDetector(
                                                                       onTap: () => _model
                                                                               .unfocusNode
                                                                               .canRequestFocus
@@ -541,7 +542,7 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                         currentChat:
                                                                             rowChatsRecord,
                                                                       ),
-                                                                    ),
+                                                                    )),
                                                                   );
                                                                 },
                                                               ).then((value) =>
@@ -837,13 +838,14 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                                 (dialogContext) {
                                                                               return Material(
                                                                                 color: Colors.transparent,
-                                                                                child: GestureDetector(
+                                                                                child: WebViewAware(
+                                                                                    child: GestureDetector(
                                                                                   onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
                                                                                   child: HomeworkAddDesktopWidget(
                                                                                     onlyPhoto: widget.lesson!.withPhotoHomework,
                                                                                     currentChat: rowChatsRecord,
                                                                                   ),
-                                                                                ),
+                                                                                )),
                                                                               );
                                                                             },
                                                                           ).then((value) =>
@@ -945,13 +947,14 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                                 (dialogContext) {
                                                                               return Material(
                                                                                 color: Colors.transparent,
-                                                                                child: GestureDetector(
+                                                                                child: WebViewAware(
+                                                                                    child: GestureDetector(
                                                                                   onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
                                                                                   child: HomeworkAddDesktopWidget(
                                                                                     onlyPhoto: widget.lesson!.withPhotoHomework,
                                                                                     currentChat: rowChatsRecord,
                                                                                   ),
-                                                                                ),
+                                                                                )),
                                                                               );
                                                                             },
                                                                           ).then((value) =>
