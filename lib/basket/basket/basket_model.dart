@@ -1,4 +1,6 @@
 import '/archive/discount/discount_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/basket/basket_empty/basket_empty_widget.dart';
 import '/basket/course_name_price/course_name_price_widget.dart';
@@ -11,6 +13,8 @@ import '/components/button_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/instant_timer.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'basket_widget.dart' show BasketWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,6 +29,11 @@ class BasketModel extends FlutterFlowModel<BasketWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  InstantTimer? instantTimer;
+  // Stores action output result for [Backend Call - Read Document] action in Basket widget.
+  TariffsRecord? fisrtTariffsInBasket;
+  // Stores action output result for [Backend Call - API (send email register)] action in Basket widget.
+  ApiCallResponse? apiResults3f;
   // Model for appBar component.
   late AppBarModel appBarModel;
   // Model for coursesListBasket component.
@@ -61,6 +70,7 @@ class BasketModel extends FlutterFlowModel<BasketWidget> {
 
   void dispose() {
     unfocusNode.dispose();
+    instantTimer?.cancel();
     appBarModel.dispose();
     coursesListBasketModel.dispose();
     courseNamePriceModel.dispose();

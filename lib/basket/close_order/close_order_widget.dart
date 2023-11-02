@@ -2,6 +2,7 @@ import '/backend/backend.dart';
 import '/components/button_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -14,9 +15,11 @@ class CloseOrderWidget extends StatefulWidget {
   const CloseOrderWidget({
     Key? key,
     required this.fullPrice,
+    this.tariffsDoc,
   }) : super(key: key);
 
   final int? fullPrice;
+  final List<TariffsRecord>? tariffsDoc;
 
   @override
   _CloseOrderWidgetState createState() => _CloseOrderWidgetState();
@@ -227,21 +230,9 @@ class _CloseOrderWidgetState extends State<CloseOrderWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.pushNamed(
-                    'Card_Pay',
-                    queryParameters: {
-                      'fullPrice': serializeParam(
-                        widget.fullPrice,
-                        ParamType.int,
-                      ),
-                    }.withoutNulls,
-                    extra: <String, dynamic>{
-                      kTransitionInfoKey: TransitionInfo(
-                        hasTransition: true,
-                        transitionType: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 0),
-                      ),
-                    },
+                  await action_blocks.payment(
+                    context,
+                    tariffs: widget.tariffsDoc,
                   );
                 },
                 child: wrapWithModel(

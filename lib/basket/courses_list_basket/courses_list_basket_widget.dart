@@ -1,6 +1,10 @@
-import "dart:js" as js;
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '/actions/actions.dart' as action_blocks;
 import '/archive/discount/discount_widget.dart';
+import '/backend/backend.dart';
 import '/basket/close_order/close_order_widget.dart';
 import '/basket/course_item/course_item_widget.dart';
 import '/basket/course_name_price/course_name_price_widget.dart';
@@ -10,21 +14,19 @@ import '/basket/old_full_price_row/old_full_price_row_widget.dart';
 import '/components/button_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'courses_list_basket_model.dart';
+
 export 'courses_list_basket_model.dart';
 
 class CoursesListBasketWidget extends StatefulWidget {
   const CoursesListBasketWidget({
     Key? key,
     required this.fullprice,
+    required this.tariffsDoc,
   }) : super(key: key);
 
   final int? fullprice;
+  final List<TariffsRecord>? tariffsDoc;
 
   @override
   _CoursesListBasketWidgetState createState() =>
@@ -242,21 +244,9 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed(
-                                'Card_Pay',
-                                queryParameters: {
-                                  'fullPrice': serializeParam(
-                                    widget.fullprice,
-                                    ParamType.int,
-                                  ),
-                                }.withoutNulls,
-                                extra: <String, dynamic>{
-                                  kTransitionInfoKey: TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                  ),
-                                },
+                              await action_blocks.payment(
+                                context,
+                                tariffs: widget.tariffsDoc,
                               );
                             },
                             child: wrapWithModel(
@@ -342,57 +332,23 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          // await showModalBottomSheet(
-                          //   isScrollControlled: true,
-                          //   backgroundColor: Colors.transparent,
-                          //   isDismissible: false,
-                          //   enableDrag: false,
-                          //   useSafeArea: true,
-                          //   context: context,
-                          //   builder: (context) {
-                          //     return Padding(
-                          //       padding: MediaQuery.viewInsetsOf(context),
-                          //       child: CloseOrderWidget(
-                          //         fullPrice: widget.fullprice!,
-                          //       ),
-                          //     );
-                          //   },
-                          // ).then((value) => safeSetState(() {}));
-                          debugPrint(
-                                                                currentUser!
-                                                                    .uid);
-                                                            debugPrint(
-                                                                FFAppState()
-                                                                    .basketTariffs
-                                                                    .map((e) =>
-                                                                        e.id)
-                                                                    .join(';'));
-                                                            js.context.callMethod(
-                                                                'showPaymentWidget',
-                                                                [
-                                                                  valueOrDefault<
-                                                                      int>(
-                                                                    functions.sum(containerTariffsRecordList
-                                                                        .where((e) => FFAppState()
-                                                                            .basketTariffs
-                                                                            .contains(e
-                                                                                .reference))
-                                                                        .toList()
-                                                                        .map((e) =>
-                                                                            e.price)
-                                                                        .toList()),
-                                                                    0,
-                                                                  ),
-                                                                  'Оплата',
-                                                                  currentUser!
-                                                                      .uid,
-                                                                  FFAppState()
-                                                                      .basketTariffs
-                                                                      .map((e) =>
-                                                                          e.id)
-                                                                      .join(
-                                                                          ';'),
-                                                                ]);
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            isDismissible: false,
+                            enableDrag: false,
+                            useSafeArea: true,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: CloseOrderWidget(
+                                  fullPrice: widget.fullprice!,
+                                  tariffsDoc: widget.tariffsDoc,
+                                ),
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
                         },
                         child: wrapWithModel(
                           model: _model.buttonModel2,

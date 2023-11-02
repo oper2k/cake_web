@@ -17,7 +17,7 @@ export '/archive/choose_payment/choose_payment_widget.dart'
     show ChoosePaymentWidget;
 export '/archive/my_courses/my_courses_widget.dart' show MyCoursesWidget;
 export '/archive/payment_card/payment_card_widget.dart' show PaymentCardWidget;
-export '/basket/card_pay/card_pay_widget.dart' show CardPayWidget;
+export '/archive/card_pay/card_pay_widget.dart' show CardPayWidget;
 export '/courses/modules/modules_widget.dart' show ModulesWidget;
 export '/basket/complete/complete_widget.dart' show CompleteWidget;
 export '/archive/present/present_widget.dart' show PresentWidget;

@@ -1,6 +1,3 @@
-import "dart:js" as js;
-
-import 'package:cake_school_web/auth/base_auth_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +5,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '/actions/actions.dart' as action_blocks;
 import '/archive/discount/discount_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/basket/basket_empty/basket_empty_widget.dart';
 import '/basket/course_name_price/course_name_price_widget.dart';
@@ -21,6 +21,7 @@ import '/components/button_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/instant_timer.dart';
 import 'basket_model.dart';
 
 export 'basket_model.dart';
@@ -52,14 +53,52 @@ class _BasketWidgetState extends State<BasketWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (widget.currentPage == 1) {
-        return;
+      if (widget.currentPage != 1) {
+        FFAppState().update(() {
+          FFAppState().basketTariffs =
+              widget.basketTariffs!.toList().cast<DocumentReference>();
+        });
+        await Future.delayed(const Duration(milliseconds: 3000));
       }
-
-      FFAppState().update(() {
-        FFAppState().basketTariffs =
-            widget.basketTariffs!.toList().cast<DocumentReference>();
-      });
+      _model.instantTimer = InstantTimer.periodic(
+        duration: Duration(milliseconds: 1000),
+        callback: (timer) async {
+          if ((currentUserDocument?.rlBuyTariffs.toList() ?? [])
+                  .where((e) => FFAppState().basketTariffs.contains(e))
+                  .toList()
+                  .length ==
+              FFAppState().basketTariffs.length) {
+            _model.instantTimer?.cancel();
+            _model.fisrtTariffsInBasket = await TariffsRecord.getDocumentOnce(
+                FFAppState().basketTariffs.first);
+            _model.apiResults3f =
+                await GetResponseGroup.sendEmailRegisterCall.call(
+              subject: 'Покупка',
+              email: currentUserEmail,
+              name: 'Покупка',
+              templateID: _model.fisrtTariffsInBasket?.getresponseId,
+            );
+            FFAppState().update(() {
+              FFAppState().deleteBasketTariffs();
+              FFAppState().basketTariffs = [];
+            });
+            if (Navigator.of(context).canPop()) {
+              context.pop();
+            }
+            context.pushNamed(
+              'Complete',
+              extra: <String, dynamic>{
+                kTransitionInfoKey: TransitionInfo(
+                  hasTransition: true,
+                  transitionType: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 0),
+                ),
+              },
+            );
+          }
+        },
+        startImmediately: true,
+      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -187,6 +226,13 @@ class _BasketWidgetState extends State<BasketWidget> {
                                                             .toList()),
                                                         0,
                                                       ),
+                                                      tariffsDoc: containerTariffsRecordList
+                                                          .where((e) =>
+                                                              FFAppState()
+                                                                  .basketTariffs
+                                                                  .contains(e
+                                                                      .reference))
+                                                          .toList(),
                                                     ),
                                                   ),
                                                 ),
@@ -410,77 +456,16 @@ class _BasketWidgetState extends State<BasketWidget> {
                                                           highlightColor: Colors
                                                               .transparent,
                                                           onTap: () async {
-                                                            // context.pushNamed(
-                                                            //   'Card_Pay',
-                                                            //   queryParameters: {
-                                                            //     'fullPrice':
-                                                            //         serializeParam(
-                                                            //       valueOrDefault<
-                                                            //           int>(
-                                                            //         functions.sum(containerTariffsRecordList
-                                                            //             .where((e) => FFAppState()
-                                                            //                 .basketTariffs
-                                                            //                 .contains(e
-                                                            //                     .reference))
-                                                            //             .toList()
-                                                            //             .map((e) =>
-                                                            //                 e.price)
-                                                            //             .toList()),
-                                                            //         0,
-                                                            //       ),
-                                                            //       ParamType.int,
-                                                            //     ),
-                                                            //   }.withoutNulls,
-                                                            //   extra: <String,
-                                                            //       dynamic>{
-                                                            //     kTransitionInfoKey:
-                                                            //         TransitionInfo(
-                                                            //       hasTransition:
-                                                            //           true,
-                                                            //       transitionType:
-                                                            //           PageTransitionType
-                                                            //               .fade,
-                                                            //       duration: Duration(
-                                                            //           milliseconds:
-                                                            //               0),
-                                                            //     ),
-                                                            //   },
-                                                            // );
-                                                            debugPrint(
-                                                                currentUser!
-                                                                    .uid);
-                                                            debugPrint(
-                                                                FFAppState()
-                                                                    .basketTariffs
-                                                                    .map((e) =>
-                                                                        e.id)
-                                                                    .join(';'));
-                                                            js.context.callMethod(
-                                                                'showPaymentWidget',
-                                                                [
-                                                                  valueOrDefault<
-                                                                      int>(
-                                                                    functions.sum(containerTariffsRecordList
-                                                                        .where((e) => FFAppState()
-                                                                            .basketTariffs
-                                                                            .contains(e
-                                                                                .reference))
-                                                                        .toList()
-                                                                        .map((e) =>
-                                                                            e.price)
-                                                                        .toList()),
-                                                                    0,
-                                                                  ),
-                                                                  'Оплата',
-                                                                  currentUser!
-                                                                      .uid,
-                                                                  FFAppState()
+                                                            await action_blocks
+                                                                .payment(
+                                                              context,
+                                                              tariffs: containerTariffsRecordList
+                                                                  .where((e) => FFAppState()
                                                                       .basketTariffs
-                                                                      .map((e) =>
-                                                                          e.id)
-                                                                      .join(
-                                                                          ';'),
-                                                                ]);
+                                                                      .contains(
+                                                                          e.reference))
+                                                                  .toList(),
+                                                            );
                                                           },
                                                           child: wrapWithModel(
                                                             model: _model
