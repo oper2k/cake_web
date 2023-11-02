@@ -33,10 +33,13 @@ class _OrderingWidgetState extends State<OrderingWidget> {
 
     _model.nameFieldController ??= TextEditingController();
     _model.nameFieldFocusNode ??= FocusNode();
+
     _model.phoneFieldController ??= TextEditingController();
     _model.phoneFieldFocusNode ??= FocusNode();
+
     _model.emailFieldController ??= TextEditingController();
     _model.emailFieldFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 

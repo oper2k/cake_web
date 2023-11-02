@@ -37,12 +37,16 @@ class _Board1WidgetState extends State<Board1Widget> {
 
     _model.nameFieldController ??= TextEditingController();
     _model.nameFieldFocusNode ??= FocusNode();
+
     _model.surnameFieldController ??= TextEditingController();
     _model.surnameFieldFocusNode ??= FocusNode();
+
     _model.instaFieldController ??= TextEditingController();
     _model.instaFieldFocusNode ??= FocusNode();
+
     _model.phoneFieldController ??= TextEditingController();
     _model.phoneFieldFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 

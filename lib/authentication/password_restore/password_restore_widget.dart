@@ -35,6 +35,7 @@ class _PasswordRestoreWidgetState extends State<PasswordRestoreWidget> {
 
     _model.emailFieldController ??= TextEditingController();
     _model.emailFieldFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 

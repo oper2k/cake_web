@@ -1,4 +1,3 @@
-import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/api_requests/api_manager.dart';
@@ -9,12 +8,12 @@ import '/courses/take_first_less/take_first_less_widget.dart';
 import '/courses/take_first_less_mobile/take_first_less_mobile_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 
 Future navigationForOpenLesson(
   BuildContext context, {
@@ -104,10 +103,11 @@ Future navigationForOpenLesson(
           useSafeArea: true,
           context: context,
           builder: (context) {
-            return Padding(
+            return WebViewAware(
+                child: Padding(
               padding: MediaQuery.viewInsetsOf(context),
               child: TakeFirstLessMobileWidget(),
-            );
+            ));
           },
         );
       } else {
@@ -118,10 +118,11 @@ Future navigationForOpenLesson(
           enableDrag: false,
           context: context,
           builder: (context) {
-            return Padding(
+            return WebViewAware(
+                child: Padding(
               padding: MediaQuery.viewInsetsOf(context),
               child: TakeFirstLessWidget(),
-            );
+            ));
           },
         );
       }
@@ -275,10 +276,11 @@ Future sendHomework(
         builder: (dialogContext) {
           return Material(
             color: Colors.transparent,
-            child: HomeworkAddDesktopWidget(
+            child: WebViewAware(
+                child: HomeworkAddDesktopWidget(
               onlyPhoto: currentLesson!.withPhotoHomework,
               currentChat: currentChat,
-            ),
+            )),
           );
         },
       );
@@ -351,10 +353,11 @@ Future sendHomework(
         builder: (dialogContext) {
           return Material(
             color: Colors.transparent,
-            child: HomeworkAddDesktopWidget(
+            child: WebViewAware(
+                child: HomeworkAddDesktopWidget(
               onlyPhoto: currentLesson!.withPhotoHomework,
               currentChat: newChatUser,
-            ),
+            )),
           );
         },
       );
@@ -471,10 +474,11 @@ Future navigationForOpenLessonFree(
           useSafeArea: true,
           context: context,
           builder: (context) {
-            return Padding(
+            return WebViewAware(
+                child: Padding(
               padding: MediaQuery.viewInsetsOf(context),
               child: TakeFirstLessMobileWidget(),
-            );
+            ));
           },
         );
       } else {
@@ -485,38 +489,14 @@ Future navigationForOpenLessonFree(
           enableDrag: false,
           context: context,
           builder: (context) {
-            return Padding(
+            return WebViewAware(
+                child: Padding(
               padding: MediaQuery.viewInsetsOf(context),
               child: TakeFirstLessWidget(),
-            );
+            ));
           },
         );
       }
     }
-  }
-}
-
-Future payment(
-  BuildContext context, {
-  List<TariffsRecord>? tariffs,
-}) async {
-  if (loggedIn) {
-    await actions.showPaymentWidget(
-      tariffs!.toList(),
-    );
-    return;
-  } else {
-    context.pushNamed(
-      'Log_In',
-      extra: <String, dynamic>{
-        kTransitionInfoKey: TransitionInfo(
-          hasTransition: true,
-          transitionType: PageTransitionType.fade,
-          duration: Duration(milliseconds: 0),
-        ),
-      },
-    );
-
-    return;
   }
 }

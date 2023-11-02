@@ -114,8 +114,8 @@ class _CoursesWidgetState extends State<CoursesWidget>
                     child: Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-                      child: FutureBuilder<List<TariffsRecord>>(
-                        future: queryTariffsRecordOnce(),
+                      child: StreamBuilder<List<TariffsRecord>>(
+                        stream: queryTariffsRecord(),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {

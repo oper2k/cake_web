@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'profile_model.dart';
 export 'profile_model.dart';
 
@@ -539,7 +540,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                         context,
                                                                     builder:
                                                                         (context) {
-                                                                      return GestureDetector(
+                                                                      return WebViewAware(
+                                                                          child:
+                                                                              GestureDetector(
                                                                         onTap: () => _model.unfocusNode.canRequestFocus
                                                                             ? FocusScope.of(context).requestFocus(_model.unfocusNode)
                                                                             : FocusScope.of(context).unfocus(),
@@ -550,7 +553,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                           child:
                                                                               BalanceWidget(),
                                                                         ),
-                                                                      );
+                                                                      ));
                                                                     },
                                                                   ).then((value) =>
                                                                       safeSetState(
@@ -742,7 +745,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                         context,
                                                                     builder:
                                                                         (context) {
-                                                                      return GestureDetector(
+                                                                      return WebViewAware(
+                                                                          child:
+                                                                              GestureDetector(
                                                                         onTap: () => _model.unfocusNode.canRequestFocus
                                                                             ? FocusScope.of(context).requestFocus(_model.unfocusNode)
                                                                             : FocusScope.of(context).unfocus(),
@@ -753,7 +758,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                           child:
                                                                               SertWidget(),
                                                                         ),
-                                                                      );
+                                                                      ));
                                                                     },
                                                                   ).then((value) =>
                                                                       safeSetState(
@@ -1859,14 +1864,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                     return Material(
                                                                       color: Colors
                                                                           .transparent,
-                                                                      child:
-                                                                          GestureDetector(
+                                                                      child: WebViewAware(
+                                                                          child: GestureDetector(
                                                                         onTap: () => _model.unfocusNode.canRequestFocus
                                                                             ? FocusScope.of(context).requestFocus(_model.unfocusNode)
                                                                             : FocusScope.of(context).unfocus(),
                                                                         child:
                                                                             SocialsWidget(),
-                                                                      ),
+                                                                      )),
                                                                     );
                                                                   },
                                                                 ).then((value) =>

@@ -1,12 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
-import '/actions/actions.dart' as action_blocks;
 import '/archive/discount/discount_widget.dart';
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -18,12 +11,19 @@ import '/basket/full_price_row/full_price_row_widget.dart';
 import '/basket/old_full_price_row/old_full_price_row_widget.dart';
 import '/components/app_bar_widget.dart';
 import '/components/button_widget.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/instant_timer.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'basket_model.dart';
-
 export 'basket_model.dart';
 
 class BasketWidget extends StatefulWidget {
@@ -53,52 +53,15 @@ class _BasketWidgetState extends State<BasketWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (widget.currentPage != 1) {
-        FFAppState().update(() {
-          FFAppState().basketTariffs =
-              widget.basketTariffs!.toList().cast<DocumentReference>();
-        });
-        await Future.delayed(const Duration(milliseconds: 3000));
+      if (widget.currentPage == 1) {
+        return;
       }
-      _model.instantTimer = InstantTimer.periodic(
-        duration: Duration(milliseconds: 1000),
-        callback: (timer) async {
-          if ((currentUserDocument?.rlBuyTariffs.toList() ?? [])
-                  .where((e) => FFAppState().basketTariffs.contains(e))
-                  .toList()
-                  .length ==
-              FFAppState().basketTariffs.length) {
-            _model.instantTimer?.cancel();
-            _model.fisrtTariffsInBasket = await TariffsRecord.getDocumentOnce(
-                FFAppState().basketTariffs.first);
-            _model.apiResults3f =
-                await GetResponseGroup.sendEmailRegisterCall.call(
-              subject: 'Покупка',
-              email: currentUserEmail,
-              name: 'Покупка',
-              templateID: _model.fisrtTariffsInBasket?.getresponseId,
-            );
-            FFAppState().update(() {
-              FFAppState().deleteBasketTariffs();
-              FFAppState().basketTariffs = [];
-            });
-            if (Navigator.of(context).canPop()) {
-              context.pop();
-            }
-            context.pushNamed(
-              'Complete',
-              extra: <String, dynamic>{
-                kTransitionInfoKey: TransitionInfo(
-                  hasTransition: true,
-                  transitionType: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 0),
-                ),
-              },
-            );
-          }
-        },
-        startImmediately: true,
-      );
+
+      FFAppState().update(() {
+        FFAppState().basketTariffs =
+            widget.basketTariffs!.toList().cast<DocumentReference>();
+      });
+      return;
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -446,45 +409,199 @@ class _BasketWidgetState extends State<BasketWidget> {
                                                                     16.0,
                                                                     0.0,
                                                                     26.0),
-                                                        child: InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            await action_blocks
-                                                                .payment(
-                                                              context,
-                                                              tariffs: containerTariffsRecordList
-                                                                  .where((e) => FFAppState()
-                                                                      .basketTariffs
-                                                                      .contains(
-                                                                          e.reference))
-                                                                  .toList(),
-                                                            );
-                                                          },
-                                                          child: wrapWithModel(
-                                                            model: _model
-                                                                .buttonModel,
-                                                            updateCallback:
-                                                                () => setState(
-                                                                    () {}),
-                                                            child: ButtonWidget(
-                                                              text:
-                                                                  'Перейти к оформлению',
-                                                              btnColor: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              txtColor: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryBackground,
-                                                              btnWidth: 268,
-                                                            ),
-                                                          ),
+                                                        child: Stack(
+                                                          children: [
+                                                            if (loggedIn)
+                                                              StreamBuilder<
+                                                                  UsersRecord>(
+                                                                stream: UsersRecord
+                                                                    .getDocument(
+                                                                        currentUserReference!)
+                                                                  ..listen(
+                                                                      (containerUsersRecord) async {
+                                                                    if (_model.containerPreviousSnapshot !=
+                                                                            null &&
+                                                                        !UsersRecordDocumentEquality().equals(
+                                                                            containerUsersRecord,
+                                                                            _model.containerPreviousSnapshot)) {
+                                                                      if (containerUsersRecord
+                                                                              .rlBuyTariffs
+                                                                              .where((e) => FFAppState().basketTariffs.contains(
+                                                                                  e))
+                                                                              .toList()
+                                                                              .length ==
+                                                                          FFAppState()
+                                                                              .basketTariffs
+                                                                              .length) {
+                                                                        _model.fisrtTariffsInBasketDesc = await TariffsRecord.getDocumentOnce(FFAppState()
+                                                                            .basketTariffs
+                                                                            .first);
+                                                                        _model.apiResults3fCopy = await GetResponseGroup
+                                                                            .sendEmailRegisterCall
+                                                                            .call(
+                                                                          subject:
+                                                                              'Покупка',
+                                                                          email:
+                                                                              currentUserEmail,
+                                                                          name:
+                                                                              'Покупка',
+                                                                          templateID: _model
+                                                                              .fisrtTariffsInBasketDesc
+                                                                              ?.getresponseId,
+                                                                        );
+                                                                        FFAppState()
+                                                                            .update(() {
+                                                                          FFAppState()
+                                                                              .deleteBasketTariffs();
+                                                                          FFAppState().basketTariffs =
+                                                                              [];
+                                                                        });
+                                                                        if (Navigator.of(context)
+                                                                            .canPop()) {
+                                                                          context
+                                                                              .pop();
+                                                                        }
+                                                                        context
+                                                                            .pushNamed(
+                                                                          'Complete',
+                                                                          extra: <String,
+                                                                              dynamic>{
+                                                                            kTransitionInfoKey:
+                                                                                TransitionInfo(
+                                                                              hasTransition: true,
+                                                                              transitionType: PageTransitionType.fade,
+                                                                              duration: Duration(milliseconds: 0),
+                                                                            ),
+                                                                          },
+                                                                        );
+                                                                      } else {
+                                                                        return;
+                                                                      }
+
+                                                                      setState(
+                                                                          () {});
+                                                                    }
+                                                                    _model.containerPreviousSnapshot =
+                                                                        containerUsersRecord;
+                                                                  }),
+                                                                builder: (context,
+                                                                    snapshot) {
+                                                                  // Customize what your widget looks like when it's loading.
+                                                                  if (!snapshot
+                                                                      .hasData) {
+                                                                    return Center(
+                                                                      child:
+                                                                          SizedBox(
+                                                                        width:
+                                                                            50.0,
+                                                                        height:
+                                                                            50.0,
+                                                                        child:
+                                                                            SpinKitRipple(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryText,
+                                                                          size:
+                                                                              50.0,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  }
+                                                                  final containerUsersRecord =
+                                                                      snapshot
+                                                                          .data!;
+                                                                  return Container(
+                                                                    decoration:
+                                                                        BoxDecoration(),
+                                                                    child:
+                                                                        InkWell(
+                                                                      splashColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      focusColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      hoverColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      highlightColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      onTap:
+                                                                          () async {
+                                                                        await actions
+                                                                            .showPaymentWidget(
+                                                                          containerTariffsRecordList
+                                                                              .where((e) => FFAppState().basketTariffs.contains(e.reference))
+                                                                              .toList(),
+                                                                        );
+                                                                      },
+                                                                      child:
+                                                                          wrapWithModel(
+                                                                        model: _model
+                                                                            .buttonModel1,
+                                                                        updateCallback:
+                                                                            () =>
+                                                                                setState(() {}),
+                                                                        child:
+                                                                            ButtonWidget(
+                                                                          text:
+                                                                              'Перейти к оформлению',
+                                                                          btnColor:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          txtColor:
+                                                                              FlutterFlowTheme.of(context).primaryBackground,
+                                                                          btnWidth:
+                                                                              268,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ),
+                                                            if (!loggedIn)
+                                                              Container(
+                                                                decoration:
+                                                                    BoxDecoration(),
+                                                                child: InkWell(
+                                                                  splashColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  focusColor: Colors
+                                                                      .transparent,
+                                                                  hoverColor: Colors
+                                                                      .transparent,
+                                                                  highlightColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  onTap:
+                                                                      () async {
+                                                                    context.pushNamed(
+                                                                        'Log_In');
+                                                                  },
+                                                                  child:
+                                                                      wrapWithModel(
+                                                                    model: _model
+                                                                        .buttonModel2,
+                                                                    updateCallback: () =>
+                                                                        setState(
+                                                                            () {}),
+                                                                    child:
+                                                                        ButtonWidget(
+                                                                      text:
+                                                                          'Перейти к оформлению',
+                                                                      btnColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .primaryText,
+                                                                      txtColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .primaryBackground,
+                                                                      btnWidth:
+                                                                          268,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                          ],
                                                         ),
                                                       ),
                                                     ],

@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'app_bar_model.dart';
 export 'app_bar_model.dart';
 
@@ -124,10 +125,11 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                             useSafeArea: true,
                             context: context,
                             builder: (context) {
-                              return Padding(
+                              return WebViewAware(
+                                  child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: SupportMobileWidget(),
-                              );
+                              ));
                             },
                           ).then((value) => safeSetState(() {}));
 
@@ -151,7 +153,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                               builder: (dialogContext) {
                                 return Material(
                                   color: Colors.transparent,
-                                  child: SupportDesktopWidget(),
+                                  child: WebViewAware(
+                                      child: SupportDesktopWidget()),
                                 );
                               },
                             ).then((value) => setState(() {}));
@@ -171,7 +174,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                               builder: (dialogContext) {
                                 return Material(
                                   color: Colors.transparent,
-                                  child: SupportPadWidget(),
+                                  child:
+                                      WebViewAware(child: SupportPadWidget()),
                                 );
                               },
                             ).then((value) => setState(() {}));
@@ -727,11 +731,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                     useSafeArea: true,
                                     context: context,
                                     builder: (context) {
-                                      return Padding(
+                                      return WebViewAware(
+                                          child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
                                         child: ExitMobileWidget(),
-                                      );
+                                      ));
                                     },
                                   ).then((value) => safeSetState(() {}));
                                 } else {
@@ -748,7 +753,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                     builder: (dialogContext) {
                                       return Material(
                                         color: Colors.transparent,
-                                        child: ExitWidget(),
+                                        child:
+                                            WebViewAware(child: ExitWidget()),
                                       );
                                     },
                                   ).then((value) => setState(() {}));

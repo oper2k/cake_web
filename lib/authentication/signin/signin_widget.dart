@@ -37,10 +37,13 @@ class _SigninWidgetState extends State<SigninWidget> {
 
     _model.loginFieldController ??= TextEditingController();
     _model.loginFieldFocusNode ??= FocusNode();
+
     _model.passFieldController ??= TextEditingController();
     _model.passFieldFocusNode ??= FocusNode();
+
     _model.passRepFieldController ??= TextEditingController();
     _model.passRepFieldFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
