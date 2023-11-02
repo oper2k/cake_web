@@ -58,7 +58,7 @@ class _BasketWidgetState extends State<BasketWidget> {
           FFAppState().basketTariffs =
               widget.basketTariffs!.toList().cast<DocumentReference>();
         });
-        await Future.delayed(const Duration(milliseconds: 5000));
+        await Future.delayed(const Duration(milliseconds: 3000));
       }
       _model.instantTimer = InstantTimer.periodic(
         duration: Duration(milliseconds: 1000),
@@ -226,6 +226,13 @@ class _BasketWidgetState extends State<BasketWidget> {
                                                             .toList()),
                                                         0,
                                                       ),
+                                                      tariffsDoc: containerTariffsRecordList
+                                                          .where((e) =>
+                                                              FFAppState()
+                                                                  .basketTariffs
+                                                                  .contains(e
+                                                                      .reference))
+                                                          .toList(),
                                                     ),
                                                   ),
                                                 ),

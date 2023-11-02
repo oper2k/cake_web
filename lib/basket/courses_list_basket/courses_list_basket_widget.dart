@@ -1,4 +1,5 @@
 import '/archive/discount/discount_widget.dart';
+import '/backend/backend.dart';
 import '/basket/close_order/close_order_widget.dart';
 import '/basket/course_item/course_item_widget.dart';
 import '/basket/course_name_price/course_name_price_widget.dart';
@@ -8,6 +9,7 @@ import '/basket/old_full_price_row/old_full_price_row_widget.dart';
 import '/components/button_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,9 +22,11 @@ class CoursesListBasketWidget extends StatefulWidget {
   const CoursesListBasketWidget({
     Key? key,
     required this.fullprice,
+    required this.tariffsDoc,
   }) : super(key: key);
 
   final int? fullprice;
+  final List<TariffsRecord>? tariffsDoc;
 
   @override
   _CoursesListBasketWidgetState createState() =>
@@ -240,21 +244,9 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed(
-                                'Card_Pay',
-                                queryParameters: {
-                                  'fullPrice': serializeParam(
-                                    widget.fullprice,
-                                    ParamType.int,
-                                  ),
-                                }.withoutNulls,
-                                extra: <String, dynamic>{
-                                  kTransitionInfoKey: TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                  ),
-                                },
+                              await action_blocks.payment(
+                                context,
+                                tariffs: widget.tariffsDoc,
                               );
                             },
                             child: wrapWithModel(
@@ -352,6 +344,7 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: CloseOrderWidget(
                                   fullPrice: widget.fullprice!,
+                                  tariffsDoc: widget.tariffsDoc,
                                 ),
                               );
                             },
