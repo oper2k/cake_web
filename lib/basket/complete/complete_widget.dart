@@ -1,3 +1,6 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/basket/pay_complete/pay_complete_widget.dart';
 import '/components/app_bar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -14,7 +17,12 @@ import 'complete_model.dart';
 export 'complete_model.dart';
 
 class CompleteWidget extends StatefulWidget {
-  const CompleteWidget({Key? key}) : super(key: key);
+  const CompleteWidget({
+    Key? key,
+    required this.tariffsInBasket,
+  }) : super(key: key);
+
+  final List<TariffsRecord>? tariffsInBasket;
 
   @override
   _CompleteWidgetState createState() => _CompleteWidgetState();
@@ -32,10 +40,24 @@ class _CompleteWidgetState extends State<CompleteWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(const Duration(milliseconds: 5200));
+      while (_model.countLoopAction < FFAppState().basketTariffs.length) {
+        _model.apiResultlvv = await GetResponseGroup.addContactCall.call(
+          email: currentUserEmail,
+          campaignId: widget.tariffsInBasket?[_model.countLoopAction]?.tokenId,
+          name: currentUserDisplayName,
+        );
+        setState(() {
+          _model.countLoopAction = _model.countLoopAction + 1;
+        });
+      }
+      setState(() {
+        FFAppState().deleteBasketTariffs();
+        FFAppState().basketTariffs = [];
+      });
+      await Future.delayed(const Duration(milliseconds: 3000));
 
       context.pushNamed(
-        'Courses',
+        'Courses_Old',
         extra: <String, dynamic>{
           kTransitionInfoKey: TransitionInfo(
             hasTransition: true,

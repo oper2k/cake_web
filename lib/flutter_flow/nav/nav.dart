@@ -83,13 +83,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? CoursesWidget() : LogInWidget(),
+          appStateNotifier.loggedIn ? CoursesOldWidget() : LogInWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? CoursesWidget() : LogInWidget(),
+              appStateNotifier.loggedIn ? CoursesOldWidget() : LogInWidget(),
         ),
         FFRoute(
           name: 'Basket',
@@ -165,22 +165,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ChoosePaymentWidget(),
         ),
         FFRoute(
-          name: 'My_Courses',
-          path: '/myCourses',
-          builder: (context, params) => MyCoursesWidget(),
+          name: 'Courses_Old',
+          path: '/coursesOld',
+          builder: (context, params) => CoursesOldWidget(),
         ),
         FFRoute(
           name: 'Payment_Card',
           path: '/paymentCard',
           builder: (context, params) => PaymentCardWidget(),
-        ),
-        FFRoute(
-          name: 'Card_Pay',
-          path: '/cardPay',
-          requireAuth: true,
-          builder: (context, params) => CardPayWidget(
-            fullPrice: params.getParam('fullPrice', ParamType.int),
-          ),
         ),
         FFRoute(
           name: 'Modules',
@@ -199,7 +191,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Complete',
           path: '/complete',
           requireAuth: true,
-          builder: (context, params) => CompleteWidget(),
+          asyncParams: {
+            'tariffsInBasket':
+                getDocList(['tariffs'], TariffsRecord.fromSnapshot),
+          },
+          builder: (context, params) => CompleteWidget(
+            tariffsInBasket: params.getParam<TariffsRecord>(
+                'tariffsInBasket', ParamType.Document, true),
+          ),
         ),
         FFRoute(
           name: 'Present',
@@ -299,12 +298,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             tariff: params.getParam(
                 'tariff', ParamType.DocumentReference, false, ['tariffs']),
           ),
-        ),
-        FFRoute(
-          name: 'Courses',
-          path: '/Courses',
-          requireAuth: true,
-          builder: (context, params) => CoursesWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

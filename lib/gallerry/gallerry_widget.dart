@@ -52,7 +52,7 @@ class _GallerryWidgetState extends State<GallerryWidget> {
         return;
       }
 
-      context.pushNamed('Courses');
+      context.pushNamed('Courses_Old');
 
       return;
     });

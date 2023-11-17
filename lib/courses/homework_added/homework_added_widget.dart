@@ -71,7 +71,7 @@ class _HomeworkAddedWidgetState extends State<HomeworkAddedWidget> {
           });
           return;
         } else {
-          context.pushNamed('Courses');
+          context.pushNamed('Courses_Old');
 
           return;
         }

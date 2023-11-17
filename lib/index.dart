@@ -15,9 +15,8 @@ export '/profile/profile_edit/profile_edit_widget.dart' show ProfileEditWidget;
 export '/archive/ordering/ordering_widget.dart' show OrderingWidget;
 export '/archive/choose_payment/choose_payment_widget.dart'
     show ChoosePaymentWidget;
-export '/archive/my_courses/my_courses_widget.dart' show MyCoursesWidget;
+export '/courses/courses_old/courses_old_widget.dart' show CoursesOldWidget;
 export '/archive/payment_card/payment_card_widget.dart' show PaymentCardWidget;
-export '/archive/card_pay/card_pay_widget.dart' show CardPayWidget;
 export '/courses/modules/modules_widget.dart' show ModulesWidget;
 export '/basket/complete/complete_widget.dart' show CompleteWidget;
 export '/archive/present/present_widget.dart' show PresentWidget;
@@ -30,4 +29,3 @@ export '/courses/lesson/lesson_widget.dart' show LessonWidget;
 export '/archive/homework/homework_widget.dart' show HomeworkWidget;
 export '/courses/modules_free/modules_free_widget.dart' show ModulesFreeWidget;
 export '/gallerry/gallerry_widget.dart' show GallerryWidget;
-export '/courses/courses/courses_widget.dart' show CoursesWidget;

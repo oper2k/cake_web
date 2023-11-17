@@ -54,7 +54,7 @@ class _BasketEmptyWidgetState extends State<BasketEmptyWidget> {
           ClipRRect(
             borderRadius: BorderRadius.circular(0.0),
             child: Image.asset(
-              'assets/images/cook.png',
+              'assets/images/ava.png',
               width: 72.0,
               height: 72.0,
               fit: BoxFit.cover,

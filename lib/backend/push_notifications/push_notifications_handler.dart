@@ -134,13 +134,8 @@ final parametersBuilderMap =
       ),
   'Ordering': ParameterData.none(),
   'Choose_Payment': ParameterData.none(),
-  'My_Courses': ParameterData.none(),
+  'Courses_Old': ParameterData.none(),
   'Payment_Card': ParameterData.none(),
-  'Card_Pay': (data) async => ParameterData(
-        allParams: {
-          'fullPrice': getParameter<int>(data, 'fullPrice'),
-        },
-      ),
   'Modules': (data) async => ParameterData(
         allParams: {
           'currentCourse': await getDocumentParameter<CoursesRecord>(
@@ -148,7 +143,9 @@ final parametersBuilderMap =
           'tariffRef': getParameter<DocumentReference>(data, 'tariffRef'),
         },
       ),
-  'Complete': ParameterData.none(),
+  'Complete': (data) async => ParameterData(
+        allParams: {},
+      ),
   'Present': ParameterData.none(),
   'HomeworkAdded': (data) async => ParameterData(
         allParams: {
@@ -205,7 +202,6 @@ final parametersBuilderMap =
           'tariff': getParameter<DocumentReference>(data, 'tariff'),
         },
       ),
-  'Courses': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

@@ -437,7 +437,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       context.pushNamed(
-                        'Courses',
+                        'Courses_Old',
                         extra: <String, dynamic>{
                           kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
