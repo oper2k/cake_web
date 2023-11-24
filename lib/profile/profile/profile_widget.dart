@@ -1,6 +1,7 @@
 import '/archive/balance/balance_widget.dart';
 import '/archive/sert/sert_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/app_bar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -9,6 +10,7 @@ import '/profile/socials/socials_widget.dart';
 import '/profile/support_desktop/support_desktop_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -114,6 +116,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         children: [
                                           Column(
                                             mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
@@ -217,7 +221,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                     .min,
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
-                                                                    .start,
+                                                                    .center,
                                                             children: [
                                                               if (responsiveVisibility(
                                                                 context:
@@ -468,6 +472,159 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                       ),
                                                                     ),
                                                                   ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            24.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: StreamBuilder<
+                                                                    List<
+                                                                        UsersFromSiteRecord>>(
+                                                                  stream:
+                                                                      queryUsersFromSiteRecord(
+                                                                    queryBuilder:
+                                                                        (usersFromSiteRecord) =>
+                                                                            usersFromSiteRecord.where(
+                                                                      'email',
+                                                                      isEqualTo:
+                                                                          currentUserEmail,
+                                                                    ),
+                                                                    singleRecord:
+                                                                        true,
+                                                                  ),
+                                                                  builder: (context,
+                                                                      snapshot) {
+                                                                    // Customize what your widget looks like when it's loading.
+                                                                    if (!snapshot
+                                                                        .hasData) {
+                                                                      return Center(
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              50.0,
+                                                                          height:
+                                                                              50.0,
+                                                                          child:
+                                                                              SpinKitRipple(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryText,
+                                                                            size:
+                                                                                50.0,
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    }
+                                                                    List<UsersFromSiteRecord>
+                                                                        containerUsersFromSiteRecordList =
+                                                                        snapshot
+                                                                            .data!;
+                                                                    // Return an empty Container when the item does not exist.
+                                                                    if (snapshot
+                                                                        .data!
+                                                                        .isEmpty) {
+                                                                      return Container();
+                                                                    }
+                                                                    final containerUsersFromSiteRecord = containerUsersFromSiteRecordList
+                                                                            .isNotEmpty
+                                                                        ? containerUsersFromSiteRecordList
+                                                                            .first
+                                                                        : null;
+                                                                    return InkWell(
+                                                                      splashColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      focusColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      hoverColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      highlightColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      onTap:
+                                                                          () async {
+                                                                        await currentUserReference!
+                                                                            .update({
+                                                                          ...mapToFirestore(
+                                                                            {
+                                                                              'rl_buy_tariffs': FieldValue.arrayUnion([
+                                                                                containerUsersFromSiteRecord?.tariff
+                                                                              ]),
+                                                                            },
+                                                                          ),
+                                                                        });
+                                                                        await containerUsersFromSiteRecord!
+                                                                            .reference
+                                                                            .delete();
+                                                                        ScaffoldMessenger.of(context)
+                                                                            .showSnackBar(
+                                                                          SnackBar(
+                                                                            content:
+                                                                                Text(
+                                                                              'Покупка восстановлена!',
+                                                                              style: TextStyle(
+                                                                                color: FlutterFlowTheme.of(context).primaryText,
+                                                                              ),
+                                                                            ),
+                                                                            duration:
+                                                                                Duration(milliseconds: 4000),
+                                                                            backgroundColor:
+                                                                                FlutterFlowTheme.of(context).green368CA87,
+                                                                          ),
+                                                                        );
+                                                                        setState(
+                                                                            () {});
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            () {
+                                                                          if (MediaQuery.sizeOf(context).width <
+                                                                              kBreakpointSmall) {
+                                                                            return 390.0;
+                                                                          } else if (MediaQuery.sizeOf(context).width <
+                                                                              kBreakpointMedium) {
+                                                                            return 268.0;
+                                                                          } else if (MediaQuery.sizeOf(context).width <
+                                                                              kBreakpointLarge) {
+                                                                            return 268.0;
+                                                                          } else {
+                                                                            return 268.0;
+                                                                          }
+                                                                        }(),
+                                                                        height:
+                                                                            56.0,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(16.0),
+                                                                        ),
+                                                                        child:
+                                                                            Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0.00,
+                                                                              0.00),
+                                                                          child:
+                                                                              Text(
+                                                                            'Восстановить покупки',
+                                                                            style: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                  fontFamily: FlutterFlowTheme.of(context).labelLargeFamily,
+                                                                                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).labelLargeFamily),
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
                                                                 ),
                                                               ),
                                                             ],

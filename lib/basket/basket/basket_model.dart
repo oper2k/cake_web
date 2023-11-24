@@ -1,7 +1,6 @@
 import '/archive/discount/discount_widget.dart';
 import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/basket/basket_empty/basket_empty_widget.dart';
 import '/basket/course_name_price/course_name_price_widget.dart';
@@ -44,10 +43,6 @@ class BasketModel extends FlutterFlowModel<BasketWidget> {
   // Model for fullPriceRow component.
   late FullPriceRowModel fullPriceRowModel;
   UsersRecord? containerPreviousSnapshot;
-  // Stores action output result for [Backend Call - Read Document] action in Container widget.
-  TariffsRecord? fisrtTariffsInBasketDesc;
-  // Stores action output result for [Backend Call - API (send email register)] action in Container widget.
-  ApiCallResponse? apiResults3fCopy;
   // Model for button component.
   late ButtonModel buttonModel1;
   // Model for button component.

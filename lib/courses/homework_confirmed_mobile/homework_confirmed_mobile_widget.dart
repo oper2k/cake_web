@@ -60,7 +60,7 @@ class _HomeworkConfirmedMobileWidgetState
         return;
       }
 
-      context.pushNamed('Courses');
+      context.pushNamed('Courses_Old');
 
       return;
     });

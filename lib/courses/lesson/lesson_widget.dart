@@ -70,7 +70,7 @@ class _LessonWidgetState extends State<LessonWidget> {
         return;
       }
 
-      context.pushNamed('Courses');
+      context.pushNamed('Courses_Old');
 
       return;
     });

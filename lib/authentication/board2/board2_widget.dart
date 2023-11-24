@@ -120,7 +120,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.pushNamed('Courses');
+                            context.pushNamed('Courses_Old');
                           },
                           child: Text(
                             'Пропустить',
@@ -646,7 +646,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                             photoUrl: _model.uploadedFileUrl,
                           ));
                           if (FFAppState().basketTariffs.length == 0) {
-                            context.pushNamed('Courses');
+                            context.pushNamed('Courses_Old');
                           } else {
                             context.pushNamed(
                               'Basket',

@@ -237,7 +237,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
           }
         }
       } else {
-        context.pushNamed('Courses');
+        context.pushNamed('Courses_Old');
 
         return;
       }

@@ -298,7 +298,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     }
 
                     if (FFAppState().basketTariffs.length == 0) {
-                      context.pushNamedAuth('Courses', context.mounted);
+                      context.pushNamedAuth('Courses_Old', context.mounted);
                     } else {
                       context.pushNamedAuth(
                         'Basket',

@@ -87,37 +87,38 @@ class _PayCompleteWidgetState extends State<PayCompleteWidget> {
                   ),
             ),
           ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.pushNamed(
-                  'Courses',
-                  extra: <String, dynamic>{
-                    kTransitionInfoKey: TransitionInfo(
-                      hasTransition: true,
-                      transitionType: PageTransitionType.fade,
-                      duration: Duration(milliseconds: 0),
-                    ),
-                  },
-                );
-              },
-              child: wrapWithModel(
-                model: _model.buttonModel,
-                updateCallback: () => setState(() {}),
-                child: ButtonWidget(
-                  text: 'На главную',
-                  btnColor: FlutterFlowTheme.of(context).primaryText,
-                  txtColor: FlutterFlowTheme.of(context).primaryBackground,
-                  btnWidth: 206,
+          if (FFAppState().basketTariffs.length == 0)
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed(
+                    'Courses_Old',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
+                },
+                child: wrapWithModel(
+                  model: _model.buttonModel,
+                  updateCallback: () => setState(() {}),
+                  child: ButtonWidget(
+                    text: 'На главную',
+                    btnColor: FlutterFlowTheme.of(context).primaryText,
+                    txtColor: FlutterFlowTheme.of(context).primaryBackground,
+                    btnWidth: 206,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

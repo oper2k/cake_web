@@ -1,7 +1,6 @@
 import '/archive/discount/discount_widget.dart';
 import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/basket/basket_empty/basket_empty_widget.dart';
 import '/basket/course_name_price/course_name_price_widget.dart';
@@ -433,29 +432,6 @@ class _BasketWidgetState extends State<BasketWidget> {
                                                                           FFAppState()
                                                                               .basketTariffs
                                                                               .length) {
-                                                                        _model.fisrtTariffsInBasketDesc = await TariffsRecord.getDocumentOnce(FFAppState()
-                                                                            .basketTariffs
-                                                                            .first);
-                                                                        _model.apiResults3fCopy = await GetResponseGroup
-                                                                            .sendEmailRegisterCall
-                                                                            .call(
-                                                                          subject:
-                                                                              'Покупка',
-                                                                          email:
-                                                                              currentUserEmail,
-                                                                          name:
-                                                                              'Покупка',
-                                                                          templateID: _model
-                                                                              .fisrtTariffsInBasketDesc
-                                                                              ?.getresponseId,
-                                                                        );
-                                                                        FFAppState()
-                                                                            .update(() {
-                                                                          FFAppState()
-                                                                              .deleteBasketTariffs();
-                                                                          FFAppState().basketTariffs =
-                                                                              [];
-                                                                        });
                                                                         if (Navigator.of(context)
                                                                             .canPop()) {
                                                                           context
@@ -464,8 +440,19 @@ class _BasketWidgetState extends State<BasketWidget> {
                                                                         context
                                                                             .pushNamed(
                                                                           'Complete',
+                                                                          queryParameters:
+                                                                              {
+                                                                            'tariffsInBasket':
+                                                                                serializeParam(
+                                                                              containerTariffsRecordList.where((e) => FFAppState().basketTariffs.contains(e.reference)).toList(),
+                                                                              ParamType.Document,
+                                                                              true,
+                                                                            ),
+                                                                          }.withoutNulls,
                                                                           extra: <String,
                                                                               dynamic>{
+                                                                            'tariffsInBasket':
+                                                                                containerTariffsRecordList.where((e) => FFAppState().basketTariffs.contains(e.reference)).toList(),
                                                                             kTransitionInfoKey:
                                                                                 TransitionInfo(
                                                                               hasTransition: true,

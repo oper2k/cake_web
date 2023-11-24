@@ -86,7 +86,7 @@ class _PageWiewWidgetState extends State<PageWiewWidget> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(40.0),
                           child: Image.asset(
-                            'assets/images/Alina_Medium.jpeg',
+                            'assets/images/IMG_6272.jpeg',
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.cover,
@@ -175,7 +175,7 @@ class _PageWiewWidgetState extends State<PageWiewWidget> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(40.0),
                           child: Image.asset(
-                            'assets/images/Alyona_Medium.jpeg',
+                            'assets/images/IMG_6273.jpeg',
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.cover,

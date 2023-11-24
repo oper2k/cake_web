@@ -136,6 +136,7 @@ class GetResponseGroup {
   static SendEmailRegisterCall sendEmailRegisterCall = SendEmailRegisterCall();
   static TransactionalemailsCall transactionalemailsCall =
       TransactionalemailsCall();
+  static AddContactCall addContactCall = AddContactCall();
 }
 
 class SendEmailRegisterCall {
@@ -168,6 +169,27 @@ class TransactionalemailsCall {
       {
         'callName': 'TransactionalemailsCall',
         'variables': {},
+      },
+    );
+    return ApiCallResponse.fromCloudCallResponse(response);
+  }
+}
+
+class AddContactCall {
+  Future<ApiCallResponse> call({
+    String? email = '',
+    String? campaignId = '',
+    String? name = '',
+  }) async {
+    final response = await makeCloudCall(
+      _kPrivateApiFunctionName,
+      {
+        'callName': 'AddContactCall',
+        'variables': {
+          'email': email,
+          'campaignId': campaignId,
+          'name': name,
+        },
       },
     );
     return ApiCallResponse.fromCloudCallResponse(response);

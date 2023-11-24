@@ -1,7 +1,6 @@
 import '/archive/discount/discount_widget.dart';
 import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/basket/close_order/close_order_widget.dart';
 import '/basket/course_item/course_item_widget.dart';
@@ -13,7 +12,6 @@ import '/components/button_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -263,32 +261,21 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
                                                 .toList()
                                                 .length ==
                                             FFAppState().basketTariffs.length) {
-                                          _model.fisrtTariffsInBasketPad =
-                                              await TariffsRecord
-                                                  .getDocumentOnce(FFAppState()
-                                                      .basketTariffs
-                                                      .first);
-                                          _model.apiResults3fCopy =
-                                              await GetResponseGroup
-                                                  .sendEmailRegisterCall
-                                                  .call(
-                                            subject: 'Покупка',
-                                            email: currentUserEmail,
-                                            name: 'Покупка',
-                                            templateID: _model
-                                                .fisrtTariffsInBasketPad
-                                                ?.getresponseId,
-                                          );
-                                          FFAppState().update(() {
-                                            FFAppState().deleteBasketTariffs();
-                                            FFAppState().basketTariffs = [];
-                                          });
                                           if (Navigator.of(context).canPop()) {
                                             context.pop();
                                           }
                                           context.pushNamed(
                                             'Complete',
+                                            queryParameters: {
+                                              'tariffsInBasket': serializeParam(
+                                                widget.tariffsDoc,
+                                                ParamType.Document,
+                                                true,
+                                              ),
+                                            }.withoutNulls,
                                             extra: <String, dynamic>{
+                                              'tariffsInBasket':
+                                                  widget.tariffsDoc,
                                               kTransitionInfoKey:
                                                   TransitionInfo(
                                                 hasTransition: true,
