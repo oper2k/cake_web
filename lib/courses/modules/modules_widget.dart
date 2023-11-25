@@ -1246,7 +1246,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
-                                                    _model.pdfTablet =
+                                                    _model.pdfTabletNew =
                                                         await actions.createPdf(
                                                       context,
                                                       '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.surname, '')}',
