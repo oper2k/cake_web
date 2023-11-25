@@ -76,7 +76,34 @@
       });
     });
   </script>
-  
+  <script src="https://widget.cloudpayments.ru/bundles/cloudpayments.js"></script>
+  <script>
+    this.showPaymentWidget = function (price, description, userId, courseId) {
+      var payments = new cp.CloudPayments({
+        language: "ru-RU",
+        email: "",
+        applePaySupport: true,
+        googlePaySupport: true,
+        yandexPaySupport: true,
+        tinkoffInstallmentSupport: true,
+      });
+
+      payments.pay("charge", {
+        publicId: "pk_f7cee894b8b084dafcb077b5b823f",
+        description: description,
+        currency: "RUB",
+        amount: price,
+        accountId: userId,
+        invoiceId: courseId,
+        skin: "mini",
+        requireEmail: false,
+      }).then(function (widgetResult) {
+        console.log('result', widgetResult);
+      }).catch(function (error) {
+        console.log('error', error);
+      });
+    }
+  </script>
   
   
   

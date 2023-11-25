@@ -37,7 +37,10 @@ dependencies:
   cloud_functions: 4.3.2
   cloud_functions_platform_interface: 5.4.2
   cloud_functions_web: 4.5.2
-  cloudpayments: ^0.3.0
+  cloudpayments:
+    git:
+      url: https://github.com/oper2k/cloudpayments.git
+      ref: master
   csv: 5.0.1
   easy_debounce: 2.0.1
   equatable: 2.0.5
