@@ -660,161 +660,141 @@ class _CoursesOldWidgetState extends State<CoursesOldWidget>
                                                                           .circular(
                                                                               12.0),
                                                                 ),
-                                                                child: FutureBuilder<
-                                                                    CoursesRecord>(
-                                                                  future: CoursesRecord
-                                                                      .getDocumentOnce(
-                                                                          courseTariffsRecord
-                                                                              .rlCourse!),
-                                                                  builder: (context,
-                                                                      snapshot) {
-                                                                    // Customize what your widget looks like when it's loading.
-                                                                    if (!snapshot
-                                                                        .hasData) {
-                                                                      return Center(
-                                                                        child:
-                                                                            SizedBox(
-                                                                          width:
-                                                                              50.0,
-                                                                          height:
-                                                                              50.0,
+                                                                child:
+                                                                    Visibility(
+                                                                  visible: !(!courseTariffsRecord
+                                                                          .show &&
+                                                                      courseTariffsRecord
+                                                                          .showKnowledgeBase),
+                                                                  child: FutureBuilder<
+                                                                      CoursesRecord>(
+                                                                    future: CoursesRecord.getDocumentOnce(
+                                                                        courseTariffsRecord
+                                                                            .rlCourse!),
+                                                                    builder:
+                                                                        (context,
+                                                                            snapshot) {
+                                                                      // Customize what your widget looks like when it's loading.
+                                                                      if (!snapshot
+                                                                          .hasData) {
+                                                                        return Center(
                                                                           child:
-                                                                              SpinKitRipple(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondaryText,
-                                                                            size:
+                                                                              SizedBox(
+                                                                            width:
                                                                                 50.0,
+                                                                            height:
+                                                                                50.0,
+                                                                            child:
+                                                                                SpinKitRipple(
+                                                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                                                              size: 50.0,
+                                                                            ),
                                                                           ),
+                                                                        );
+                                                                      }
+                                                                      final columnCoursesRecord =
+                                                                          snapshot
+                                                                              .data!;
+                                                                      return InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            'Modules',
+                                                                            queryParameters:
+                                                                                {
+                                                                              'currentCourse': serializeParam(
+                                                                                columnCoursesRecord,
+                                                                                ParamType.Document,
+                                                                              ),
+                                                                              'tariffRef': serializeParam(
+                                                                                userTariffsItem,
+                                                                                ParamType.DocumentReference,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                            extra: <String,
+                                                                                dynamic>{
+                                                                              'currentCourse': columnCoursesRecord,
+                                                                              kTransitionInfoKey: TransitionInfo(
+                                                                                hasTransition: true,
+                                                                                transitionType: PageTransitionType.fade,
+                                                                                duration: Duration(milliseconds: 0),
+                                                                              ),
+                                                                            },
+                                                                          );
+                                                                        },
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            ClipRRect(
+                                                                              borderRadius: BorderRadius.circular(24.0),
+                                                                              child: Image.network(
+                                                                                columnCoursesRecord.image,
+                                                                                width: double.infinity,
+                                                                                height: 180.0,
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 22.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                columnCoursesRecord.name,
+                                                                                style: FlutterFlowTheme.of(context).bodyLarge,
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                courseTariffsRecord.name,
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                      color: FlutterFlowTheme.of(context).accent1,
+                                                                                      useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 6.0, 0.0, 0.0),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                children: [
+                                                                                  FaIcon(
+                                                                                    FontAwesomeIcons.clock,
+                                                                                    color: FlutterFlowTheme.of(context).accent1,
+                                                                                    size: 20.0,
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 2.0, 0.0, 0.0),
+                                                                                    child: Text(
+                                                                                      columnCoursesRecord.countLessonsString,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                            color: FlutterFlowTheme.of(context).accent1,
+                                                                                            useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       );
-                                                                    }
-                                                                    final columnCoursesRecord =
-                                                                        snapshot
-                                                                            .data!;
-                                                                    return InkWell(
-                                                                      splashColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      focusColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      hoverColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      highlightColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      onTap:
-                                                                          () async {
-                                                                        context
-                                                                            .pushNamed(
-                                                                          'Modules',
-                                                                          queryParameters:
-                                                                              {
-                                                                            'currentCourse':
-                                                                                serializeParam(
-                                                                              columnCoursesRecord,
-                                                                              ParamType.Document,
-                                                                            ),
-                                                                            'tariffRef':
-                                                                                serializeParam(
-                                                                              userTariffsItem,
-                                                                              ParamType.DocumentReference,
-                                                                            ),
-                                                                          }.withoutNulls,
-                                                                          extra: <String,
-                                                                              dynamic>{
-                                                                            'currentCourse':
-                                                                                columnCoursesRecord,
-                                                                            kTransitionInfoKey:
-                                                                                TransitionInfo(
-                                                                              hasTransition: true,
-                                                                              transitionType: PageTransitionType.fade,
-                                                                              duration: Duration(milliseconds: 0),
-                                                                            ),
-                                                                          },
-                                                                        );
-                                                                      },
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          ClipRRect(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(24.0),
-                                                                            child:
-                                                                                Image.network(
-                                                                              columnCoursesRecord.image,
-                                                                              width: double.infinity,
-                                                                              height: 180.0,
-                                                                              fit: BoxFit.cover,
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                22.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              columnCoursesRecord.name,
-                                                                              style: FlutterFlowTheme.of(context).bodyLarge,
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                8.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              courseTariffsRecord.name,
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                    color: FlutterFlowTheme.of(context).accent1,
-                                                                                    useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                6.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                FaIcon(
-                                                                                  FontAwesomeIcons.clock,
-                                                                                  color: FlutterFlowTheme.of(context).accent1,
-                                                                                  size: 20.0,
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(8.0, 2.0, 0.0, 0.0),
-                                                                                  child: Text(
-                                                                                    columnCoursesRecord.countLessonsString,
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                          color: FlutterFlowTheme.of(context).accent1,
-                                                                                          useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                                        ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    );
-                                                                  },
+                                                                    },
+                                                                  ),
                                                                 ),
                                                               );
                                                             },

@@ -55,6 +55,8 @@ class ModulesModel extends FlutterFlowModel<ModulesWidget> {
   List<LessonsRecord>? allLessonsWithPhoto2;
   // Model for button component.
   late ButtonModel buttonModel1;
+  // Stores action output result for [Custom Action - createPdf] action in button widget.
+  FFUploadedFile? pdfTablet;
   // Model for infoCourseCompMobile component.
   late InfoCourseCompMobileModel infoCourseCompMobileModel1;
   // Model for button component.

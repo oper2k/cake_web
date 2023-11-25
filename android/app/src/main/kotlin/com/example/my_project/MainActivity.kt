@@ -1,4 +1,4 @@
-package ru.derastudio.cakeschool
+package ru.derastudio.cakeschoolweb
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -76,6 +76,11 @@ class TariffsRecord extends FirestoreRecord {
   String get tokenId => _tokenId ?? '';
   bool hasTokenId() => _tokenId != null;
 
+  // "showKnowledgeBase" field.
+  bool? _showKnowledgeBase;
+  bool get showKnowledgeBase => _showKnowledgeBase ?? false;
+  bool hasShowKnowledgeBase() => _showKnowledgeBase != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _idForApple = snapshotData['id_for_apple'] as String?;
@@ -89,6 +94,7 @@ class TariffsRecord extends FirestoreRecord {
     _greenText = snapshotData['green_text'] as String?;
     _getresponseId = snapshotData['getresponse_id'] as String?;
     _tokenId = snapshotData['token_id'] as String?;
+    _showKnowledgeBase = snapshotData['showKnowledgeBase'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -136,6 +142,7 @@ Map<String, dynamic> createTariffsRecordData({
   String? greenText,
   String? getresponseId,
   String? tokenId,
+  bool? showKnowledgeBase,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -149,6 +156,7 @@ Map<String, dynamic> createTariffsRecordData({
       'green_text': greenText,
       'getresponse_id': getresponseId,
       'token_id': tokenId,
+      'showKnowledgeBase': showKnowledgeBase,
     }.withoutNulls,
   );
 
@@ -172,7 +180,8 @@ class TariffsRecordDocumentEquality implements Equality<TariffsRecord> {
         listEquality.equals(e1?.descriptionCrossed, e2?.descriptionCrossed) &&
         e1?.greenText == e2?.greenText &&
         e1?.getresponseId == e2?.getresponseId &&
-        e1?.tokenId == e2?.tokenId;
+        e1?.tokenId == e2?.tokenId &&
+        e1?.showKnowledgeBase == e2?.showKnowledgeBase;
   }
 
   @override
@@ -188,7 +197,8 @@ class TariffsRecordDocumentEquality implements Equality<TariffsRecord> {
         e?.descriptionCrossed,
         e?.greenText,
         e?.getresponseId,
-        e?.tokenId
+        e?.tokenId,
+        e?.showKnowledgeBase
       ]);
 
   @override

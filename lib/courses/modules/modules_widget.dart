@@ -397,11 +397,17 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
-                                                    await action_blocks.cert(
+                                                    _model.pdfTablet =
+                                                        await actions.createPdf(
                                                       context,
-                                                      course:
-                                                          widget.currentCourse,
+                                                      '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.surname, '')}',
+                                                      getCurrentTimestamp
+                                                          .toString(),
+                                                      widget
+                                                          .currentCourse!.name,
                                                     );
+
+                                                    setState(() {});
                                                   },
                                                   child: wrapWithModel(
                                                     model: _model.buttonModel1,
