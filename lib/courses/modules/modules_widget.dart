@@ -17,6 +17,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/actions/actions.dart' as action_blocks;
+import '/custom_code/actions/index.dart' as actions;
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
@@ -1239,11 +1240,17 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
-                                                    await action_blocks.cert(
+                                                    _model.pdfTablet =
+                                                        await actions.createPdf(
                                                       context,
-                                                      course:
-                                                          widget.currentCourse,
+                                                      '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.surname, '')}',
+                                                      getCurrentTimestamp
+                                                          .toString(),
+                                                      widget
+                                                          .currentCourse!.name,
                                                     );
+
+                                                    setState(() {});
                                                   },
                                                   child: wrapWithModel(
                                                     model: _model.buttonModel2,
@@ -1686,15 +1693,40 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                       MainAxisSize.min,
                                                   children: [
                                                     if (_model.showSert)
-                                                      wrapWithModel(
-                                                        model: _model
-                                                            .infoCourseCompMobileModel2,
-                                                        updateCallback: () =>
-                                                            setState(() {}),
-                                                        child:
-                                                            InfoCourseCompMobileWidget(
-                                                          currentCourse: widget
-                                                              .currentCourse,
+                                                      InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          _model.pdfMobile =
+                                                              await actions
+                                                                  .createPdf(
+                                                            context,
+                                                            '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.surname, '')}',
+                                                            getCurrentTimestamp
+                                                                .toString(),
+                                                            widget
+                                                                .currentCourse!
+                                                                .name,
+                                                          );
+
+                                                          setState(() {});
+                                                        },
+                                                        child: wrapWithModel(
+                                                          model: _model
+                                                              .infoCourseCompMobileModel2,
+                                                          updateCallback: () =>
+                                                              setState(() {}),
+                                                          child:
+                                                              InfoCourseCompMobileWidget(
+                                                            currentCourse: widget
+                                                                .currentCourse,
+                                                          ),
                                                         ),
                                                       ).animateOnPageLoad(
                                                           animationsMap[

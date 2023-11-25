@@ -17,6 +17,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/actions/actions.dart' as action_blocks;
+import '/custom_code/actions/index.dart' as actions;
 import 'modules_widget.dart' show ModulesWidget;
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,8 +59,12 @@ class ModulesModel extends FlutterFlowModel<ModulesWidget> {
   late InfoCourseCompMobileModel infoCourseCompMobileModel1;
   // Model for button component.
   late ButtonModel buttonModel2;
+  // Stores action output result for [Custom Action - createPdf] action in button widget.
+  FFUploadedFile? pdfTablet;
   // Model for infoCourseCompMobile component.
   late InfoCourseCompMobileModel infoCourseCompMobileModel2;
+  // Stores action output result for [Custom Action - createPdf] action in infoCourseCompMobile widget.
+  FFUploadedFile? pdfMobile;
   // Model for appBar component.
   late AppBarModel appBarModel;
   // Model for infoCourseCompleted component.

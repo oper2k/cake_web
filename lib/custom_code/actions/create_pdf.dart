@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 
 // Set your action name, define your arguments and return parameter,
 // and then add the boilerplate code using the green button on the right!
+import 'package:universal_html/html.dart' as html;
 import 'package:open_file/open_file.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:translit/translit.dart';
@@ -56,9 +57,18 @@ Future<FFUploadedFile> createPdf(
       robotoLight));
 
   Uint8List pdfBytes = await pdf.save();
-  String filePath = await savePdf(pdfBytes, 'Certificate_$name');
-
-  return FFUploadedFile(name: filePath, bytes: pdfBytes);
+  if (!isWeb) {
+    String filePath = await savePdf(pdfBytes, 'Certificate_$name');
+    return FFUploadedFile(name: filePath, bytes: pdfBytes);
+  } else {
+    final blob = html.Blob([pdfBytes], 'application/pdf');
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute('download', 'Certificate_$name.pdf')
+      ..click();
+    html.Url.revokeObjectUrl(url);
+    return FFUploadedFile(name: 'Certificate_$name.pdf', bytes: pdfBytes);
+  }
 }
 
 pw.PageTheme _buildPageTheme(pw.MemoryImage image) {
