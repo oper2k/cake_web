@@ -120,7 +120,24 @@ class _Board2WidgetState extends State<Board2Widget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.pushNamed('Courses_Old');
+                            if (FFAppState().basketTariffs.length == 0) {
+                              context.pushNamed('Courses_Old');
+                            } else {
+                              context.pushNamed(
+                                'Basket',
+                                queryParameters: {
+                                  'currentPage': serializeParam(
+                                    1,
+                                    ParamType.int,
+                                  ),
+                                  'basketTariffs': serializeParam(
+                                    FFAppState().basketTariffs,
+                                    ParamType.DocumentReference,
+                                    true,
+                                  ),
+                                }.withoutNulls,
+                              );
+                            }
                           },
                           child: Text(
                             'Пропустить',
