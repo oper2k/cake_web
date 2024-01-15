@@ -69,7 +69,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                     shape: BoxShape.circle,
                   ),
                   child: Image.asset(
-                    'assets/images/cake_school_logo_black.png',
+                    'assets/images/Irina.jpeg',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -109,7 +109,14 @@ class _MessageWidgetState extends State<MessageWidget> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (widget.currentMes?.user != currentUserReference)
+                    if ((widget.currentMes?.user != currentUserReference) &&
+                        responsiveVisibility(
+                          context: context,
+                          phone: false,
+                          tablet: false,
+                          tabletLandscape: false,
+                          desktop: false,
+                        ))
                       Text(
                         'CakeSchool',
                         style: FlutterFlowTheme.of(context).labelSmall,

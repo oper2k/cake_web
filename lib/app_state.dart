@@ -58,9 +58,6 @@ class FFAppState extends ChangeNotifier {
           await secureStorage.getInt('ff_showContinueCourse') ??
               _showContinueCourse;
     });
-    await _safeInitAsync(() async {
-      _agreeRules = await secureStorage.getInt('ff_agreeRules') ?? _agreeRules;
-    });
   }
 
   void update(VoidCallback callback) {
@@ -275,17 +272,6 @@ class FFAppState extends ChangeNotifier {
 
   void deleteShowContinueCourse() {
     secureStorage.delete(key: 'ff_showContinueCourse');
-  }
-
-  int _agreeRules = 0;
-  int get agreeRules => _agreeRules;
-  set agreeRules(int _value) {
-    _agreeRules = _value;
-    secureStorage.setInt('ff_agreeRules', _value);
-  }
-
-  void deleteAgreeRules() {
-    secureStorage.delete(key: 'ff_agreeRules');
   }
 
   bool _rulesOpen = false;

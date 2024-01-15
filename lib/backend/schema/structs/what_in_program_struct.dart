@@ -53,8 +53,9 @@ class WhatInProgramStruct extends FFFirebaseStruct {
         description: data['description'] as String?,
       );
 
-  static WhatInProgramStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? WhatInProgramStruct.fromMap(data) : null;
+  static WhatInProgramStruct? maybeFromMap(dynamic data) => data is Map
+      ? WhatInProgramStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'image': _image,

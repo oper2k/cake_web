@@ -1,3 +1,4 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/app_bar_widget.dart';
@@ -6,7 +7,6 @@ import '/courses/homework_look/homework_look_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -23,13 +23,11 @@ class HomeworkAddedWidget extends StatefulWidget {
     Key? key,
     required this.photoOnly,
     required this.currentChat,
-    required this.courseFree,
     required this.currentTariff,
   }) : super(key: key);
 
   final bool? photoOnly;
   final ChatsRecord? currentChat;
-  final bool? courseFree;
   final DocumentReference? currentTariff;
 
   @override
@@ -48,17 +46,7 @@ class _HomeworkAddedWidgetState extends State<HomeworkAddedWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (widget.courseFree == true) {
-        await widget.currentChat!.reference.update({
-          ...mapToFirestore(
-            {
-              'last_message_seen_by':
-                  FieldValue.arrayUnion([currentUserReference]),
-            },
-          ),
-        });
-        return;
-      } else {
+      if (loggedIn) {
         if ((currentUserDocument?.rlBuyTariffs?.toList() ?? [])
             .contains(widget.currentTariff)) {
           await widget.currentChat!.reference.update({
@@ -75,6 +63,10 @@ class _HomeworkAddedWidgetState extends State<HomeworkAddedWidget> {
 
           return;
         }
+      } else {
+        context.pushNamed('Log_In');
+
+        return;
       }
     });
 
@@ -166,7 +158,7 @@ class _HomeworkAddedWidgetState extends State<HomeworkAddedWidget> {
                                 phone: false,
                               ))
                                 Align(
-                                  alignment: AlignmentDirectional(-1.00, 0.00),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         20.0, 0.0, 0.0, 0.0),
@@ -223,7 +215,7 @@ class _HomeworkAddedWidgetState extends State<HomeworkAddedWidget> {
                                     ))
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(-1.00, 0.00),
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Builder(
                                           builder: (context) => Padding(
                                             padding:
@@ -236,26 +228,21 @@ class _HomeworkAddedWidgetState extends State<HomeworkAddedWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                await showAlignedDialog(
+                                                await showDialog(
                                                   barrierDismissible: false,
                                                   context: context,
-                                                  isGlobal: true,
-                                                  avoidOverflow: false,
-                                                  targetAnchor:
-                                                      AlignmentDirectional(
-                                                              0.0, 0.0)
-                                                          .resolve(
-                                                              Directionality.of(
-                                                                  context)),
-                                                  followerAnchor:
-                                                      AlignmentDirectional(
-                                                              0.0, 0.0)
-                                                          .resolve(
-                                                              Directionality.of(
-                                                                  context)),
                                                   builder: (dialogContext) {
-                                                    return Material(
-                                                      color: Colors.transparent,
+                                                    return Dialog(
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
                                                       child: WebViewAware(
                                                           child:
                                                               GestureDetector(
@@ -344,7 +331,7 @@ class _HomeworkAddedWidgetState extends State<HomeworkAddedWidget> {
                     desktop: false,
                   ))
                 Align(
-                  alignment: AlignmentDirectional(1.00, -1.00),
+                  alignment: AlignmentDirectional(1.0, -1.0),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 10.0, 0.0),

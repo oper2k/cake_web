@@ -1,3 +1,4 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -40,32 +41,39 @@ class _CompleteWidgetState extends State<CompleteWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      while (_model.countLoopAction < FFAppState().basketTariffs.length) {
-        _model.apiResultlvv = await GetResponseGroup.addContactCall.call(
-          email: currentUserEmail,
-          campaignId: widget.tariffsInBasket?[_model.countLoopAction]?.tokenId,
-          name: currentUserDisplayName,
-        );
+      if (loggedIn) {
+        while (_model.countLoopAction < FFAppState().basketTariffs.length) {
+          _model.apiResultlvv = await GetResponseGroup.addContactCall.call(
+            email: currentUserEmail,
+            campaignId:
+                widget.tariffsInBasket?[_model.countLoopAction]?.tokenId,
+            name: currentUserDisplayName,
+          );
+          setState(() {
+            _model.countLoopAction = _model.countLoopAction + 1;
+          });
+        }
         setState(() {
-          _model.countLoopAction = _model.countLoopAction + 1;
+          FFAppState().deleteBasketTariffs();
+          FFAppState().basketTariffs = [];
         });
-      }
-      setState(() {
-        FFAppState().deleteBasketTariffs();
-        FFAppState().basketTariffs = [];
-      });
-      await Future.delayed(const Duration(milliseconds: 3000));
+        await Future.delayed(const Duration(milliseconds: 3000));
 
-      context.pushNamed(
-        'Courses_Old',
-        extra: <String, dynamic>{
-          kTransitionInfoKey: TransitionInfo(
-            hasTransition: true,
-            transitionType: PageTransitionType.fade,
-            duration: Duration(milliseconds: 0),
-          ),
-        },
-      );
+        context.pushNamed(
+          'Courses_Old',
+          extra: <String, dynamic>{
+            kTransitionInfoKey: TransitionInfo(
+              hasTransition: true,
+              transitionType: PageTransitionType.fade,
+              duration: Duration(milliseconds: 0),
+            ),
+          },
+        );
+      } else {
+        context.pushNamed('Log_In');
+
+        return;
+      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -99,7 +107,7 @@ class _CompleteWidgetState extends State<CompleteWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Align(
-          alignment: AlignmentDirectional(0.00, -1.00),
+          alignment: AlignmentDirectional(0.0, -1.0),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
             child: Container(

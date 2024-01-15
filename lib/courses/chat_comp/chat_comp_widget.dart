@@ -171,7 +171,7 @@ class _ChatCompWidgetState extends State<ChatCompWidget> {
                   ),
                   if (!widget.onlyPhoto! && !widget.currentChat!.isFinished)
                     Align(
-                      alignment: AlignmentDirectional(0.00, 1.00),
+                      alignment: AlignmentDirectional(0.0, 1.0),
                       child: Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 12.0),
@@ -439,7 +439,7 @@ class _ChatCompWidgetState extends State<ChatCompWidget> {
                     ),
                   if (widget.onlyPhoto! && !widget.currentChat!.isFinished)
                     Align(
-                      alignment: AlignmentDirectional(0.00, 1.00),
+                      alignment: AlignmentDirectional(0.0, 1.0),
                       child: Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 12.0),
@@ -601,7 +601,7 @@ class _ChatCompWidgetState extends State<ChatCompWidget> {
                     ),
                   if (widget.currentChat?.isFinished ?? true)
                     Align(
-                      alignment: AlignmentDirectional(0.00, 1.00),
+                      alignment: AlignmentDirectional(0.0, 1.0),
                       child: Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 12.0),
@@ -611,51 +611,30 @@ class _ChatCompWidgetState extends State<ChatCompWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            if (stackCoursesRecord.isFree) {
-                              context.goNamed(
-                                'ModulesFree',
-                                queryParameters: {
-                                  'currentCourse': serializeParam(
-                                    stackCoursesRecord,
-                                    ParamType.Document,
-                                  ),
-                                }.withoutNulls,
-                                extra: <String, dynamic>{
-                                  'currentCourse': stackCoursesRecord,
-                                  kTransitionInfoKey: TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                  ),
-                                },
-                              );
-                            } else {
-                              _model.tariff =
-                                  await TariffsRecord.getDocumentOnce(
-                                      currentUserDocument!.rlRecentlyTariff!);
+                            _model.tariff = await TariffsRecord.getDocumentOnce(
+                                currentUserDocument!.rlRecentlyTariff!);
 
-                              context.goNamed(
-                                'Modules',
-                                queryParameters: {
-                                  'currentCourse': serializeParam(
-                                    stackCoursesRecord,
-                                    ParamType.Document,
-                                  ),
-                                  'tariffRef': serializeParam(
-                                    currentUserDocument?.rlRecentlyTariff,
-                                    ParamType.DocumentReference,
-                                  ),
-                                }.withoutNulls,
-                                extra: <String, dynamic>{
-                                  'currentCourse': stackCoursesRecord,
-                                  kTransitionInfoKey: TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                  ),
-                                },
-                              );
-                            }
+                            context.goNamed(
+                              'Modules',
+                              queryParameters: {
+                                'currentCourse': serializeParam(
+                                  stackCoursesRecord,
+                                  ParamType.Document,
+                                ),
+                                'tariffRef': serializeParam(
+                                  currentUserDocument?.rlRecentlyTariff,
+                                  ParamType.DocumentReference,
+                                ),
+                              }.withoutNulls,
+                              extra: <String, dynamic>{
+                                'currentCourse': stackCoursesRecord,
+                                kTransitionInfoKey: TransitionInfo(
+                                  hasTransition: true,
+                                  transitionType: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                ),
+                              },
+                            );
 
                             setState(() {});
                           },

@@ -35,8 +35,9 @@ class AdditionalInfoStruct extends FFFirebaseStruct {
         text: data['text'] as String?,
       );
 
-  static AdditionalInfoStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? AdditionalInfoStruct.fromMap(data) : null;
+  static AdditionalInfoStruct? maybeFromMap(dynamic data) => data is Map
+      ? AdditionalInfoStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'title': _title,

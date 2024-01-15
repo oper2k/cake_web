@@ -133,7 +133,7 @@ class _ChoosePaymentWidgetState extends State<ChoosePaymentWidget> {
                           children: [
                             Expanded(
                               child: Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -141,7 +141,7 @@ class _ChoosePaymentWidgetState extends State<ChoosePaymentWidget> {
                                   children: [
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(-1.00, 0.00),
+                                          AlignmentDirectional(-1.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
@@ -184,7 +184,7 @@ class _ChoosePaymentWidgetState extends State<ChoosePaymentWidget> {
                                     ),
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(-1.00, 0.00),
+                                          AlignmentDirectional(-1.0, 0.0),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 16.0, 0.0, 0.0),
@@ -515,7 +515,7 @@ class _ChoosePaymentWidgetState extends State<ChoosePaymentWidget> {
                                     ))
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(-1.00, 0.00),
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -570,7 +570,7 @@ class _ChoosePaymentWidgetState extends State<ChoosePaymentWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            -1.00, 0.00),
+                                                            -1.0, 0.0),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
@@ -664,7 +664,7 @@ class _ChoosePaymentWidgetState extends State<ChoosePaymentWidget> {
                                           children: [
                                             Align(
                                               alignment: AlignmentDirectional(
-                                                  -1.00, 0.00),
+                                                  -1.0, 0.0),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -775,7 +775,7 @@ class _ChoosePaymentWidgetState extends State<ChoosePaymentWidget> {
                           height: 24.0,
                           decoration: BoxDecoration(),
                           child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Icon(
                               FFIcons.kup,
                               color: FlutterFlowTheme.of(context).secondaryText,

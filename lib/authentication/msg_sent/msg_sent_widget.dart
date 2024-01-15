@@ -88,7 +88,7 @@ class _MsgSentWidgetState extends State<MsgSentWidget> {
                 children: [
                   Flexible(
                     child: Align(
-                      alignment: AlignmentDirectional(0.00, 0.00),
+                      alignment: AlignmentDirectional(0.0, 0.0),
                       child: AutoSizeText(
                         'Отправили вам письмо\nс восстановлением пароля',
                         textAlign: TextAlign.center,

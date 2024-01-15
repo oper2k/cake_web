@@ -44,7 +44,7 @@ class PdfFileStruct extends FFFirebaseStruct {
       );
 
   static PdfFileStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? PdfFileStruct.fromMap(data) : null;
+      data is Map ? PdfFileStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
         'name': _name,

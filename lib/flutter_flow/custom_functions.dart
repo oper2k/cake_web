@@ -315,3 +315,14 @@ List<DocumentReference> listFreeAndPaidCourses(
   List<DocumentReference> allCourses = [freeCourses, ...paidCourse];
   return allCourses;
 }
+
+List<DocumentReference>? returnTariffsListReversed(
+    List<DocumentReference>? tariffsList) {
+  List<DocumentReference> newListtarif = [];
+  if (tariffsList != null) {
+    newListtarif = tariffsList.reversed.toList();
+    return newListtarif;
+  } else {
+    return newListtarif;
+  }
+}

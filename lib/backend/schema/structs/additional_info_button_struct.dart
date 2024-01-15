@@ -98,10 +98,9 @@ class AdditionalInfoButtonStruct extends FFFirebaseStruct {
         additionalInfoLink: data['additionalInfoLink'] as String?,
       );
 
-  static AdditionalInfoButtonStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic>
-          ? AdditionalInfoButtonStruct.fromMap(data)
-          : null;
+  static AdditionalInfoButtonStruct? maybeFromMap(dynamic data) => data is Map
+      ? AdditionalInfoButtonStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'title': _title,

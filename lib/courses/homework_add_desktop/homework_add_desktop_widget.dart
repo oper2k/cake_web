@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/courses/chat_comp/chat_comp_widget.dart';
 import '/courses/roadmap_item/roadmap_item_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -114,7 +115,7 @@ class _HomeworkAddDesktopWidgetState extends State<HomeworkAddDesktopWidget>
                 borderRadius: BorderRadius.circular(24.0),
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
+                padding: EdgeInsets.all(32.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,

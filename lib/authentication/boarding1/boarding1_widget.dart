@@ -88,7 +88,7 @@ class _Boarding1WidgetState extends State<Boarding1Widget> {
                         ),
                       Expanded(
                         child: Align(
-                          alignment: AlignmentDirectional(0.00, 0.00),
+                          alignment: AlignmentDirectional(0.0, 0.0),
                           child: wrapWithModel(
                             model: _model.board1Model,
                             updateCallback: () => setState(() {}),

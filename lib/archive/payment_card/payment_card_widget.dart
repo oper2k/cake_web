@@ -205,9 +205,7 @@ class _PaymentCardWidgetState extends State<PaymentCardWidget> {
                                     ),
                                     filled: true,
                                     fillColor: Color(0x1AFFFFFF),
-                                    contentPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            20.0, 20.0, 20.0, 20.0),
+                                    contentPadding: EdgeInsets.all(20.0),
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .titleMedium
@@ -328,8 +326,7 @@ class _PaymentCardWidgetState extends State<PaymentCardWidget> {
                                             filled: true,
                                             fillColor: Color(0x1AFFFFFF),
                                             contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 20.0, 20.0, 20.0),
+                                                EdgeInsets.all(20.0),
                                           ),
                                           style: FlutterFlowTheme.of(context)
                                               .titleMedium
@@ -449,8 +446,7 @@ class _PaymentCardWidgetState extends State<PaymentCardWidget> {
                                             filled: true,
                                             fillColor: Color(0x1AFFFFFF),
                                             contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 20.0, 20.0, 20.0),
+                                                EdgeInsets.all(20.0),
                                             suffixIcon: InkWell(
                                               onTap: () => setState(
                                                 () => _model.cvvVisibility =

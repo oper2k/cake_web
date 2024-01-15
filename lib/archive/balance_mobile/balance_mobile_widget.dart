@@ -126,7 +126,7 @@ class _BalanceMobileWidgetState extends State<BalanceMobileWidget> {
                         ],
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 18.0, 0.0, 0.0),
@@ -147,7 +147,7 @@ class _BalanceMobileWidgetState extends State<BalanceMobileWidget> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 8.0, 0.0, 0.0),
@@ -167,7 +167,7 @@ class _BalanceMobileWidgetState extends State<BalanceMobileWidget> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 30.0, 0.0, 0.0),
@@ -190,8 +190,7 @@ class _BalanceMobileWidgetState extends State<BalanceMobileWidget> {
                             ),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 20.0, 20.0, 20.0),
+                            padding: EdgeInsets.all(20.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -259,8 +258,7 @@ class _BalanceMobileWidgetState extends State<BalanceMobileWidget> {
                             ),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 20.0, 20.0, 20.0),
+                            padding: EdgeInsets.all(20.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -328,8 +326,7 @@ class _BalanceMobileWidgetState extends State<BalanceMobileWidget> {
                             ),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 20.0, 20.0, 20.0),
+                            padding: EdgeInsets.all(20.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -389,7 +386,7 @@ class _BalanceMobileWidgetState extends State<BalanceMobileWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.00, 1.00),
+                alignment: AlignmentDirectional(0.0, 1.0),
                 child: Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 20.0, 45.0),
@@ -401,7 +398,7 @@ class _BalanceMobileWidgetState extends State<BalanceMobileWidget> {
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: Align(
-                      alignment: AlignmentDirectional(0.00, 0.00),
+                      alignment: AlignmentDirectional(0.0, 0.0),
                       child: Text(
                         'Закрыть',
                         style: FlutterFlowTheme.of(context).labelLarge,

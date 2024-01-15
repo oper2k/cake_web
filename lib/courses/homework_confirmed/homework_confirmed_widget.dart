@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/actions/actions.dart' as action_blocks;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -22,13 +23,11 @@ class HomeworkConfirmedWidget extends StatefulWidget {
     required this.lesson,
     required this.countLes,
     required this.index,
-    required this.courseFree,
   }) : super(key: key);
 
   final LessonsRecord? lesson;
   final int? countLes;
   final int? index;
-  final bool? courseFree;
 
   @override
   _HomeworkConfirmedWidgetState createState() =>
@@ -85,7 +84,7 @@ class _HomeworkConfirmedWidgetState extends State<HomeworkConfirmedWidget>
         phone: false,
       ),
       child: Align(
-        alignment: AlignmentDirectional(0.00, 0.00),
+        alignment: AlignmentDirectional(0.0, 0.0),
         child: Container(
           width: 592.0,
           decoration: BoxDecoration(
@@ -93,7 +92,7 @@ class _HomeworkConfirmedWidgetState extends State<HomeworkConfirmedWidget>
             borderRadius: BorderRadius.circular(24.0),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
+            padding: EdgeInsets.all(32.0),
             child: StreamBuilder<UsersRecord>(
               stream: UsersRecord.getDocument(currentUserReference!),
               builder: (context, snapshot) {
@@ -139,8 +138,14 @@ class _HomeworkConfirmedWidgetState extends State<HomeworkConfirmedWidget>
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            FFAppState().update(() {
-                              FFAppState().agreeRules = 0;
+                            await columnUsersRecord.reference.update({
+                              ...mapToFirestore(
+                                {
+                                  'rl_confirmed_rules_lessons':
+                                      FieldValue.arrayRemove(
+                                          [widget.lesson?.reference]),
+                                },
+                              ),
                             });
                             _model.updatePage(() {
                               FFAppState().rulesOpen = false;
@@ -279,15 +284,22 @@ class _HomeworkConfirmedWidgetState extends State<HomeworkConfirmedWidget>
                       children: [
                         Stack(
                           children: [
-                            if (FFAppState().agreeRules == 0)
+                            if (!columnUsersRecord.rlConfirmedRulesLessons
+                                .contains(widget.lesson?.reference))
                               InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  FFAppState().update(() {
-                                    FFAppState().agreeRules = 1;
+                                  await columnUsersRecord.reference.update({
+                                    ...mapToFirestore(
+                                      {
+                                        'rl_confirmed_rules_lessons':
+                                            FieldValue.arrayUnion(
+                                                [widget.lesson?.reference]),
+                                      },
+                                    ),
                                   });
                                 },
                                 child: Container(
@@ -305,15 +317,22 @@ class _HomeworkConfirmedWidgetState extends State<HomeworkConfirmedWidget>
                                   ),
                                 ),
                               ),
-                            if (FFAppState().agreeRules == 1)
+                            if (columnUsersRecord.rlConfirmedRulesLessons
+                                .contains(widget.lesson?.reference))
                               InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  FFAppState().update(() {
-                                    FFAppState().agreeRules = 0;
+                                  await columnUsersRecord.reference.update({
+                                    ...mapToFirestore(
+                                      {
+                                        'rl_confirmed_rules_lessons':
+                                            FieldValue.arrayRemove(
+                                                [widget.lesson?.reference]),
+                                      },
+                                    ),
                                   });
                                 },
                                 child: Container(
@@ -366,7 +385,8 @@ class _HomeworkConfirmedWidgetState extends State<HomeworkConfirmedWidget>
                                             ?.toList() ??
                                         [])
                                     .contains(widget.lesson?.reference) &&
-                                (FFAppState().agreeRules == 1))
+                                columnUsersRecord.rlConfirmedRulesLessons
+                                    .contains(widget.lesson?.reference))
                               AuthUserStreamWidget(
                                 builder: (context) => InkWell(
                                   splashColor: Colors.transparent,
@@ -404,7 +424,8 @@ class _HomeworkConfirmedWidgetState extends State<HomeworkConfirmedWidget>
                                             ?.toList() ??
                                         [])
                                     .contains(widget.lesson?.reference) &&
-                                (FFAppState().agreeRules == 1))
+                                columnUsersRecord.rlConfirmedRulesLessons
+                                    .contains(widget.lesson?.reference))
                               AuthUserStreamWidget(
                                 builder: (context) => wrapWithModel(
                                   model: _model.buttonModel2,
@@ -419,7 +440,8 @@ class _HomeworkConfirmedWidgetState extends State<HomeworkConfirmedWidget>
                                   ),
                                 ),
                               ),
-                            if (FFAppState().agreeRules == 0)
+                            if (!columnUsersRecord.rlConfirmedRulesLessons
+                                .contains(widget.lesson?.reference))
                               wrapWithModel(
                                 model: _model.buttonModel3,
                                 updateCallback: () => setState(() {}),
@@ -443,8 +465,14 @@ class _HomeworkConfirmedWidgetState extends State<HomeworkConfirmedWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              FFAppState().update(() {
-                                FFAppState().agreeRules = 0;
+                              await columnUsersRecord.reference.update({
+                                ...mapToFirestore(
+                                  {
+                                    'rl_confirmed_rules_lessons':
+                                        FieldValue.arrayRemove(
+                                            [widget.lesson?.reference]),
+                                  },
+                                ),
                               });
                               _model.updatePage(() {
                                 FFAppState().rulesOpen = false;

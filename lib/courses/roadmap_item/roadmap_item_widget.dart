@@ -190,7 +190,7 @@ class _RoadmapItemWidgetState extends State<RoadmapItemWidget> {
                                   size: 18.0,
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0.00, 0.00),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 0.0, 0.0),
@@ -252,7 +252,7 @@ class _RoadmapItemWidgetState extends State<RoadmapItemWidget> {
                                   size: 18.0,
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0.00, 0.00),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 0.0, 0.0),
@@ -426,7 +426,7 @@ class _RoadmapItemWidgetState extends State<RoadmapItemWidget> {
                                   size: 18.0,
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0.00, 0.00),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 0.0, 0.0),
@@ -488,7 +488,7 @@ class _RoadmapItemWidgetState extends State<RoadmapItemWidget> {
                                   size: 18.0,
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0.00, 0.00),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 0.0, 0.0),
@@ -529,7 +529,7 @@ class _RoadmapItemWidgetState extends State<RoadmapItemWidget> {
             shape: BoxShape.circle,
           ),
           child: Align(
-            alignment: AlignmentDirectional(0.00, 0.00),
+            alignment: AlignmentDirectional(0.0, 0.0),
             child: Text(
               functions.increase(widget.itemInList).toString(),
               style: FlutterFlowTheme.of(context).labelSmall,

@@ -53,7 +53,7 @@ class TelegaStruct extends FFFirebaseStruct {
       );
 
   static TelegaStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? TelegaStruct.fromMap(data) : null;
+      data is Map ? TelegaStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
         'telegaName': _telegaName,

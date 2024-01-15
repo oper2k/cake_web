@@ -82,12 +82,12 @@ class _SupportDesktopWidgetState extends State<SupportDesktopWidget>
       child: Stack(
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(-1.00, 0.00),
+                  alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Text(
                     'Контактная информация\nдля связи с техподдержкой:',
                     style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -121,7 +121,7 @@ class _SupportDesktopWidgetState extends State<SupportDesktopWidget>
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Icon(
                               FFIcons.ktelegram,
                               color: FlutterFlowTheme.of(context).black3666666,
@@ -194,7 +194,7 @@ class _SupportDesktopWidgetState extends State<SupportDesktopWidget>
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Icon(
                               FFIcons.kwattsUp,
                               color: FlutterFlowTheme.of(context).black3666666,
@@ -266,7 +266,7 @@ class _SupportDesktopWidgetState extends State<SupportDesktopWidget>
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Icon(
                               FFIcons.kvk,
                               color: FlutterFlowTheme.of(context).black3666666,
@@ -338,7 +338,7 @@ class _SupportDesktopWidgetState extends State<SupportDesktopWidget>
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Icon(
                               FFIcons.kmail,
                               color: FlutterFlowTheme.of(context).black3666666,
@@ -392,7 +392,7 @@ class _SupportDesktopWidgetState extends State<SupportDesktopWidget>
             ),
           ),
           Align(
-            alignment: AlignmentDirectional(1.00, -1.00),
+            alignment: AlignmentDirectional(1.0, -1.0),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 16.0, 0.0),
               child: InkWell(

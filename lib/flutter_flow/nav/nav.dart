@@ -82,14 +82,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? CoursesOldWidget() : LogInWidget(),
+      errorBuilder: (context, state) => RootPageContext.wrap(
+        appStateNotifier.loggedIn ? CoursesOldWidget() : LogInWidget(),
+        errorRoute: state.location,
+      ),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? CoursesOldWidget() : LogInWidget(),
+          builder: (context, _) => RootPageContext.wrap(
+            appStateNotifier.loggedIn ? CoursesOldWidget() : LogInWidget(),
+          ),
         ),
         FFRoute(
           name: 'Basket',
@@ -108,7 +111,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Profile',
           path: '/profile',
-          requireAuth: true,
           builder: (context, params) => ProfileWidget(),
         ),
         FFRoute(
@@ -149,7 +151,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Profile_Edit',
           path: '/profileEdit',
-          requireAuth: true,
           builder: (context, params) => ProfileEditWidget(
             initialTabIndex: params.getParam('initialTabIndex', ParamType.int),
           ),
@@ -167,6 +168,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Courses_Old',
           path: '/coursesOld',
+          requireAuth: true,
           builder: (context, params) => CoursesOldWidget(),
         ),
         FFRoute(
@@ -177,7 +179,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Modules',
           path: '/modules',
-          requireAuth: true,
           asyncParams: {
             'currentCourse': getDoc(['courses'], CoursesRecord.fromSnapshot),
           },
@@ -208,14 +209,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'HomeworkAdded',
           path: '/homeworkAdded',
-          requireAuth: true,
           asyncParams: {
             'currentChat': getDoc(['chats'], ChatsRecord.fromSnapshot),
           },
           builder: (context, params) => HomeworkAddedWidget(
             photoOnly: params.getParam('photoOnly', ParamType.bool),
             currentChat: params.getParam('currentChat', ParamType.Document),
-            courseFree: params.getParam('courseFree', ParamType.bool),
             currentTariff: params.getParam('currentTariff',
                 ParamType.DocumentReference, false, ['tariffs']),
           ),
@@ -228,7 +227,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Homework_Confirmed_Mobile',
           path: '/homeworkConfirmedMobile',
-          requireAuth: true,
           asyncParams: {
             'currentLesson':
                 getDoc(['courses', 'lessons'], LessonsRecord.fromSnapshot),
@@ -237,7 +235,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             currentLesson: params.getParam('currentLesson', ParamType.Document),
             countLesson: params.getParam('countLesson', ParamType.int),
             lessonIndx: params.getParam('lessonIndx', ParamType.int),
-            courseFree: params.getParam('courseFree', ParamType.bool),
             currentTariff: params.getParam('currentTariff',
                 ParamType.DocumentReference, false, ['tariffs']),
           ),
@@ -245,7 +242,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Lesson',
           path: '/lessonfull',
-          requireAuth: true,
           asyncParams: {
             'currentLesson':
                 getDoc(['courses', 'lessons'], LessonsRecord.fromSnapshot),
@@ -256,7 +252,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             countLessons: params.getParam('countLessons', ParamType.int),
             tariff: params.getParam(
                 'tariff', ParamType.DocumentReference, false, ['tariffs']),
-            freeCourse: params.getParam('freeCourse', ParamType.bool),
           ),
         ),
         FFRoute(
@@ -276,25 +271,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'ModulesFree',
-          path: '/modulesFree',
-          requireAuth: true,
-          asyncParams: {
-            'currentCourse': getDoc(['courses'], CoursesRecord.fromSnapshot),
-          },
-          builder: (context, params) => ModulesFreeWidget(
-            currentCourse: params.getParam('currentCourse', ParamType.Document),
-          ),
-        ),
-        FFRoute(
           name: 'Gallerry',
           path: '/gallerry',
-          requireAuth: true,
           builder: (context, params) => GallerryWidget(
             allImages:
                 params.getParam<String>('allImages', ParamType.String, true),
             currentIndex: params.getParam('currentIndex', ParamType.int),
-            courseFree: params.getParam('courseFree', ParamType.bool),
             tariff: params.getParam(
                 'tariff', ParamType.DocumentReference, false, ['tariffs']),
           ),
@@ -497,13 +479,20 @@ class FFRoute {
                   key: state.pageKey,
                   child: child,
                   transitionDuration: transitionInfo.duration,
-                  transitionsBuilder: PageTransition(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          PageTransition(
                     type: transitionInfo.transitionType,
                     duration: transitionInfo.duration,
                     reverseDuration: transitionInfo.duration,
                     alignment: transitionInfo.alignment,
                     child: child,
-                  ).transitionsBuilder,
+                  ).buildTransitions(
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ),
                 )
               : MaterialPage(key: state.pageKey, child: child);
         },

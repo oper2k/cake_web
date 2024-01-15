@@ -23,6 +23,7 @@ import 'schema/message_record.dart';
 import 'schema/tariffs_record.dart';
 import 'schema/users_from_site_record.dart';
 import 'schema/appversion_record.dart';
+import 'schema/chat_banner_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -48,6 +49,7 @@ export 'schema/message_record.dart';
 export 'schema/tariffs_record.dart';
 export 'schema/users_from_site_record.dart';
 export 'schema/appversion_record.dart';
+export 'schema/chat_banner_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -725,6 +727,43 @@ Future<List<AppversionRecord>> queryAppversionRecordOnce({
     queryCollectionOnce(
       AppversionRecord.collection,
       AppversionRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query ChatBannerRecords (as a Stream and as a Future).
+Future<int> queryChatBannerRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ChatBannerRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ChatBannerRecord>> queryChatBannerRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ChatBannerRecord.collection,
+      ChatBannerRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ChatBannerRecord>> queryChatBannerRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ChatBannerRecord.collection,
+      ChatBannerRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

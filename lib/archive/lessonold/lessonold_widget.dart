@@ -133,7 +133,7 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1.00, 0.00),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -636,12 +636,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0),
+                                                                EdgeInsets.all(
+                                                                    20.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -718,12 +714,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0),
+                                                                EdgeInsets.all(
+                                                                    20.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -800,12 +792,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0),
+                                                                EdgeInsets.all(
+                                                                    20.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -882,12 +870,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0),
+                                                                EdgeInsets.all(
+                                                                    20.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -964,12 +948,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0),
+                                                                EdgeInsets.all(
+                                                                    20.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -1046,12 +1026,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0,
-                                                                        20.0),
+                                                                EdgeInsets.all(
+                                                                    20.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -1161,8 +1137,7 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      0.00,
-                                                                      0.00),
+                                                                      0.0, 0.0),
                                                               child: Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
@@ -1219,8 +1194,7 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      0.00,
-                                                                      0.00),
+                                                                      0.0, 0.0),
                                                               child: Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
@@ -1277,8 +1251,7 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      0.00,
-                                                                      0.00),
+                                                                      0.0, 0.0),
                                                               child: Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
@@ -1335,8 +1308,7 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      0.00,
-                                                                      0.00),
+                                                                      0.0, 0.0),
                                                               child: Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
@@ -1431,8 +1403,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          0.00,
-                                                                          0.00),
+                                                                          0.0,
+                                                                          0.0),
                                                                   child: Icon(
                                                                     FFIcons
                                                                         .kplayCircle,
@@ -1668,8 +1640,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                                       child:
                                                                           Align(
                                                                         alignment: AlignmentDirectional(
-                                                                            0.00,
-                                                                            0.00),
+                                                                            0.0,
+                                                                            0.0),
                                                                         child:
                                                                             Text(
                                                                           '01',
@@ -1867,8 +1839,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                                       child:
                                                                           Align(
                                                                         alignment: AlignmentDirectional(
-                                                                            0.00,
-                                                                            0.00),
+                                                                            0.0,
+                                                                            0.0),
                                                                         child:
                                                                             Text(
                                                                           '02',
@@ -2064,8 +2036,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                                         ),
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              0.00,
-                                                                              0.00),
+                                                                              0.0,
+                                                                              0.0),
                                                                           child:
                                                                               Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -2126,8 +2098,8 @@ class _LessonoldWidgetState extends State<LessonoldWidget> {
                                                                       child:
                                                                           Align(
                                                                         alignment: AlignmentDirectional(
-                                                                            0.00,
-                                                                            0.00),
+                                                                            0.0,
+                                                                            0.0),
                                                                         child:
                                                                             Text(
                                                                           '03',

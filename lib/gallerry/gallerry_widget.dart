@@ -1,3 +1,4 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -18,13 +19,11 @@ class GallerryWidget extends StatefulWidget {
     Key? key,
     this.allImages,
     required this.currentIndex,
-    required this.courseFree,
     required this.tariff,
   }) : super(key: key);
 
   final List<String>? allImages;
   final int? currentIndex;
-  final bool? courseFree;
   final DocumentReference? tariff;
 
   @override
@@ -43,18 +42,14 @@ class _GallerryWidgetState extends State<GallerryWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (widget.courseFree == true) {
-        return;
+      if (loggedIn) {
+        if (!(currentUserDocument?.rlBuyTariffs?.toList() ?? [])
+            .contains(widget.tariff)) {
+          context.pushNamed('Courses_Old');
+        }
+      } else {
+        context.pushNamed('Log_In');
       }
-
-      if ((currentUserDocument?.rlBuyTariffs?.toList() ?? [])
-          .contains(widget.tariff)) {
-        return;
-      }
-
-      context.pushNamed('Courses_Old');
-
-      return;
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -88,7 +83,7 @@ class _GallerryWidgetState extends State<GallerryWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
         body: Align(
-          alignment: AlignmentDirectional(0.00, 0.00),
+          alignment: AlignmentDirectional(0.0, 0.0),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
             child: Container(
@@ -104,7 +99,7 @@ class _GallerryWidgetState extends State<GallerryWidget> {
                 child: Stack(
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(0.00, 0.00),
+                      alignment: AlignmentDirectional(0.0, 0.0),
                       child: Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 80.0),
@@ -144,7 +139,7 @@ class _GallerryWidgetState extends State<GallerryWidget> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(0.00, 1.00),
+                      alignment: AlignmentDirectional(0.0, 1.0),
                       child: Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 94.0),
@@ -285,7 +280,7 @@ class _GallerryWidgetState extends State<GallerryWidget> {
                                             (_model.currentImageIndex != 0)))
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(-1.00, 0.00),
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: InkWell(
                                           splashColor: Colors.transparent,
                                           focusColor: Colors.transparent,
@@ -347,7 +342,7 @@ class _GallerryWidgetState extends State<GallerryWidget> {
                                                     .toString())))
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(1.00, 0.00),
+                                            AlignmentDirectional(1.0, 0.0),
                                         child: InkWell(
                                           splashColor: Colors.transparent,
                                           focusColor: Colors.transparent,
@@ -404,7 +399,7 @@ class _GallerryWidgetState extends State<GallerryWidget> {
                       phone: false,
                     ))
                       Align(
-                        alignment: AlignmentDirectional(0.00, 0.00),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -414,7 +409,7 @@ class _GallerryWidgetState extends State<GallerryWidget> {
                                 ((_model.currentImageIndex != null) &&
                                     (_model.currentImageIndex != 0)))
                               Align(
-                                alignment: AlignmentDirectional(-1.00, 0.00),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -467,7 +462,7 @@ class _GallerryWidgetState extends State<GallerryWidget> {
                                             .toString() !=
                                         widget.allImages?.length.toString())))
                               Align(
-                                alignment: AlignmentDirectional(1.00, 0.00),
+                                alignment: AlignmentDirectional(1.0, 0.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,

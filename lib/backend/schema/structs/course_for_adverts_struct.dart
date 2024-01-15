@@ -82,10 +82,9 @@ class CourseForAdvertsStruct extends FFFirebaseStruct {
             data['button_courseRef_course'] as DocumentReference?,
       );
 
-  static CourseForAdvertsStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic>
-          ? CourseForAdvertsStruct.fromMap(data)
-          : null;
+  static CourseForAdvertsStruct? maybeFromMap(dynamic data) => data is Map
+      ? CourseForAdvertsStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'name': _name,

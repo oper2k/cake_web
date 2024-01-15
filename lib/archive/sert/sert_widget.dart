@@ -53,7 +53,7 @@ class _SertWidgetState extends State<SertWidget> {
         phone: false,
       ),
       child: Align(
-        alignment: AlignmentDirectional(0.00, 0.00),
+        alignment: AlignmentDirectional(0.0, 0.0),
         child: Container(
           width: 592.0,
           decoration: BoxDecoration(
@@ -61,7 +61,7 @@ class _SertWidgetState extends State<SertWidget> {
             borderRadius: BorderRadius.circular(24.0),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
+            padding: EdgeInsets.all(32.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

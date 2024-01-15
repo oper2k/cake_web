@@ -27,5 +27,4 @@ export '/courses/homework_confirmed_mobile/homework_confirmed_mobile_widget.dart
     show HomeworkConfirmedMobileWidget;
 export '/courses/lesson/lesson_widget.dart' show LessonWidget;
 export '/archive/homework/homework_widget.dart' show HomeworkWidget;
-export '/courses/modules_free/modules_free_widget.dart' show ModulesFreeWidget;
 export '/gallerry/gallerry_widget.dart' show GallerryWidget;

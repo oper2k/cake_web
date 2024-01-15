@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/components/app_bar_widget.dart';
 import '/components/button_widget.dart';
 import '/courses/homework_add_desktop/homework_add_desktop_widget.dart';
@@ -8,7 +9,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/actions/actions.dart' as action_blocks;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -97,7 +97,7 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Align(
-          alignment: AlignmentDirectional(0.00, -1.00),
+          alignment: AlignmentDirectional(0.0, -1.0),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
             child: StreamBuilder<UsersRecord>(
@@ -187,8 +187,8 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Align(
-                                            alignment: AlignmentDirectional(
-                                                -1.00, 0.00),
+                                            alignment:
+                                                AlignmentDirectional(-1.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
                                               crossAxisAlignment:
@@ -295,8 +295,6 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                 rowChatsRecord,
                                                             currentTariff:
                                                                 widget.tariff,
-                                                            freeCourse: widget
-                                                                .courseFree,
                                                           );
                                                         },
                                                         child: wrapWithModel(
@@ -352,31 +350,25 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                         context)
                                                                     .width >=
                                                                 kBreakpointLarge) {
-                                                              await showAlignedDialog(
+                                                              await showDialog(
                                                                 barrierDismissible:
                                                                     false,
                                                                 context:
                                                                     context,
-                                                                isGlobal: true,
-                                                                avoidOverflow:
-                                                                    false,
-                                                                targetAnchor:
-                                                                    AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0)
-                                                                        .resolve(
-                                                                            Directionality.of(context)),
-                                                                followerAnchor:
-                                                                    AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0)
-                                                                        .resolve(
-                                                                            Directionality.of(context)),
                                                                 builder:
                                                                     (dialogContext) {
-                                                                  return Material(
-                                                                    color: Colors
-                                                                        .transparent,
+                                                                  return Dialog(
+                                                                    insetPadding:
+                                                                        EdgeInsets
+                                                                            .zero,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    alignment: AlignmentDirectional(
+                                                                            0.0,
+                                                                            0.0)
+                                                                        .resolve(
+                                                                            Directionality.of(context)),
                                                                     child: WebViewAware(
                                                                         child: GestureDetector(
                                                                       onTap: () => _model
@@ -425,13 +417,6 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                         .tariff,
                                                                     ParamType
                                                                         .DocumentReference,
-                                                                  ),
-                                                                  'courseFree':
-                                                                      serializeParam(
-                                                                    widget
-                                                                        .courseFree,
-                                                                    ParamType
-                                                                        .bool,
                                                                   ),
                                                                 }.withoutNulls,
                                                                 extra: <String,
@@ -500,31 +485,25 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                         context)
                                                                     .width >=
                                                                 kBreakpointLarge) {
-                                                              await showAlignedDialog(
+                                                              await showDialog(
                                                                 barrierDismissible:
                                                                     false,
                                                                 context:
                                                                     context,
-                                                                isGlobal: true,
-                                                                avoidOverflow:
-                                                                    false,
-                                                                targetAnchor:
-                                                                    AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0)
-                                                                        .resolve(
-                                                                            Directionality.of(context)),
-                                                                followerAnchor:
-                                                                    AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0)
-                                                                        .resolve(
-                                                                            Directionality.of(context)),
                                                                 builder:
                                                                     (dialogContext) {
-                                                                  return Material(
-                                                                    color: Colors
-                                                                        .transparent,
+                                                                  return Dialog(
+                                                                    insetPadding:
+                                                                        EdgeInsets
+                                                                            .zero,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    alignment: AlignmentDirectional(
+                                                                            0.0,
+                                                                            0.0)
+                                                                        .resolve(
+                                                                            Directionality.of(context)),
                                                                     child: WebViewAware(
                                                                         child: GestureDetector(
                                                                       onTap: () => _model
@@ -573,13 +552,6 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                         .tariff,
                                                                     ParamType
                                                                         .DocumentReference,
-                                                                  ),
-                                                                  'courseFree':
-                                                                      serializeParam(
-                                                                    widget
-                                                                        .courseFree,
-                                                                    ParamType
-                                                                        .bool,
                                                                   ),
                                                                 }.withoutNulls,
                                                                 extra: <String,
@@ -767,8 +739,6 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                             rowChatsRecord,
                                                                         currentTariff:
                                                                             widget.tariff,
-                                                                        freeCourse:
-                                                                            widget.courseFree,
                                                                       );
                                                                     },
                                                                     child:
@@ -821,23 +791,17 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                           () async {
                                                                         if (MediaQuery.sizeOf(context).width >=
                                                                             kBreakpointLarge) {
-                                                                          await showAlignedDialog(
+                                                                          await showDialog(
                                                                             barrierDismissible:
                                                                                 false,
                                                                             context:
                                                                                 context,
-                                                                            isGlobal:
-                                                                                true,
-                                                                            avoidOverflow:
-                                                                                false,
-                                                                            targetAnchor:
-                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                            followerAnchor:
-                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                             builder:
                                                                                 (dialogContext) {
-                                                                              return Material(
-                                                                                color: Colors.transparent,
+                                                                              return Dialog(
+                                                                                insetPadding: EdgeInsets.zero,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                 child: WebViewAware(
                                                                                     child: GestureDetector(
                                                                                   onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -867,10 +831,6 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                               'currentTariff': serializeParam(
                                                                                 widget.tariff,
                                                                                 ParamType.DocumentReference,
-                                                                              ),
-                                                                              'courseFree': serializeParam(
-                                                                                widget.courseFree,
-                                                                                ParamType.bool,
                                                                               ),
                                                                             }.withoutNulls,
                                                                             extra: <String,
@@ -930,23 +890,17 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                           () async {
                                                                         if (MediaQuery.sizeOf(context).width >=
                                                                             kBreakpointLarge) {
-                                                                          await showAlignedDialog(
+                                                                          await showDialog(
                                                                             barrierDismissible:
                                                                                 false,
                                                                             context:
                                                                                 context,
-                                                                            isGlobal:
-                                                                                true,
-                                                                            avoidOverflow:
-                                                                                false,
-                                                                            targetAnchor:
-                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                            followerAnchor:
-                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                             builder:
                                                                                 (dialogContext) {
-                                                                              return Material(
-                                                                                color: Colors.transparent,
+                                                                              return Dialog(
+                                                                                insetPadding: EdgeInsets.zero,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                 child: WebViewAware(
                                                                                     child: GestureDetector(
                                                                                   onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -976,10 +930,6 @@ class _HomeworkWidgetState extends State<HomeworkWidget> {
                                                                               'currentTariff': serializeParam(
                                                                                 widget.tariff,
                                                                                 ParamType.DocumentReference,
-                                                                              ),
-                                                                              'courseFree': serializeParam(
-                                                                                widget.courseFree,
-                                                                                ParamType.bool,
                                                                               ),
                                                                             }.withoutNulls,
                                                                             extra: <String,

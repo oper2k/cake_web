@@ -50,7 +50,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
         phone: false,
       ),
       child: Align(
-        alignment: AlignmentDirectional(0.00, 0.00),
+        alignment: AlignmentDirectional(0.0, 0.0),
         child: Container(
           width: 592.0,
           decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
             borderRadius: BorderRadius.circular(24.0),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
+            padding: EdgeInsets.all(32.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -98,7 +98,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                   ],
                 ),
                 Align(
-                  alignment: AlignmentDirectional(-1.00, 0.00),
+                  alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                     child: Text(
@@ -114,7 +114,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(-1.00, 0.00),
+                  alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                     child: Text(
@@ -130,7 +130,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(-1.00, 0.00),
+                  alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
@@ -152,8 +152,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
+                      padding: EdgeInsets.all(20.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,8 +213,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
+                      padding: EdgeInsets.all(20.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -276,8 +274,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
+                      padding: EdgeInsets.all(20.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -327,7 +324,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(-1.00, 0.00),
+                  alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),

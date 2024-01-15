@@ -1,5 +1,7 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/components/app_bar_widget.dart';
 import '/components/button_widget.dart';
 import '/courses/homework_add_desktop/homework_add_desktop_widget.dart';
@@ -13,7 +15,6 @@ import '/flutter_flow/flutter_flow_web_view.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -33,14 +34,12 @@ class LessonWidget extends StatefulWidget {
     this.lessonIndex,
     this.countLessons,
     this.tariff,
-    required this.freeCourse,
   }) : super(key: key);
 
   final LessonsRecord? currentLesson;
   final int? lessonIndex;
   final int? countLessons;
   final DocumentReference? tariff;
-  final bool? freeCourse;
 
   @override
   _LessonWidgetState createState() => _LessonWidgetState();
@@ -58,21 +57,23 @@ class _LessonWidgetState extends State<LessonWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().rulesOpen = false;
-      });
-      if (widget.freeCourse == true) {
+      if (loggedIn) {
+        setState(() {
+          FFAppState().rulesOpen = false;
+        });
+        if ((currentUserDocument?.rlBuyTariffs?.toList() ?? [])
+            .contains(widget.tariff)) {
+          return;
+        }
+
+        context.pushNamed('Courses_Old');
+
+        return;
+      } else {
+        context.pushNamed('Log_In');
+
         return;
       }
-
-      if ((currentUserDocument?.rlBuyTariffs?.toList() ?? [])
-          .contains(widget.tariff)) {
-        return;
-      }
-
-      context.pushNamed('Courses_Old');
-
-      return;
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -106,7 +107,7 @@ class _LessonWidgetState extends State<LessonWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Align(
-          alignment: AlignmentDirectional(0.00, -1.00),
+          alignment: AlignmentDirectional(0.0, -1.0),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
             child: FutureBuilder<List<LessonsContentRecord>>(
@@ -219,7 +220,7 @@ class _LessonWidgetState extends State<LessonWidget> {
                                       ),
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(-1.00, 0.00),
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -340,9 +341,10 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                           .transparent,
                                                                   onTap:
                                                                       () async {
-                                                                    if ((widget.currentLesson!.showRules &&
-                                                                            (FFAppState().agreeRules ==
-                                                                                1)) ||
+                                                                    if (((widget.currentLesson?.showRules ==
+                                                                                true) &&
+                                                                            columnUsersRecord.rlConfirmedRulesLessons.contains(widget
+                                                                                .currentLesson?.reference)) ||
                                                                         (widget.currentLesson?.showRules ==
                                                                             false)) {
                                                                       await action_blocks
@@ -382,11 +384,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                               widget.lessonIndex,
                                                                               ParamType.int,
                                                                             ),
-                                                                            'courseFree':
-                                                                                serializeParam(
-                                                                              widget.freeCourse,
-                                                                              ParamType.bool,
-                                                                            ),
                                                                             'currentTariff':
                                                                                 serializeParam(
                                                                               widget.tariff,
@@ -413,23 +410,17 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                           FFAppState().rulesOpen =
                                                                               true;
                                                                         });
-                                                                        await showAlignedDialog(
+                                                                        await showDialog(
                                                                           barrierDismissible:
                                                                               false,
                                                                           context:
                                                                               context,
-                                                                          isGlobal:
-                                                                              true,
-                                                                          avoidOverflow:
-                                                                              false,
-                                                                          targetAnchor:
-                                                                              AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                          followerAnchor:
-                                                                              AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                           builder:
                                                                               (dialogContext) {
-                                                                            return Material(
-                                                                              color: Colors.transparent,
+                                                                            return Dialog(
+                                                                              insetPadding: EdgeInsets.zero,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                               child: WebViewAware(
                                                                                   child: GestureDetector(
                                                                                 onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -437,7 +428,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                   lesson: widget.currentLesson!,
                                                                                   countLes: widget.countLessons!,
                                                                                   index: widget.lessonIndex!,
-                                                                                  courseFree: widget.freeCourse!,
                                                                                 ),
                                                                               )),
                                                                             );
@@ -537,9 +527,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                     currentTariff:
                                                                         widget
                                                                             .tariff,
-                                                                    freeCourse:
-                                                                        widget
-                                                                            .freeCourse,
                                                                   );
                                                                 },
                                                                 child:
@@ -594,24 +581,20 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                     if (MediaQuery.sizeOf(context)
                                                                             .width >=
                                                                         kBreakpointLarge) {
-                                                                      await showAlignedDialog(
+                                                                      await showDialog(
                                                                         barrierDismissible:
                                                                             false,
                                                                         context:
                                                                             context,
-                                                                        isGlobal:
-                                                                            true,
-                                                                        avoidOverflow:
-                                                                            false,
-                                                                        targetAnchor:
-                                                                            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                        followerAnchor:
-                                                                            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                         builder:
                                                                             (dialogContext) {
-                                                                          return Material(
-                                                                            color:
+                                                                          return Dialog(
+                                                                            insetPadding:
+                                                                                EdgeInsets.zero,
+                                                                            backgroundColor:
                                                                                 Colors.transparent,
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                             child: WebViewAware(
                                                                                 child: GestureDetector(
                                                                               onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -645,11 +628,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                               serializeParam(
                                                                             widget.tariff,
                                                                             ParamType.DocumentReference,
-                                                                          ),
-                                                                          'courseFree':
-                                                                              serializeParam(
-                                                                            widget.freeCourse,
-                                                                            ParamType.bool,
                                                                           ),
                                                                         }.withoutNulls,
                                                                         extra: <String,
@@ -720,24 +698,20 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                     if (MediaQuery.sizeOf(context)
                                                                             .width >=
                                                                         kBreakpointLarge) {
-                                                                      await showAlignedDialog(
+                                                                      await showDialog(
                                                                         barrierDismissible:
                                                                             false,
                                                                         context:
                                                                             context,
-                                                                        isGlobal:
-                                                                            true,
-                                                                        avoidOverflow:
-                                                                            false,
-                                                                        targetAnchor:
-                                                                            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                        followerAnchor:
-                                                                            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                         builder:
                                                                             (dialogContext) {
-                                                                          return Material(
-                                                                            color:
+                                                                          return Dialog(
+                                                                            insetPadding:
+                                                                                EdgeInsets.zero,
+                                                                            backgroundColor:
                                                                                 Colors.transparent,
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                             child: WebViewAware(
                                                                                 child: GestureDetector(
                                                                               onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -772,11 +746,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                             widget.tariff,
                                                                             ParamType.DocumentReference,
                                                                           ),
-                                                                          'courseFree':
-                                                                              serializeParam(
-                                                                            widget.freeCourse,
-                                                                            ParamType.bool,
-                                                                          ),
                                                                         }.withoutNulls,
                                                                         extra: <String,
                                                                             dynamic>{
@@ -805,15 +774,15 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                     child:
                                                                         ButtonWidget(
                                                                       text:
-                                                                          'Задание cдано ✅',
+                                                                          'Посмотреть обратную связь',
                                                                       btnColor:
                                                                           FlutterFlowTheme.of(context)
-                                                                              .secondaryBackground,
+                                                                              .green2009F4E,
                                                                       txtColor:
                                                                           FlutterFlowTheme.of(context)
-                                                                              .primaryText,
+                                                                              .primaryBackground,
                                                                       btnWidth:
-                                                                          215,
+                                                                          310,
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1277,7 +1246,7 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                         size: 18.0,
                                                                                       ),
                                                                                       Align(
-                                                                                        alignment: AlignmentDirectional(0.00, 0.00),
+                                                                                        alignment: AlignmentDirectional(0.0, 0.0),
                                                                                         child: Padding(
                                                                                           padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                                                                                           child: Text(
@@ -1334,7 +1303,7 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                         size: 18.0,
                                                                                       ),
                                                                                       Align(
-                                                                                        alignment: AlignmentDirectional(0.00, 0.00),
+                                                                                        alignment: AlignmentDirectional(0.0, 0.0),
                                                                                         child: Padding(
                                                                                           padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                                                                                           child: Text(
@@ -1432,10 +1401,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                               allImagesInLessonIndex,
                                                                                               ParamType.int,
                                                                                             ),
-                                                                                            'courseFree': serializeParam(
-                                                                                              widget.freeCourse,
-                                                                                              ParamType.bool,
-                                                                                            ),
                                                                                             'tariff': serializeParam(
                                                                                               widget.tariff,
                                                                                               ParamType.DocumentReference,
@@ -1480,7 +1445,7 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                 false,
                                                                           ))
                                                                             Align(
-                                                                              alignment: AlignmentDirectional(1.00, 0.00),
+                                                                              alignment: AlignmentDirectional(1.0, 0.0),
                                                                               child: Container(
                                                                                 width: 100.0,
                                                                                 height: 124.0,
@@ -2052,7 +2017,7 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                     hoverColor: Colors.transparent,
                                                                                     highlightColor: Colors.transparent,
                                                                                     onTap: () async {
-                                                                                      if ((widget.currentLesson!.showRules && (FFAppState().agreeRules == 1)) || (widget.currentLesson?.showRules == false)) {
+                                                                                      if ((widget.currentLesson!.showRules && columnUsersRecord.rlConfirmedRulesLessons.contains(widget.currentLesson?.reference)) || (widget.currentLesson?.showRules == false)) {
                                                                                         await action_blocks.lessonCompleted(
                                                                                           context,
                                                                                           currentLesson: widget.currentLesson,
@@ -2082,10 +2047,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                                 widget.tariff,
                                                                                                 ParamType.DocumentReference,
                                                                                               ),
-                                                                                              'courseFree': serializeParam(
-                                                                                                widget.freeCourse,
-                                                                                                ParamType.bool,
-                                                                                              ),
                                                                                             }.withoutNulls,
                                                                                             extra: <String, dynamic>{
                                                                                               'currentLesson': widget.currentLesson,
@@ -2102,16 +2063,14 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                           FFAppState().update(() {
                                                                                             FFAppState().rulesOpen = true;
                                                                                           });
-                                                                                          await showAlignedDialog(
+                                                                                          await showDialog(
                                                                                             barrierDismissible: false,
                                                                                             context: context,
-                                                                                            isGlobal: true,
-                                                                                            avoidOverflow: false,
-                                                                                            targetAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                                            followerAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                             builder: (dialogContext) {
-                                                                                              return Material(
-                                                                                                color: Colors.transparent,
+                                                                                              return Dialog(
+                                                                                                insetPadding: EdgeInsets.zero,
+                                                                                                backgroundColor: Colors.transparent,
+                                                                                                alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                                 child: WebViewAware(
                                                                                                     child: GestureDetector(
                                                                                                   onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -2119,7 +2078,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                                     lesson: widget.currentLesson!,
                                                                                                     countLes: widget.countLessons!,
                                                                                                     index: widget.lessonIndex!,
-                                                                                                    courseFree: widget.freeCourse!,
                                                                                                   ),
                                                                                                 )),
                                                                                               );
@@ -2174,7 +2132,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                       indexLesson: widget.lessonIndex,
                                                                                       currentChat: columnChatsRecord,
                                                                                       currentTariff: widget.tariff,
-                                                                                      freeCourse: widget.freeCourse,
                                                                                     );
                                                                                   },
                                                                                   child: wrapWithModel(
@@ -2196,16 +2153,14 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                     highlightColor: Colors.transparent,
                                                                                     onTap: () async {
                                                                                       if (MediaQuery.sizeOf(context).width >= kBreakpointLarge) {
-                                                                                        await showAlignedDialog(
+                                                                                        await showDialog(
                                                                                           barrierDismissible: false,
                                                                                           context: context,
-                                                                                          isGlobal: true,
-                                                                                          avoidOverflow: false,
-                                                                                          targetAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                                          followerAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                           builder: (dialogContext) {
-                                                                                            return Material(
-                                                                                              color: Colors.transparent,
+                                                                                            return Dialog(
+                                                                                              insetPadding: EdgeInsets.zero,
+                                                                                              backgroundColor: Colors.transparent,
+                                                                                              alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                               child: WebViewAware(
                                                                                                   child: GestureDetector(
                                                                                                 onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -2232,10 +2187,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                             'currentTariff': serializeParam(
                                                                                               widget.tariff,
                                                                                               ParamType.DocumentReference,
-                                                                                            ),
-                                                                                            'courseFree': serializeParam(
-                                                                                              widget.freeCourse,
-                                                                                              ParamType.bool,
                                                                                             ),
                                                                                           }.withoutNulls,
                                                                                           extra: <String, dynamic>{
@@ -2269,16 +2220,14 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                     highlightColor: Colors.transparent,
                                                                                     onTap: () async {
                                                                                       if (MediaQuery.sizeOf(context).width >= kBreakpointLarge) {
-                                                                                        await showAlignedDialog(
+                                                                                        await showDialog(
                                                                                           barrierDismissible: false,
                                                                                           context: context,
-                                                                                          isGlobal: true,
-                                                                                          avoidOverflow: false,
-                                                                                          targetAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                                          followerAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                           builder: (dialogContext) {
-                                                                                            return Material(
-                                                                                              color: Colors.transparent,
+                                                                                            return Dialog(
+                                                                                              insetPadding: EdgeInsets.zero,
+                                                                                              backgroundColor: Colors.transparent,
+                                                                                              alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                               child: WebViewAware(
                                                                                                   child: GestureDetector(
                                                                                                 onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -2306,10 +2255,6 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                               widget.tariff,
                                                                                               ParamType.DocumentReference,
                                                                                             ),
-                                                                                            'courseFree': serializeParam(
-                                                                                              widget.freeCourse,
-                                                                                              ParamType.bool,
-                                                                                            ),
                                                                                           }.withoutNulls,
                                                                                           extra: <String, dynamic>{
                                                                                             'currentChat': columnChatsRecord,
@@ -2326,9 +2271,9 @@ class _LessonWidgetState extends State<LessonWidget> {
                                                                                       model: _model.buttonModel10,
                                                                                       updateCallback: () => setState(() {}),
                                                                                       child: ButtonWidget(
-                                                                                        text: 'Задание cдано ✅',
-                                                                                        btnColor: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                        txtColor: FlutterFlowTheme.of(context).primaryText,
+                                                                                        text: 'Посмотреть обратную связь',
+                                                                                        btnColor: FlutterFlowTheme.of(context).green2009F4E,
+                                                                                        txtColor: FlutterFlowTheme.of(context).primaryBackground,
                                                                                       ),
                                                                                     ),
                                                                                   ),

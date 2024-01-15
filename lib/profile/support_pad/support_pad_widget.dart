@@ -63,7 +63,7 @@ class _SupportPadWidgetState extends State<SupportPadWidget>
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.00, 0.00),
+      alignment: AlignmentDirectional(0.0, 0.0),
       child: Container(
         width: 384.0,
         height: 452.0,
@@ -77,12 +77,12 @@ class _SupportPadWidgetState extends State<SupportPadWidget>
         child: Stack(
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
+              padding: EdgeInsets.all(24.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(-1.00, 0.00),
+                    alignment: AlignmentDirectional(-1.0, 0.0),
                     child: Text(
                       'Контактная информация\nдля связи с техподдержкой:',
                       style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -117,7 +117,7 @@ class _SupportPadWidgetState extends State<SupportPadWidget>
                               shape: BoxShape.circle,
                             ),
                             child: Align(
-                              alignment: AlignmentDirectional(0.00, 0.00),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Icon(
                                 FFIcons.ktelegram,
                                 color:
@@ -193,7 +193,7 @@ class _SupportPadWidgetState extends State<SupportPadWidget>
                               shape: BoxShape.circle,
                             ),
                             child: Align(
-                              alignment: AlignmentDirectional(0.00, 0.00),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Icon(
                                 FFIcons.kwattsUp,
                                 color:
@@ -268,7 +268,7 @@ class _SupportPadWidgetState extends State<SupportPadWidget>
                               shape: BoxShape.circle,
                             ),
                             child: Align(
-                              alignment: AlignmentDirectional(0.00, 0.00),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Icon(
                                 FFIcons.kvk,
                                 color:
@@ -343,7 +343,7 @@ class _SupportPadWidgetState extends State<SupportPadWidget>
                               shape: BoxShape.circle,
                             ),
                             child: Align(
-                              alignment: AlignmentDirectional(0.00, 0.00),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Icon(
                                 FFIcons.kmail,
                                 color:
@@ -399,7 +399,7 @@ class _SupportPadWidgetState extends State<SupportPadWidget>
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(1.00, -1.00),
+              alignment: AlignmentDirectional(1.0, -1.0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 16.0, 0.0),
                 child: InkWell(

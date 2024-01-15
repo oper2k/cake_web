@@ -118,6 +118,12 @@ class UsersRecord extends FirestoreRecord {
   List<DocumentReference> get rlStartModule => _rlStartModule ?? const [];
   bool hasRlStartModule() => _rlStartModule != null;
 
+  // "rl_confirmed_rules_lessons" field.
+  List<DocumentReference>? _rlConfirmedRulesLessons;
+  List<DocumentReference> get rlConfirmedRulesLessons =>
+      _rlConfirmedRulesLessons ?? const [];
+  bool hasRlConfirmedRulesLessons() => _rlConfirmedRulesLessons != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -140,6 +146,8 @@ class UsersRecord extends FirestoreRecord {
     _rlFinishedLessons = getDataList(snapshotData['rl_finished_lessons']);
     _rlFinishedModule = getDataList(snapshotData['rl_finished_module']);
     _rlStartModule = getDataList(snapshotData['rl_start_module']);
+    _rlConfirmedRulesLessons =
+        getDataList(snapshotData['rl_confirmed_rules_lessons']);
   }
 
   static CollectionReference get collection =>
@@ -239,7 +247,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         listEquality.equals(e1?.rlBonusLessons, e2?.rlBonusLessons) &&
         listEquality.equals(e1?.rlFinishedLessons, e2?.rlFinishedLessons) &&
         listEquality.equals(e1?.rlFinishedModule, e2?.rlFinishedModule) &&
-        listEquality.equals(e1?.rlStartModule, e2?.rlStartModule);
+        listEquality.equals(e1?.rlStartModule, e2?.rlStartModule) &&
+        listEquality.equals(
+            e1?.rlConfirmedRulesLessons, e2?.rlConfirmedRulesLessons);
   }
 
   @override
@@ -263,7 +273,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.rlBonusLessons,
         e?.rlFinishedLessons,
         e?.rlFinishedModule,
-        e?.rlStartModule
+        e?.rlStartModule,
+        e?.rlConfirmedRulesLessons
       ]);
 
   @override

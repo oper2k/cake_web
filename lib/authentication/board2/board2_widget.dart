@@ -110,7 +110,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                   ),
                   Flexible(
                     child: Align(
-                      alignment: AlignmentDirectional(1.00, 0.00),
+                      alignment: AlignmentDirectional(1.0, 0.0),
                       child: Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(6.0, 0.0, 0.0, 0.0),
@@ -155,7 +155,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                 decoration: BoxDecoration(),
               ),
             Align(
-              alignment: AlignmentDirectional(-1.00, 0.00),
+              alignment: AlignmentDirectional(-1.0, 0.0),
               child: Container(
                 width: 384.0,
                 decoration: BoxDecoration(),
@@ -163,7 +163,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(-1.00, 0.00),
+                      alignment: AlignmentDirectional(-1.0, 0.0),
                       child: AutoSizeText(
                         'Заполните\nданные о себе',
                         maxLines: 2,
@@ -178,7 +178,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(-1.00, 0.00),
+                      alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
@@ -282,8 +282,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                               child: Stack(
                                 children: [
                                   Align(
-                                    alignment:
-                                        AlignmentDirectional(-1.00, 1.00),
+                                    alignment: AlignmentDirectional(-1.0, 1.0),
                                     child: Container(
                                       width: 132.0,
                                       height: 132.0,
@@ -304,7 +303,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                                       _model.uploadedFileUrl != '')
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(-1.00, 1.00),
+                                          AlignmentDirectional(-1.0, 1.0),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(24.0),
@@ -317,8 +316,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                                       ),
                                     ),
                                   Align(
-                                    alignment:
-                                        AlignmentDirectional(1.00, -1.00),
+                                    alignment: AlignmentDirectional(1.0, -1.0),
                                     child: Stack(
                                       alignment: AlignmentDirectional(0.0, 0.0),
                                       children: [
@@ -392,6 +390,41 @@ class _Board2WidgetState extends State<Board2Widget> {
                             initialDate: getCurrentTimestamp,
                             firstDate: DateTime(1900),
                             lastDate: getCurrentTimestamp,
+                            builder: (context, child) {
+                              return wrapInMaterialDatePickerTheme(
+                                context,
+                                child!,
+                                headerBackgroundColor: Color(0xE5000000),
+                                headerForegroundColor:
+                                    FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                headerTextStyle: FlutterFlowTheme.of(context)
+                                    .headlineLarge
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .headlineLargeFamily,
+                                      fontSize: 32.0,
+                                      fontWeight: FontWeight.w600,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .headlineLargeFamily),
+                                    ),
+                                pickerBackgroundColor:
+                                    FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                pickerForegroundColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                selectedDateTimeBackgroundColor:
+                                    Color(0xE5000000),
+                                selectedDateTimeForegroundColor:
+                                    FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                actionButtonForegroundColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                iconSize: 24.0,
+                              );
+                            },
                           );
 
                           if (_datePickedDate != null) {
@@ -423,8 +456,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                               builder: (context) {
                                 if (_model.datePicked != null) {
                                   return Align(
-                                    alignment:
-                                        AlignmentDirectional(-1.00, 0.00),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: Text(
                                       dateTimeFormat(
                                         'd/M/y',
@@ -438,8 +470,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                                   );
                                 } else {
                                   return Align(
-                                    alignment:
-                                        AlignmentDirectional(-1.00, 0.00),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: Text(
                                       'Дата рождения',
                                       style: FlutterFlowTheme.of(context)
@@ -472,7 +503,7 @@ class _Board2WidgetState extends State<Board2Widget> {
                       desktop: false,
                     ))
                       Align(
-                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 38.0, 0.0, 0.0),

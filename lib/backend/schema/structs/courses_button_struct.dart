@@ -8,12 +8,14 @@ import '/backend/schema/util/schema_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
-class AudioFileStruct extends FFFirebaseStruct {
-  AudioFileStruct({
+class CoursesButtonStruct extends FFFirebaseStruct {
+  CoursesButtonStruct({
     String? name,
+    bool? withLink,
     String? link,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _name = name,
+        _withLink = withLink,
         _link = link,
         super(firestoreUtilData);
 
@@ -23,23 +25,32 @@ class AudioFileStruct extends FFFirebaseStruct {
   set name(String? val) => _name = val;
   bool hasName() => _name != null;
 
+  // "withLink" field.
+  bool? _withLink;
+  bool get withLink => _withLink ?? false;
+  set withLink(bool? val) => _withLink = val;
+  bool hasWithLink() => _withLink != null;
+
   // "link" field.
   String? _link;
   String get link => _link ?? '';
   set link(String? val) => _link = val;
   bool hasLink() => _link != null;
 
-  static AudioFileStruct fromMap(Map<String, dynamic> data) => AudioFileStruct(
+  static CoursesButtonStruct fromMap(Map<String, dynamic> data) =>
+      CoursesButtonStruct(
         name: data['name'] as String?,
+        withLink: data['withLink'] as bool?,
         link: data['link'] as String?,
       );
 
-  static AudioFileStruct? maybeFromMap(dynamic data) => data is Map
-      ? AudioFileStruct.fromMap(data.cast<String, dynamic>())
+  static CoursesButtonStruct? maybeFromMap(dynamic data) => data is Map
+      ? CoursesButtonStruct.fromMap(data.cast<String, dynamic>())
       : null;
 
   Map<String, dynamic> toMap() => {
         'name': _name,
+        'withLink': _withLink,
         'link': _link,
       }.withoutNulls;
 
@@ -49,17 +60,26 @@ class AudioFileStruct extends FFFirebaseStruct {
           _name,
           ParamType.String,
         ),
+        'withLink': serializeParam(
+          _withLink,
+          ParamType.bool,
+        ),
         'link': serializeParam(
           _link,
           ParamType.String,
         ),
       }.withoutNulls;
 
-  static AudioFileStruct fromSerializableMap(Map<String, dynamic> data) =>
-      AudioFileStruct(
+  static CoursesButtonStruct fromSerializableMap(Map<String, dynamic> data) =>
+      CoursesButtonStruct(
         name: deserializeParam(
           data['name'],
           ParamType.String,
+          false,
+        ),
+        withLink: deserializeParam(
+          data['withLink'],
+          ParamType.bool,
           false,
         ),
         link: deserializeParam(
@@ -70,27 +90,32 @@ class AudioFileStruct extends FFFirebaseStruct {
       );
 
   @override
-  String toString() => 'AudioFileStruct(${toMap()})';
+  String toString() => 'CoursesButtonStruct(${toMap()})';
 
   @override
   bool operator ==(Object other) {
-    return other is AudioFileStruct && name == other.name && link == other.link;
+    return other is CoursesButtonStruct &&
+        name == other.name &&
+        withLink == other.withLink &&
+        link == other.link;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([name, link]);
+  int get hashCode => const ListEquality().hash([name, withLink, link]);
 }
 
-AudioFileStruct createAudioFileStruct({
+CoursesButtonStruct createCoursesButtonStruct({
   String? name,
+  bool? withLink,
   String? link,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
 }) =>
-    AudioFileStruct(
+    CoursesButtonStruct(
       name: name,
+      withLink: withLink,
       link: link,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
@@ -100,61 +125,66 @@ AudioFileStruct createAudioFileStruct({
       ),
     );
 
-AudioFileStruct? updateAudioFileStruct(
-  AudioFileStruct? audioFile, {
+CoursesButtonStruct? updateCoursesButtonStruct(
+  CoursesButtonStruct? coursesButton, {
   bool clearUnsetFields = true,
   bool create = false,
 }) =>
-    audioFile
+    coursesButton
       ?..firestoreUtilData = FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
       );
 
-void addAudioFileStructData(
+void addCoursesButtonStructData(
   Map<String, dynamic> firestoreData,
-  AudioFileStruct? audioFile,
+  CoursesButtonStruct? coursesButton,
   String fieldName, [
   bool forFieldValue = false,
 ]) {
   firestoreData.remove(fieldName);
-  if (audioFile == null) {
+  if (coursesButton == null) {
     return;
   }
-  if (audioFile.firestoreUtilData.delete) {
+  if (coursesButton.firestoreUtilData.delete) {
     firestoreData[fieldName] = FieldValue.delete();
     return;
   }
   final clearFields =
-      !forFieldValue && audioFile.firestoreUtilData.clearUnsetFields;
+      !forFieldValue && coursesButton.firestoreUtilData.clearUnsetFields;
   if (clearFields) {
     firestoreData[fieldName] = <String, dynamic>{};
   }
-  final audioFileData = getAudioFileFirestoreData(audioFile, forFieldValue);
-  final nestedData = audioFileData.map((k, v) => MapEntry('$fieldName.$k', v));
+  final coursesButtonData =
+      getCoursesButtonFirestoreData(coursesButton, forFieldValue);
+  final nestedData =
+      coursesButtonData.map((k, v) => MapEntry('$fieldName.$k', v));
 
-  final mergeFields = audioFile.firestoreUtilData.create || clearFields;
+  final mergeFields = coursesButton.firestoreUtilData.create || clearFields;
   firestoreData
       .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
-Map<String, dynamic> getAudioFileFirestoreData(
-  AudioFileStruct? audioFile, [
+Map<String, dynamic> getCoursesButtonFirestoreData(
+  CoursesButtonStruct? coursesButton, [
   bool forFieldValue = false,
 ]) {
-  if (audioFile == null) {
+  if (coursesButton == null) {
     return {};
   }
-  final firestoreData = mapToFirestore(audioFile.toMap());
+  final firestoreData = mapToFirestore(coursesButton.toMap());
 
   // Add any Firestore field values
-  audioFile.firestoreUtilData.fieldValues
+  coursesButton.firestoreUtilData.fieldValues
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;
 }
 
-List<Map<String, dynamic>> getAudioFileListFirestoreData(
-  List<AudioFileStruct>? audioFiles,
+List<Map<String, dynamic>> getCoursesButtonListFirestoreData(
+  List<CoursesButtonStruct>? coursesButtons,
 ) =>
-    audioFiles?.map((e) => getAudioFileFirestoreData(e, true)).toList() ?? [];
+    coursesButtons
+        ?.map((e) => getCoursesButtonFirestoreData(e, true))
+        .toList() ??
+    [];

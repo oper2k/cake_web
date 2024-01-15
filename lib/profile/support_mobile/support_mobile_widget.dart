@@ -45,7 +45,6 @@ class _SupportMobileWidgetState extends State<SupportMobileWidget> {
     context.watch<FFAppState>();
 
     return Container(
-      width: 384.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
         borderRadius: BorderRadius.only(
@@ -62,12 +61,12 @@ class _SupportMobileWidgetState extends State<SupportMobileWidget> {
         alignment: AlignmentDirectional(1.0, -1.0),
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(-1.00, 0.00),
+                  alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Text(
                     'Контактная информация\nдля связи с техподдержкой:',
                     style: FlutterFlowTheme.of(context).labelSmall.override(
@@ -101,7 +100,7 @@ class _SupportMobileWidgetState extends State<SupportMobileWidget> {
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Icon(
                               FFIcons.ktelegram,
                               color: FlutterFlowTheme.of(context).black3666666,
@@ -174,7 +173,7 @@ class _SupportMobileWidgetState extends State<SupportMobileWidget> {
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Icon(
                               FFIcons.kwattsUp,
                               color: FlutterFlowTheme.of(context).black3666666,
@@ -246,7 +245,7 @@ class _SupportMobileWidgetState extends State<SupportMobileWidget> {
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Icon(
                               FFIcons.kvk,
                               color: FlutterFlowTheme.of(context).black3666666,
@@ -318,7 +317,7 @@ class _SupportMobileWidgetState extends State<SupportMobileWidget> {
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Icon(
                               FFIcons.kmail,
                               color: FlutterFlowTheme.of(context).black3666666,

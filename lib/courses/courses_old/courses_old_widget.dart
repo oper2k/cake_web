@@ -7,6 +7,8 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -110,7 +112,7 @@ class _CoursesOldWidgetState extends State<CoursesOldWidget>
               child: Stack(
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(0.00, -1.00),
+                    alignment: AlignmentDirectional(0.0, -1.0),
                     child: Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
@@ -130,7 +132,7 @@ class _CoursesOldWidgetState extends State<CoursesOldWidget>
                                 model: _model.appBarModel,
                                 updateCallback: () => setState(() {}),
                                 child: AppBarWidget(
-                                  selected: 0,
+                                  selected: 2,
                                 ),
                               ),
                             ),
@@ -147,7 +149,7 @@ class _CoursesOldWidgetState extends State<CoursesOldWidget>
                                     ),
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(-1.00, 0.00),
+                                          AlignmentDirectional(-1.0, 0.0),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 16.0, 0.0, 0.0),
@@ -244,311 +246,6 @@ class _CoursesOldWidgetState extends State<CoursesOldWidget>
                                           ),
                                         ),
                                       ),
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.00, 0.00),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 32.0, 0.0, 0.0),
-                                        child: Text(
-                                          'Бесплатные курсы',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w500,
-                                                useGoogleFonts: GoogleFonts
-                                                        .asMap()
-                                                    .containsKey(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLargeFamily),
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.00, 0.00),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 16.0, 0.0, 0.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            FutureBuilder<List<CoursesRecord>>(
-                                              future: queryCoursesRecordOnce(
-                                                queryBuilder: (coursesRecord) =>
-                                                    coursesRecord
-                                                        .where(
-                                                          'isFree',
-                                                          isEqualTo: true,
-                                                        )
-                                                        .where(
-                                                          'show',
-                                                          isEqualTo: true,
-                                                        ),
-                                              ),
-                                              builder: (context, snapshot) {
-                                                // Customize what your widget looks like when it's loading.
-                                                if (!snapshot.hasData) {
-                                                  return Center(
-                                                    child: SizedBox(
-                                                      width: 50.0,
-                                                      height: 50.0,
-                                                      child: SpinKitRipple(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        size: 50.0,
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
-                                                List<CoursesRecord>
-                                                    wrapCoursesRecordList =
-                                                    snapshot.data!;
-                                                return Wrap(
-                                                  spacing: 32.0,
-                                                  runSpacing: 32.0,
-                                                  alignment:
-                                                      WrapAlignment.start,
-                                                  crossAxisAlignment:
-                                                      WrapCrossAlignment.start,
-                                                  direction: Axis.horizontal,
-                                                  runAlignment:
-                                                      WrapAlignment.start,
-                                                  verticalDirection:
-                                                      VerticalDirection.down,
-                                                  clipBehavior: Clip.none,
-                                                  children: List.generate(
-                                                      wrapCoursesRecordList
-                                                          .length, (wrapIndex) {
-                                                    final wrapCoursesRecord =
-                                                        wrapCoursesRecordList[
-                                                            wrapIndex];
-                                                    return Container(
-                                                      width: () {
-                                                        if (MediaQuery.sizeOf(
-                                                                    context)
-                                                                .width <
-                                                            kBreakpointSmall) {
-                                                          return 390.0;
-                                                        } else if (MediaQuery
-                                                                    .sizeOf(
-                                                                        context)
-                                                                .width <
-                                                            kBreakpointMedium) {
-                                                          return 235.0;
-                                                        } else if (MediaQuery
-                                                                    .sizeOf(
-                                                                        context)
-                                                                .width <
-                                                            kBreakpointLarge) {
-                                                          return 280.0;
-                                                        } else {
-                                                          return 280.0;
-                                                        }
-                                                      }(),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12.0),
-                                                      ),
-                                                      child: InkWell(
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        focusColor:
-                                                            Colors.transparent,
-                                                        hoverColor:
-                                                            Colors.transparent,
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () async {
-                                                          context.pushNamed(
-                                                            'ModulesFree',
-                                                            queryParameters: {
-                                                              'currentCourse':
-                                                                  serializeParam(
-                                                                wrapCoursesRecord,
-                                                                ParamType
-                                                                    .Document,
-                                                              ),
-                                                            }.withoutNulls,
-                                                            extra: <String,
-                                                                dynamic>{
-                                                              'currentCourse':
-                                                                  wrapCoursesRecord,
-                                                              kTransitionInfoKey:
-                                                                  TransitionInfo(
-                                                                hasTransition:
-                                                                    true,
-                                                                transitionType:
-                                                                    PageTransitionType
-                                                                        .fade,
-                                                                duration: Duration(
-                                                                    milliseconds:
-                                                                        0),
-                                                              ),
-                                                            },
-                                                          );
-                                                        },
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          24.0),
-                                                              child:
-                                                                  Image.network(
-                                                                wrapCoursesRecord
-                                                                    .image,
-                                                                width: double
-                                                                    .infinity,
-                                                                height: 180.0,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          22.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                wrapCoursesRecord
-                                                                    .name,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLarge,
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                'Бесплатный',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          FlutterFlowTheme.of(context)
-                                                                              .bodyMediumFamily,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .accent1,
-                                                                      useGoogleFonts: GoogleFonts
-                                                                              .asMap()
-                                                                          .containsKey(
-                                                                              FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          6.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  FaIcon(
-                                                                    FontAwesomeIcons
-                                                                        .clock,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .accent1,
-                                                                    size: 20.0,
-                                                                  ),
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            8.0,
-                                                                            2.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      wrapCoursesRecord
-                                                                          .countLessonsString,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).accent1,
-                                                                            useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }),
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.00, 0.00),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 32.0, 0.0, 0.0),
-                                        child: Text(
-                                          'Купленные курсы',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w500,
-                                                useGoogleFonts: GoogleFonts
-                                                        .asMap()
-                                                    .containsKey(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLargeFamily),
-                                              ),
-                                        ),
-                                      ),
-                                    ),
                                     if ((currentUserDocument?.rlBuyTariffs
                                                     ?.toList() ??
                                                 [])
@@ -556,7 +253,7 @@ class _CoursesOldWidgetState extends State<CoursesOldWidget>
                                         0)
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 16.0, 0.0, 100.0),
+                                            0.0, 32.0, 0.0, 100.0),
                                         child: AuthUserStreamWidget(
                                           builder: (context) => Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -567,19 +264,24 @@ class _CoursesOldWidgetState extends State<CoursesOldWidget>
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
+                                                    -1.0, 0.0),
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 16.0, 0.0, 0.0),
                                                   child: Builder(
                                                     builder: (context) {
-                                                      final userTariffs =
-                                                          (currentUserDocument
-                                                                      ?.rlBuyTariffs
-                                                                      ?.toList() ??
-                                                                  [])
-                                                              .toList();
+                                                      final userTariffs = functions
+                                                              .returnTariffsListReversed(
+                                                                  stackUsersRecord
+                                                                      .rlBuyTariffs
+                                                                      .toList())
+                                                              ?.where((e) =>
+                                                                  e.id !=
+                                                                  'LqB6M310JL8gRkevuvl5')
+                                                              .toList()
+                                                              ?.toList() ??
+                                                          [];
                                                       return Wrap(
                                                         spacing: 32.0,
                                                         runSpacing: 32.0,
@@ -840,7 +542,7 @@ class _CoursesOldWidgetState extends State<CoursesOldWidget>
                     phone: false,
                   ))
                     Align(
-                      alignment: AlignmentDirectional(1.00, 1.00),
+                      alignment: AlignmentDirectional(1.0, 1.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [

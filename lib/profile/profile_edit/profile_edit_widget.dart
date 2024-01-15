@@ -1,3 +1,4 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
@@ -13,6 +14,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -43,6 +45,15 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => ProfileEditModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (loggedIn) {
+        return;
+      }
+
+      context.pushNamed('Log_In');
+    });
 
     _model.tabBarController = TabController(
       vsync: this,
@@ -107,7 +118,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Align(
-          alignment: AlignmentDirectional(0.00, -1.00),
+          alignment: AlignmentDirectional(0.0, -1.0),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
             child: Container(
@@ -252,6 +263,13 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                         ),
                                       ],
                                       controller: _model.tabBarController,
+                                      onTap: (i) async {
+                                        [
+                                          () async {},
+                                          () async {},
+                                          () async {}
+                                        ][i]();
+                                      },
                                     ),
                                   ),
                                   Expanded(
@@ -411,8 +429,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                                       children: [
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              -1.00,
-                                                                              1.00),
+                                                                              -1.0,
+                                                                              1.0),
                                                                           child:
                                                                               Container(
                                                                             width:
@@ -434,8 +452,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                                         ),
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              -1.00,
-                                                                              1.00),
+                                                                              -1.0,
+                                                                              1.0),
                                                                           child:
                                                                               AuthUserStreamWidget(
                                                                             builder: (context) =>
@@ -452,8 +470,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                                         ),
                                                                         Align(
                                                                           alignment: AlignmentDirectional(
-                                                                              1.00,
-                                                                              -1.00),
+                                                                              1.0,
+                                                                              -1.0),
                                                                           child:
                                                                               Stack(
                                                                             alignment:
@@ -566,8 +584,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                           Align(
                                                             alignment:
                                                                 AlignmentDirectional(
-                                                                    -1.00,
-                                                                    0.00),
+                                                                    -1.0, 0.0),
                                                             child: Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -969,6 +986,26 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                                               initialDate: getCurrentTimestamp,
                                                                               firstDate: DateTime(1900),
                                                                               lastDate: getCurrentTimestamp,
+                                                                              builder: (context, child) {
+                                                                                return wrapInMaterialDatePickerTheme(
+                                                                                  context,
+                                                                                  child!,
+                                                                                  headerBackgroundColor: Color(0xE5000000),
+                                                                                  headerForegroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                  headerTextStyle: FlutterFlowTheme.of(context).headlineLarge.override(
+                                                                                        fontFamily: FlutterFlowTheme.of(context).headlineLargeFamily,
+                                                                                        fontSize: 32.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                        useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).headlineLargeFamily),
+                                                                                      ),
+                                                                                  pickerBackgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                  pickerForegroundColor: FlutterFlowTheme.of(context).primary,
+                                                                                  selectedDateTimeBackgroundColor: Color(0xE5000000),
+                                                                                  selectedDateTimeForegroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                  actionButtonForegroundColor: FlutterFlowTheme.of(context).primaryText,
+                                                                                  iconSize: 24.0,
+                                                                                );
+                                                                              },
                                                                             );
 
                                                                             if (_datePickedDate !=
@@ -1014,7 +1051,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                                                 builder: (context) {
                                                                                   if (containerUsersRecord.birthdayDate != null) {
                                                                                     return Align(
-                                                                                      alignment: AlignmentDirectional(-1.00, 0.00),
+                                                                                      alignment: AlignmentDirectional(-1.0, 0.0),
                                                                                       child: Text(
                                                                                         dateTimeFormat(
                                                                                           'd/M/y',
@@ -1026,7 +1063,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                                                     );
                                                                                   } else {
                                                                                     return Align(
-                                                                                      alignment: AlignmentDirectional(-1.00, 0.00),
+                                                                                      alignment: AlignmentDirectional(-1.0, 0.0),
                                                                                       child: Text(
                                                                                         'Дата рождения',
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1068,8 +1105,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          -1.00,
-                                                                          0.00),
+                                                                          -1.0,
+                                                                          0.0),
                                                                   child:
                                                                       Padding(
                                                                     padding: EdgeInsetsDirectional
@@ -1089,8 +1126,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          -1.00,
-                                                                          0.00),
+                                                                          -1.0,
+                                                                          0.0),
                                                                   child:
                                                                       Padding(
                                                                     padding: EdgeInsetsDirectional
@@ -1186,8 +1223,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(
-                                                                          -1.00,
-                                                                          0.00),
+                                                                          -1.0,
+                                                                          0.0),
                                                                   child:
                                                                       Padding(
                                                                     padding: EdgeInsetsDirectional
@@ -1283,8 +1320,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                           Align(
                                                             alignment:
                                                                 AlignmentDirectional(
-                                                                    -1.00,
-                                                                    0.00),
+                                                                    -1.0, 0.0),
                                                             child: Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -1453,8 +1489,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      -1.00,
-                                                                      0.00),
+                                                                      -1.0,
+                                                                      0.0),
                                                               child: Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
@@ -1481,8 +1517,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      -1.00,
-                                                                      0.00),
+                                                                      -1.0,
+                                                                      0.0),
                                                               child: Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
@@ -1604,8 +1640,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      -1.00,
-                                                                      0.00),
+                                                                      -1.0,
+                                                                      0.0),
                                                               child: Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
@@ -1732,7 +1768,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
+                                                    -1.0, 0.0),
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
@@ -1747,7 +1783,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                               ),
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
+                                                    -1.0, 0.0),
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
@@ -1881,7 +1917,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                               ),
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
+                                                    -1.0, 0.0),
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
@@ -1990,7 +2026,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                           children: [
                                             Align(
                                               alignment: AlignmentDirectional(
-                                                  -1.00, 0.00),
+                                                  -1.0, 0.0),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -2005,7 +2041,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                             ),
                                             Align(
                                               alignment: AlignmentDirectional(
-                                                  -1.00, 0.00),
+                                                  -1.0, 0.0),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -2099,7 +2135,7 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                             ),
                                             Align(
                                               alignment: AlignmentDirectional(
-                                                  -1.00, 0.00),
+                                                  -1.0, 0.0),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(

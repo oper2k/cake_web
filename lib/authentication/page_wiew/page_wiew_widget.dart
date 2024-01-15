@@ -519,7 +519,7 @@ class _PageWiewWidgetState extends State<PageWiewWidget> {
                 ],
               ),
               Align(
-                alignment: AlignmentDirectional(0.00, -1.00),
+                alignment: AlignmentDirectional(0.0, -1.0),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 28.0, 0.0, 0.0),
                   child: smooth_page_indicator.SmoothPageIndicator(

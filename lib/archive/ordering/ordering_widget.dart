@@ -99,7 +99,7 @@ class _OrderingWidgetState extends State<OrderingWidget> {
                   ),
                 Expanded(
                   child: Align(
-                    alignment: AlignmentDirectional(0.00, -1.00),
+                    alignment: AlignmentDirectional(0.0, -1.0),
                     child: Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
@@ -158,7 +158,7 @@ class _OrderingWidgetState extends State<OrderingWidget> {
                                       children: [
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.00, 0.00),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
@@ -221,9 +221,7 @@ class _OrderingWidgetState extends State<OrderingWidget> {
                                                     BorderRadius.circular(20.0),
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        20.0, 20.0, 20.0, 20.0),
+                                                padding: EdgeInsets.all(20.0),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -671,7 +669,7 @@ class _OrderingWidgetState extends State<OrderingWidget> {
                                           ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.00, 0.00),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -730,7 +728,7 @@ class _OrderingWidgetState extends State<OrderingWidget> {
                                             children: [
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
+                                                    -1.0, 0.0),
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
@@ -802,9 +800,7 @@ class _OrderingWidgetState extends State<OrderingWidget> {
                                                 BorderRadius.circular(20.0),
                                           ),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 20.0, 20.0, 20.0),
+                                            padding: EdgeInsets.all(20.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
                                               crossAxisAlignment:

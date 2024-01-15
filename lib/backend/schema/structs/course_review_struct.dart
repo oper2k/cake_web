@@ -53,8 +53,9 @@ class CourseReviewStruct extends FFFirebaseStruct {
         description: data['description'] as String?,
       );
 
-  static CourseReviewStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? CourseReviewStruct.fromMap(data) : null;
+  static CourseReviewStruct? maybeFromMap(dynamic data) => data is Map
+      ? CourseReviewStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'subTitle': _subTitle,

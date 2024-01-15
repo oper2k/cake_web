@@ -199,6 +199,16 @@ class CoursesRecord extends FirestoreRecord {
   String get oldPrice => _oldPrice ?? '';
   bool hasOldPrice() => _oldPrice != null;
 
+  // "buttonBuy" field.
+  CoursesButtonStruct? _buttonBuy;
+  CoursesButtonStruct get buttonBuy => _buttonBuy ?? CoursesButtonStruct();
+  bool hasButtonBuy() => _buttonBuy != null;
+
+  // "bannerShow" field.
+  bool? _bannerShow;
+  bool get bannerShow => _bannerShow ?? false;
+  bool hasBannerShow() => _bannerShow != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _image = snapshotData['image'] as String?;
@@ -260,6 +270,8 @@ class CoursesRecord extends FirestoreRecord {
     _whatYouLearn = getDataList(snapshotData['what_you_learn']);
     _linkForSale = snapshotData['link_for_sale'] as String?;
     _oldPrice = snapshotData['old_price'] as String?;
+    _buttonBuy = CoursesButtonStruct.maybeFromMap(snapshotData['buttonBuy']);
+    _bannerShow = snapshotData['bannerShow'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -318,6 +330,8 @@ Map<String, dynamic> createCoursesRecordData({
   BuyTodayStruct? buyToday,
   String? linkForSale,
   String? oldPrice,
+  CoursesButtonStruct? buttonBuy,
+  bool? bannerShow,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -342,11 +356,16 @@ Map<String, dynamic> createCoursesRecordData({
       'buy_today': BuyTodayStruct().toMap(),
       'link_for_sale': linkForSale,
       'old_price': oldPrice,
+      'buttonBuy': CoursesButtonStruct().toMap(),
+      'bannerShow': bannerShow,
     }.withoutNulls,
   );
 
   // Handle nested data for "buy_today" field.
   addBuyTodayStructData(firestoreData, buyToday, 'buy_today');
+
+  // Handle nested data for "buttonBuy" field.
+  addCoursesButtonStructData(firestoreData, buttonBuy, 'buttonBuy');
 
   return firestoreData;
 }
@@ -392,7 +411,9 @@ class CoursesRecordDocumentEquality implements Equality<CoursesRecord> {
         e1?.buyToday == e2?.buyToday &&
         listEquality.equals(e1?.whatYouLearn, e2?.whatYouLearn) &&
         e1?.linkForSale == e2?.linkForSale &&
-        e1?.oldPrice == e2?.oldPrice;
+        e1?.oldPrice == e2?.oldPrice &&
+        e1?.buttonBuy == e2?.buttonBuy &&
+        e1?.bannerShow == e2?.bannerShow;
   }
 
   @override
@@ -432,7 +453,9 @@ class CoursesRecordDocumentEquality implements Equality<CoursesRecord> {
         e?.buyToday,
         e?.whatYouLearn,
         e?.linkForSale,
-        e?.oldPrice
+        e?.oldPrice,
+        e?.buttonBuy,
+        e?.bannerShow
       ]);
 
   @override

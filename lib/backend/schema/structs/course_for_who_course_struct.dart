@@ -44,10 +44,9 @@ class CourseForWhoCourseStruct extends FFFirebaseStruct {
         description: data['description'] as String?,
       );
 
-  static CourseForWhoCourseStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic>
-          ? CourseForWhoCourseStruct.fromMap(data)
-          : null;
+  static CourseForWhoCourseStruct? maybeFromMap(dynamic data) => data is Map
+      ? CourseForWhoCourseStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'image': _image,

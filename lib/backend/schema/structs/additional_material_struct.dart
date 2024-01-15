@@ -53,10 +53,9 @@ class AdditionalMaterialStruct extends FFFirebaseStruct {
         color: getSchemaColor(data['color']),
       );
 
-  static AdditionalMaterialStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic>
-          ? AdditionalMaterialStruct.fromMap(data)
-          : null;
+  static AdditionalMaterialStruct? maybeFromMap(dynamic data) => data is Map
+      ? AdditionalMaterialStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'image': _image,

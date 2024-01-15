@@ -33,6 +33,7 @@ class FlutterFlowAudioPlayer extends StatefulWidget {
     required this.fillColor,
     required this.playbackButtonColor,
     required this.activeTrackColor,
+    this.inactiveTrackColor,
     required this.elevation,
     this.pauseOnNavigate = true,
     required this.playInBackground,
@@ -44,6 +45,7 @@ class FlutterFlowAudioPlayer extends StatefulWidget {
   final Color fillColor;
   final Color playbackButtonColor;
   final Color activeTrackColor;
+  final Color? inactiveTrackColor;
   final double elevation;
   final bool pauseOnNavigate;
   final PlayInBackground playInBackground;
@@ -186,6 +188,7 @@ class _FlutterFlowAudioPlayerState extends State<FlutterFlowAudioPlayer>
                           _assetsAudioPlayer!.seek(to);
                         },
                         activeTrackColor: widget.activeTrackColor,
+                        inactiveTrackColor: widget.inactiveTrackColor,
                       ),
                     ],
                   ),
@@ -206,12 +209,14 @@ class PositionSeekWidget extends StatefulWidget {
     required this.duration,
     required this.seekTo,
     required this.activeTrackColor,
+    this.inactiveTrackColor,
   });
 
   final Duration currentPosition;
   final Duration duration;
   final Function(Duration) seekTo;
   final Color activeTrackColor;
+  final Color? inactiveTrackColor;
 
   @override
   _PositionSeekWidgetState createState() => _PositionSeekWidgetState();
@@ -242,7 +247,8 @@ class _PositionSeekWidgetState extends State<PositionSeekWidget> {
   Widget build(BuildContext context) => SliderTheme(
         data: SliderTheme.of(context).copyWith(
           activeTrackColor: widget.activeTrackColor,
-          inactiveTrackColor: const Color(0xFFC9D0D5),
+          inactiveTrackColor:
+              widget.inactiveTrackColor ?? const Color(0xFFC9D0D5),
           trackShape: const FlutterFlowRoundedRectSliderTrackShape(),
           trackHeight: 6.0,
           thumbShape: SliderComponentShape.noThumb,

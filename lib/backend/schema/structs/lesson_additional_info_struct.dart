@@ -35,10 +35,9 @@ class LessonAdditionalInfoStruct extends FFFirebaseStruct {
         text: data['text'] as String?,
       );
 
-  static LessonAdditionalInfoStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic>
-          ? LessonAdditionalInfoStruct.fromMap(data)
-          : null;
+  static LessonAdditionalInfoStruct? maybeFromMap(dynamic data) => data is Map
+      ? LessonAdditionalInfoStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'title': _title,

@@ -11,6 +11,7 @@ export 'course_for_who_course_struct.dart';
 export 'course_more_struct.dart';
 export 'course_review_struct.dart';
 export 'course_bonuses_struct.dart';
+export 'courses_button_struct.dart';
 export 'lesson_additional_info_struct.dart';
 export 'lessons_witout_image_struct.dart';
 export 'pdf_file_struct.dart';

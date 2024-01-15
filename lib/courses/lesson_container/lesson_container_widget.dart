@@ -20,13 +20,11 @@ class LessonContainerWidget extends StatefulWidget {
     this.currentLesson,
     this.userDoc,
     this.currentState,
-    required this.isFree,
   }) : super(key: key);
 
   final LessonsRecord? currentLesson;
   final UsersRecord? userDoc;
   final int? currentState;
-  final bool? isFree;
 
   @override
   _LessonContainerWidgetState createState() => _LessonContainerWidgetState();
@@ -65,7 +63,7 @@ class _LessonContainerWidgetState extends State<LessonContainerWidget> {
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(24.0),
       ),
-      alignment: AlignmentDirectional(0.00, -1.00),
+      alignment: AlignmentDirectional(0.0, -1.0),
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
         child: Column(
@@ -134,73 +132,36 @@ class _LessonContainerWidgetState extends State<LessonContainerWidget> {
               Flexible(
                 child: Stack(
                   children: [
-                    if (widget.isFree ?? true)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 8.0, 24.0, 0.0),
-                              child: AutoSizeText(
-                                'Урок откроется: ${valueOrDefault<String>(
-                                  functions.dateOnRussian(
-                                      functions.addSomeDaysToDate(
-                                          functions.returnDiffInDaysUserCreate(
-                                              widget.userDoc!)!,
-                                          widget.currentLesson!.openDay)),
-                                  'Нет даты',
-                                )}',
-                                maxLines: 1,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .override(
-                                      fontFamily: FlutterFlowTheme.of(context)
-                                          .bodySmallFamily,
-                                      color:
-                                          FlutterFlowTheme.of(context).accent1,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              FlutterFlowTheme.of(context)
-                                                  .bodySmallFamily),
-                                    ),
-                              ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 8.0, 24.0, 0.0),
+                            child: AutoSizeText(
+                              'Урок откроется: ${valueOrDefault<String>(
+                                functions.dateOnRussian(
+                                    widget.currentLesson?.openDate),
+                                'Нет даты',
+                              )}',
+                              maxLines: 1,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .bodySmallFamily,
+                                    color: FlutterFlowTheme.of(context).accent1,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodySmallFamily),
+                                  ),
                             ),
                           ),
-                        ],
-                      ),
-                    if (!widget.isFree!)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 8.0, 24.0, 0.0),
-                              child: AutoSizeText(
-                                'Урок откроется: ${valueOrDefault<String>(
-                                  functions.dateOnRussian(
-                                      widget.currentLesson?.openDate),
-                                  'Нет даты',
-                                )}',
-                                maxLines: 1,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .override(
-                                      fontFamily: FlutterFlowTheme.of(context)
-                                          .bodySmallFamily,
-                                      color:
-                                          FlutterFlowTheme.of(context).accent1,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              FlutterFlowTheme.of(context)
-                                                  .bodySmallFamily),
-                                    ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

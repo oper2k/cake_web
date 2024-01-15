@@ -70,7 +70,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: AlignmentDirectional(0.0, 0.0),
               child: Text(
                 widget.text,
                 style: FlutterFlowTheme.of(context).labelMedium.override(

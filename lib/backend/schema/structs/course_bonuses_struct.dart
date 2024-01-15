@@ -44,8 +44,9 @@ class CourseBonusesStruct extends FFFirebaseStruct {
         description: data['description'] as String?,
       );
 
-  static CourseBonusesStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? CourseBonusesStruct.fromMap(data) : null;
+  static CourseBonusesStruct? maybeFromMap(dynamic data) => data is Map
+      ? CourseBonusesStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'image': _image,

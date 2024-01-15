@@ -64,7 +64,7 @@ class _TariffChangeWidgetState extends State<TariffChangeWidget>
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.00, 0.00),
+      alignment: AlignmentDirectional(0.0, 0.0),
       child: Container(
         width: 592.0,
         decoration: BoxDecoration(
@@ -72,7 +72,7 @@ class _TariffChangeWidgetState extends State<TariffChangeWidget>
           borderRadius: BorderRadius.circular(24.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
+          padding: EdgeInsets.all(32.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,

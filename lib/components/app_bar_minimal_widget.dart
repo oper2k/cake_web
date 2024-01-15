@@ -78,15 +78,15 @@ class _AppBarMinimalWidgetState extends State<AppBarMinimalWidget> {
             height: valueOrDefault<double>(
               () {
                 if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                  return 32.0;
+                  return 50.0;
                 } else if (MediaQuery.sizeOf(context).width <
                     kBreakpointMedium) {
-                  return 40.0;
+                  return 58.0;
                 } else if (MediaQuery.sizeOf(context).width <
                     kBreakpointLarge) {
-                  return 40.0;
+                  return 58.0;
                 } else {
-                  return 40.0;
+                  return 58.0;
                 }
               }(),
               0.0,
@@ -95,7 +95,7 @@ class _AppBarMinimalWidgetState extends State<AppBarMinimalWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(0.0),
               child: Image.asset(
-                'assets/images/CakeSchool.png',
+                'assets/images/cake_school_logo_black.png',
                 fit: BoxFit.cover,
               ),
             ),

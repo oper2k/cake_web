@@ -89,14 +89,14 @@ class _SigninWidgetState extends State<SigninWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                 child: AutoSizeText(
-                  'Добро пожаловать \nв CakeSchool',
+                  'Добро пожаловать \nв Cake School',
                   textAlign: TextAlign.start,
                   maxLines: 2,
                   style: FlutterFlowTheme.of(context).titleLarge,
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-1.00, 0.00),
+                alignment: AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                   child: Text(
@@ -452,7 +452,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 45.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                 child: RichText(
                   textScaleFactor: MediaQuery.of(context).textScaleFactor,
                   text: TextSpan(
@@ -465,6 +465,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                   fontFamily: FlutterFlowTheme.of(context)
                                       .displayMediumFamily,
                                   color: FlutterFlowTheme.of(context).accent1,
+                                  fontSize: 12.0,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
                                           .displayMediumFamily),
@@ -472,18 +473,82 @@ class _SigninWidgetState extends State<SigninWidget> {
                       ),
                       TextSpan(
                         text: 'Политикой конфиденциальности',
+                        style:
+                            FlutterFlowTheme.of(context).displayLarge.override(
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .displayLargeFamily,
+                                  fontSize: 12.0,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .displayLargeFamily),
+                                ),
+                        mouseCursor: SystemMouseCursors.click,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            await launchURL(
+                                'https://drive.google.com/file/d/1UR2LZshZm0-AcI4C5-B066FPdFgHHRBT/view');
+                          },
+                      ),
+                      TextSpan(
+                        text: '  и даёте ',
+                        style:
+                            FlutterFlowTheme.of(context).displayLarge.override(
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .displayLargeFamily,
+                                  color: FlutterFlowTheme.of(context).accent1,
+                                  fontWeight: FontWeight.normal,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .displayLargeFamily),
+                                ),
+                      ),
+                      TextSpan(
+                        text: ' Согласие на обработку персональных данных',
                         style: FlutterFlowTheme.of(context).displayLarge,
                         mouseCursor: SystemMouseCursors.click,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
                             await launchURL(
-                                'https://file.alinamakarova.ru/oferta.pdf');
+                                'https://drive.google.com/file/d/17dP_BCUwnRdEeDnpSkcIAMEEEz_5N1Uk/view');
                           },
                       )
                     ],
                     style: FlutterFlowTheme.of(context).bodyMedium,
                   ),
                   textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 45.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await launchURL(
+                            'https://drive.google.com/file/d/1iYg2RuLkLCJD_kIOVu0yb61YR26B3JH1/view?usp=share_link');
+                      },
+                      child: Text(
+                        'Оферта на оказание платных образовательных услуг',
+                        textAlign: TextAlign.center,
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).bodyMediumFamily,
+                              color: FlutterFlowTheme.of(context).accent1,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.normal,
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily),
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

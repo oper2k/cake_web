@@ -76,6 +76,11 @@ class KnowledgeBaseRecord extends FirestoreRecord {
   List<AdditionalInfoStruct> get additionalInfo => _additionalInfo ?? const [];
   bool hasAdditionalInfo() => _additionalInfo != null;
 
+  // "views" field.
+  int? _views;
+  int get views => _views ?? 0;
+  bool hasViews() => _views != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _type = snapshotData['type'] as String?;
@@ -92,6 +97,7 @@ class KnowledgeBaseRecord extends FirestoreRecord {
       snapshotData['additionalInfo'],
       AdditionalInfoStruct.fromMap,
     );
+    _views = castToType<int>(snapshotData['views']);
   }
 
   static CollectionReference get collection =>
@@ -139,6 +145,7 @@ Map<String, dynamic> createKnowledgeBaseRecordData({
   bool? isTrial,
   String? authorSubtitle,
   bool? show,
+  int? views,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -152,6 +159,7 @@ Map<String, dynamic> createKnowledgeBaseRecordData({
       'isTrial': isTrial,
       'authorSubtitle': authorSubtitle,
       'show': show,
+      'views': views,
     }.withoutNulls,
   );
 
@@ -176,7 +184,8 @@ class KnowledgeBaseRecordDocumentEquality
         listEquality.equals(e1?.rlFavoriteUser, e2?.rlFavoriteUser) &&
         e1?.authorSubtitle == e2?.authorSubtitle &&
         e1?.show == e2?.show &&
-        listEquality.equals(e1?.additionalInfo, e2?.additionalInfo);
+        listEquality.equals(e1?.additionalInfo, e2?.additionalInfo) &&
+        e1?.views == e2?.views;
   }
 
   @override
@@ -192,7 +201,8 @@ class KnowledgeBaseRecordDocumentEquality
         e?.rlFavoriteUser,
         e?.authorSubtitle,
         e?.show,
-        e?.additionalInfo
+        e?.additionalInfo,
+        e?.views
       ]);
 
   @override

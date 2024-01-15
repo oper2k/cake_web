@@ -44,10 +44,9 @@ class LessonsWitoutImageStruct extends FFFirebaseStruct {
         description: data['description'] as String?,
       );
 
-  static LessonsWitoutImageStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic>
-          ? LessonsWitoutImageStruct.fromMap(data)
-          : null;
+  static LessonsWitoutImageStruct? maybeFromMap(dynamic data) => data is Map
+      ? LessonsWitoutImageStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'subTitle': _subTitle,

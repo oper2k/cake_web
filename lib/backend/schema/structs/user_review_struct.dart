@@ -53,8 +53,9 @@ class UserReviewStruct extends FFFirebaseStruct {
         userSubname: data['userSubname'] as String?,
       );
 
-  static UserReviewStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? UserReviewStruct.fromMap(data) : null;
+  static UserReviewStruct? maybeFromMap(dynamic data) => data is Map
+      ? UserReviewStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'text': _text,

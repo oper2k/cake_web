@@ -58,7 +58,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.00, -1.00),
+      alignment: AlignmentDirectional(0.0, -1.0),
       child: Container(
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primaryBackground,
@@ -72,12 +72,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               phone: false,
             ))
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 4.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0.0),
                   child: Image.asset(
-                    'assets/images/CakeSchool.png',
-                    width: 77.0,
+                    'assets/images/cake_school_logo_black.png',
+                    height: 60.0,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -89,12 +89,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               desktop: false,
             ))
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 4.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0.0),
                   child: Image.asset(
-                    'assets/images/CakeSchool.png',
-                    width: 58.0,
+                    'assets/images/cake_school_logo_black.png',
+                    height: 40.0,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -162,18 +162,15 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                             setState(() {
                               FFAppState().supportOn = true;
                             });
-                            await showAlignedDialog(
+                            await showDialog(
                               barrierDismissible: false,
                               context: context,
-                              isGlobal: true,
-                              avoidOverflow: false,
-                              targetAnchor: AlignmentDirectional(0.0, 0.0)
-                                  .resolve(Directionality.of(context)),
-                              followerAnchor: AlignmentDirectional(0.0, 0.0)
-                                  .resolve(Directionality.of(context)),
                               builder: (dialogContext) {
-                                return Material(
-                                  color: Colors.transparent,
+                                return Dialog(
+                                  insetPadding: EdgeInsets.zero,
+                                  backgroundColor: Colors.transparent,
+                                  alignment: AlignmentDirectional(0.0, 0.0)
+                                      .resolve(Directionality.of(context)),
                                   child:
                                       WebViewAware(child: SupportPadWidget()),
                                 );
@@ -269,7 +266,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                             height: 40.0,
                             decoration: BoxDecoration(),
                             child: Align(
-                              alignment: AlignmentDirectional(0.00, 0.00),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 6.0),
@@ -280,7 +277,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                     children: [
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(-1.00, 1.00),
+                                            AlignmentDirectional(-1.0, 1.0),
                                         child: Icon(
                                           FFIcons.kbag,
                                           color: (widget.selected == 1) &&
@@ -303,7 +300,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                           ))
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(1.00, -1.00),
+                                              AlignmentDirectional(1.0, -1.0),
                                           child: Container(
                                             width: 16.0,
                                             height: 16.0,
@@ -315,7 +312,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                             ),
                                             child: Align(
                                               alignment: AlignmentDirectional(
-                                                  0.00, 0.00),
+                                                  0.0, 0.0),
                                               child: Text(
                                                 FFAppState()
                                                     .basketTariffs
@@ -391,7 +388,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                 shape: BoxShape.circle,
                               ),
                               child: Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 2.0, 0.0, 0.0),
@@ -423,77 +420,79 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 24.0,
-                    child: VerticalDivider(
-                      thickness: 1.0,
-                      color: Color(0xFFC5C5C7),
+                  if (loggedIn)
+                    SizedBox(
+                      height: 24.0,
+                      child: VerticalDivider(
+                        thickness: 1.0,
+                        color: Color(0xFFC5C5C7),
+                      ),
                     ),
-                  ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.pushNamed(
-                        'Courses_Old',
-                        extra: <String, dynamic>{
-                          kTransitionInfoKey: TransitionInfo(
-                            hasTransition: true,
-                            transitionType: PageTransitionType.fade,
-                            duration: Duration(milliseconds: 0),
-                          ),
-                        },
-                      );
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 40.0,
-                          height: 40.0,
-                          decoration: BoxDecoration(),
-                          child: Icon(
-                            FFIcons.kbookOpen,
-                            color: (widget.selected == 2) &&
-                                    (FFAppState().supportOn == false)
-                                ? FlutterFlowTheme.of(context).primaryText
-                                : FlutterFlowTheme.of(context).secondaryText,
-                            size: 22.0,
-                          ),
-                        ),
-                        if (responsiveVisibility(
-                          context: context,
-                          phone: false,
-                        ))
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 8.0, 0.0),
-                            child: Text(
-                              'Мои курсы',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily,
-                                    color: (widget.selected == 2) &&
-                                            (FFAppState().supportOn == false)
-                                        ? FlutterFlowTheme.of(context)
-                                            .primaryText
-                                        : FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                    fontWeight: FontWeight.w600,
-                                    useGoogleFonts: GoogleFonts.asMap()
-                                        .containsKey(
-                                            FlutterFlowTheme.of(context)
-                                                .bodyMediumFamily),
-                                  ),
+                  if (loggedIn)
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed(
+                          'Courses_Old',
+                          extra: <String, dynamic>{
+                            kTransitionInfoKey: TransitionInfo(
+                              hasTransition: true,
+                              transitionType: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 0),
+                            ),
+                          },
+                        );
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 40.0,
+                            height: 40.0,
+                            decoration: BoxDecoration(),
+                            child: Icon(
+                              FFIcons.kbookOpen,
+                              color: (widget.selected == 2) &&
+                                      (FFAppState().supportOn == false)
+                                  ? FlutterFlowTheme.of(context).primaryText
+                                  : FlutterFlowTheme.of(context).secondaryText,
+                              size: 22.0,
                             ),
                           ),
-                      ],
+                          if (responsiveVisibility(
+                            context: context,
+                            phone: false,
+                          ))
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 8.0, 0.0),
+                              child: Text(
+                                'Мои курсы',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color: (widget.selected == 2) &&
+                                              (FFAppState().supportOn == false)
+                                          ? FlutterFlowTheme.of(context)
+                                              .primaryText
+                                          : FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                      fontWeight: FontWeight.w600,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily),
+                                    ),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
                   SizedBox(
                     height: 24.0,
                     child: VerticalDivider(
@@ -626,16 +625,29 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed(
-                                  'Profile',
-                                  extra: <String, dynamic>{
-                                    kTransitionInfoKey: TransitionInfo(
-                                      hasTransition: true,
-                                      transitionType: PageTransitionType.fade,
-                                      duration: Duration(milliseconds: 0),
-                                    ),
-                                  },
-                                );
+                                if (loggedIn) {
+                                  context.pushNamed(
+                                    'Profile',
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType: PageTransitionType.fade,
+                                        duration: Duration(milliseconds: 0),
+                                      ),
+                                    },
+                                  );
+                                } else {
+                                  context.pushNamed(
+                                    'Log_In',
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType: PageTransitionType.fade,
+                                        duration: Duration(milliseconds: 0),
+                                      ),
+                                    },
+                                  );
+                                }
                               },
                               child: Container(
                                 width: 40.0,
@@ -676,16 +688,29 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed(
-                                  'Profile',
-                                  extra: <String, dynamic>{
-                                    kTransitionInfoKey: TransitionInfo(
-                                      hasTransition: true,
-                                      transitionType: PageTransitionType.fade,
-                                      duration: Duration(milliseconds: 0),
-                                    ),
-                                  },
-                                );
+                                if (loggedIn) {
+                                  context.pushNamed(
+                                    'Profile',
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType: PageTransitionType.fade,
+                                        duration: Duration(milliseconds: 0),
+                                      ),
+                                    },
+                                  );
+                                } else {
+                                  context.pushNamed(
+                                    'Log_In',
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType: PageTransitionType.fade,
+                                        duration: Duration(milliseconds: 0),
+                                      ),
+                                    },
+                                  );
+                                }
                               },
                               child: Container(
                                 width: 32.0,
@@ -740,19 +765,17 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                     },
                                   ).then((value) => safeSetState(() {}));
                                 } else {
-                                  await showAlignedDialog(
+                                  await showDialog(
                                     barrierDismissible: false,
                                     context: context,
-                                    isGlobal: true,
-                                    avoidOverflow: false,
-                                    targetAnchor: AlignmentDirectional(0.0, 0.0)
-                                        .resolve(Directionality.of(context)),
-                                    followerAnchor: AlignmentDirectional(
-                                            0.0, 0.0)
-                                        .resolve(Directionality.of(context)),
                                     builder: (dialogContext) {
-                                      return Material(
-                                        color: Colors.transparent,
+                                      return Dialog(
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
                                         child:
                                             WebViewAware(child: ExitWidget()),
                                       );

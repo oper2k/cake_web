@@ -21,7 +21,6 @@ class LesMobileWidget extends StatefulWidget {
     this.currentLesson,
     required this.index,
     required this.countLessons,
-    required this.isFree,
   }) : super(key: key);
 
   final UsersRecord? userDoc;
@@ -29,7 +28,6 @@ class LesMobileWidget extends StatefulWidget {
   final LessonsRecord? currentLesson;
   final int? index;
   final int? countLessons;
-  final bool? isFree;
 
   @override
   _LesMobileWidgetState createState() => _LesMobileWidgetState();
@@ -70,7 +68,7 @@ class _LesMobileWidgetState extends State<LesMobileWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Align(
-            alignment: AlignmentDirectional(-1.00, 0.00),
+            alignment: AlignmentDirectional(-1.0, 0.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -195,93 +193,45 @@ class _LesMobileWidgetState extends State<LesMobileWidget> {
                         if (widget.currentState == 1)
                           Stack(
                             children: [
-                              if (widget.isFree ?? true)
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 0.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Expanded(
-                                        child: Align(
-                                          alignment:
-                                              AlignmentDirectional(-1.00, 0.00),
-                                          child: Text(
-                                            'Урок откроется: ${valueOrDefault<String>(
-                                              functions.dateOnRussian(
-                                                  functions.addSomeDaysToDate(
-                                                      functions
-                                                          .returnDiffInDaysUserCreate(
-                                                              widget.userDoc!)!,
-                                                      widget.currentLesson!
-                                                          .openDay)),
-                                              'Нет даты',
-                                            )}',
-                                            maxLines: 3,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodySmall
-                                                .override(
-                                                  fontFamily:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodySmallFamily,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .accent1,
-                                                  useGoogleFonts: GoogleFonts
-                                                          .asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodySmallFamily),
-                                                ),
-                                          ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 10.0, 0.0, 0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Expanded(
+                                      child: Align(
+                                        alignment:
+                                            AlignmentDirectional(-1.0, 0.0),
+                                        child: Text(
+                                          'Урок откроется: ${valueOrDefault<String>(
+                                            functions.dateToRussian(
+                                                widget.currentLesson?.openDate),
+                                            'Нет даты',
+                                          )}',
+                                          maxLines: 3,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmallFamily,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .accent1,
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodySmallFamily),
+                                              ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              if (!widget.isFree!)
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 0.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Expanded(
-                                        child: Align(
-                                          alignment:
-                                              AlignmentDirectional(-1.00, 0.00),
-                                          child: Text(
-                                            'Урок откроется: ${valueOrDefault<String>(
-                                              functions.dateToRussian(widget
-                                                  .currentLesson?.openDate),
-                                              'Нет даты',
-                                            )}',
-                                            maxLines: 3,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodySmall
-                                                .override(
-                                                  fontFamily:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodySmallFamily,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .accent1,
-                                                  useGoogleFonts: GoogleFonts
-                                                          .asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodySmallFamily),
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              ),
                             ],
                           ),
                       ],

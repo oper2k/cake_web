@@ -1,3 +1,4 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/app_bar_widget.dart';
@@ -19,7 +20,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -123,29 +123,17 @@ class _ModulesWidgetState extends State<ModulesWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if ((currentUserDocument?.rlBuyTariffs?.toList() ?? [])
-          .contains(widget.tariffRef)) {
-        await currentUserReference!.update(createUsersRecordData(
-          rlRecentlyCourse: widget.currentCourse?.reference,
-          rlRecentlyTariff: widget.tariffRef,
-        ));
-        FFAppState().update(() {
-          FFAppState().showContinueCourse = 1;
-        });
-        _model.countLessonsWithHomework = await queryLessonsRecordCount(
-          parent: widget.currentCourse?.reference,
-          queryBuilder: (lessonsRecord) => lessonsRecord
-              .where(
-                'with_homework',
-                isEqualTo: true,
-              )
-              .where(
-                'rl_tariff',
-                arrayContains: widget.tariffRef,
-              ),
-        );
-        if (_model.countLessonsWithHomework! > 0) {
-          _model.allLessonsWithHomework = await queryLessonsRecordOnce(
+      if (loggedIn) {
+        if ((currentUserDocument?.rlBuyTariffs?.toList() ?? [])
+            .contains(widget.tariffRef)) {
+          await currentUserReference!.update(createUsersRecordData(
+            rlRecentlyCourse: widget.currentCourse?.reference,
+            rlRecentlyTariff: widget.tariffRef,
+          ));
+          FFAppState().update(() {
+            FFAppState().showContinueCourse = 1;
+          });
+          _model.countLessonsWithHomework = await queryLessonsRecordCount(
             parent: widget.currentCourse?.reference,
             queryBuilder: (lessonsRecord) => lessonsRecord
                 .where(
@@ -153,17 +141,74 @@ class _ModulesWidgetState extends State<ModulesWidget>
                   isEqualTo: true,
                 )
                 .where(
-                  'rl_usersPassHomework',
-                  arrayContains: currentUserReference,
+                  'rl_tariff',
+                  arrayContains: widget.tariffRef,
                 ),
           );
-          if (_model.countLessonsWithHomework ==
-              _model.allLessonsWithHomework?.length) {
-            setState(() {
-              _model.showSert = true;
-            });
+          if (_model.countLessonsWithHomework! > 0) {
+            _model.allLessonsWithHomework = await queryLessonsRecordOnce(
+              parent: widget.currentCourse?.reference,
+              queryBuilder: (lessonsRecord) => lessonsRecord
+                  .where(
+                    'with_homework',
+                    isEqualTo: true,
+                  )
+                  .where(
+                    'rl_usersPassHomework',
+                    arrayContains: currentUserReference,
+                  ),
+            );
+            if (_model.countLessonsWithHomework ==
+                _model.allLessonsWithHomework
+                    ?.where((e) => e.rlTariff.contains(widget.tariffRef))
+                    .toList()
+                    ?.length) {
+              setState(() {
+                _model.showSert = true;
+              });
+            } else {
+              _model.countLessonWithPhoto = await queryLessonsRecordCount(
+                parent: widget.currentCourse?.reference,
+                queryBuilder: (lessonsRecord) => lessonsRecord
+                    .where(
+                      'with_photo_homework',
+                      isEqualTo: true,
+                    )
+                    .where(
+                      'rl_tariff',
+                      arrayContains: widget.tariffRef,
+                    ),
+              );
+              if (_model.countLessonWithPhoto! > 0) {
+                _model.allLessonsWithPhoto = await queryLessonsRecordOnce(
+                  parent: widget.currentCourse?.reference,
+                  queryBuilder: (lessonsRecord) => lessonsRecord
+                      .where(
+                        'with_photo_homework',
+                        isEqualTo: true,
+                      )
+                      .where(
+                        'rl_usersPassHomework',
+                        arrayContains: currentUserReference,
+                      ),
+                );
+                if (_model.countLessonWithPhoto ==
+                    _model.allLessonsWithPhoto
+                        ?.where((e) => e.rlTariff.contains(widget.tariffRef))
+                        .toList()
+                        ?.length) {
+                  setState(() {
+                    _model.showSert = true;
+                  });
+                } else {
+                  return;
+                }
+              } else {
+                return;
+              }
+            }
           } else {
-            _model.countLessonWithPhoto = await queryLessonsRecordCount(
+            _model.countLessonWithPhoto2 = await queryLessonsRecordCount(
               parent: widget.currentCourse?.reference,
               queryBuilder: (lessonsRecord) => lessonsRecord
                   .where(
@@ -175,8 +220,8 @@ class _ModulesWidgetState extends State<ModulesWidget>
                     arrayContains: widget.tariffRef,
                   ),
             );
-            if (_model.countLessonWithPhoto! > 0) {
-              _model.allLessonsWithPhoto = await queryLessonsRecordOnce(
+            if (_model.countLessonWithPhoto2! > 0) {
+              _model.allLessonsWithPhoto2 = await queryLessonsRecordOnce(
                 parent: widget.currentCourse?.reference,
                 queryBuilder: (lessonsRecord) => lessonsRecord
                     .where(
@@ -188,8 +233,11 @@ class _ModulesWidgetState extends State<ModulesWidget>
                       arrayContains: currentUserReference,
                     ),
               );
-              if (_model.countLessonWithPhoto ==
-                  _model.allLessonsWithPhoto?.length) {
+              if (_model.countLessonWithPhoto2 ==
+                  _model.allLessonsWithPhoto2
+                      ?.where((e) => e.rlTariff.contains(widget.tariffRef))
+                      .toList()
+                      ?.length) {
                 setState(() {
                   _model.showSert = true;
                 });
@@ -201,45 +249,12 @@ class _ModulesWidgetState extends State<ModulesWidget>
             }
           }
         } else {
-          _model.countLessonWithPhoto2 = await queryLessonsRecordCount(
-            parent: widget.currentCourse?.reference,
-            queryBuilder: (lessonsRecord) => lessonsRecord
-                .where(
-                  'with_photo_homework',
-                  isEqualTo: true,
-                )
-                .where(
-                  'rl_tariff',
-                  arrayContains: widget.tariffRef,
-                ),
-          );
-          if (_model.countLessonWithPhoto2! > 0) {
-            _model.allLessonsWithPhoto2 = await queryLessonsRecordOnce(
-              parent: widget.currentCourse?.reference,
-              queryBuilder: (lessonsRecord) => lessonsRecord
-                  .where(
-                    'with_photo_homework',
-                    isEqualTo: true,
-                  )
-                  .where(
-                    'rl_usersPassHomework',
-                    arrayContains: currentUserReference,
-                  ),
-            );
-            if (_model.countLessonWithPhoto2 ==
-                _model.allLessonsWithPhoto2?.length) {
-              setState(() {
-                _model.showSert = true;
-              });
-            } else {
-              return;
-            }
-          } else {
-            return;
-          }
+          context.pushNamed('Courses_Old');
+
+          return;
         }
       } else {
-        context.pushNamed('Courses_Old');
+        context.pushNamed('Log_In');
 
         return;
       }
@@ -278,7 +293,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
         body: Stack(
           children: [
             Align(
-              alignment: AlignmentDirectional(0.00, -1.00),
+              alignment: AlignmentDirectional(0.0, -1.0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                 child: Container(
@@ -340,7 +355,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.00, 0.00),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             mainAxisAlignment:
@@ -416,7 +431,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                         setState(() {}),
                                                     child: ButtonWidget(
                                                       text:
-                                                          'Скачать сертификат 🔖',
+                                                          'Скачать сертификат',
                                                       btnColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -448,7 +463,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                   child: Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            -1.00, 0.00),
+                                                            -1.0, 0.0),
                                                     child: Container(
                                                       width: 1900.0,
                                                       height: 20.0,
@@ -457,7 +472,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                       child: Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -1.00, 0.00),
+                                                                -1.0, 0.0),
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.min,
@@ -487,8 +502,8 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        -1.00,
-                                                                        0.00),
+                                                                        -1.0,
+                                                                        0.0),
                                                                 child: FutureBuilder<
                                                                     List<
                                                                         LessonsRecord>>(
@@ -692,8 +707,8 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      -1.00,
-                                                                      -1.00),
+                                                                      -1.0,
+                                                                      -1.0),
                                                               child: Padding(
                                                                 padding: EdgeInsetsDirectional
                                                                     .fromSTEB(
@@ -804,7 +819,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -1.00, 0.00),
+                                                                -1.0, 0.0),
                                                         child: Container(
                                                           width: 1000.0,
                                                           decoration:
@@ -932,7 +947,6 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                                   currentState: 0,
                                                                                                   currentLesson: allLesWithModuleItem,
                                                                                                   userDoc: stackUsersRecord,
-                                                                                                  isFree: widget.currentCourse!.isFree,
                                                                                                 ),
                                                                                               ),
                                                                                             if (valueOrDefault<bool>(
@@ -946,16 +960,14 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                                   hoverColor: Colors.transparent,
                                                                                                   highlightColor: Colors.transparent,
                                                                                                   onTap: () async {
-                                                                                                    await showAlignedDialog(
+                                                                                                    await showDialog(
                                                                                                       barrierDismissible: false,
                                                                                                       context: context,
-                                                                                                      isGlobal: true,
-                                                                                                      avoidOverflow: false,
-                                                                                                      targetAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                                                      followerAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                                       builder: (dialogContext) {
-                                                                                                        return Material(
-                                                                                                          color: Colors.transparent,
+                                                                                                        return Dialog(
+                                                                                                          insetPadding: EdgeInsets.zero,
+                                                                                                          backgroundColor: Colors.transparent,
+                                                                                                          alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                                           child: WebViewAware(
                                                                                                               child: GestureDetector(
                                                                                                             onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -970,7 +982,6 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                                     currentState: 1,
                                                                                                     currentLesson: allLesWithModuleItem,
                                                                                                     userDoc: stackUsersRecord,
-                                                                                                    isFree: widget.currentCourse!.isFree,
                                                                                                   ),
                                                                                                 ),
                                                                                               ),
@@ -986,16 +997,14 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                             hoverColor: Colors.transparent,
                                                                                             highlightColor: Colors.transparent,
                                                                                             onTap: () async {
-                                                                                              await showAlignedDialog(
+                                                                                              await showDialog(
                                                                                                 barrierDismissible: false,
                                                                                                 context: context,
-                                                                                                isGlobal: true,
-                                                                                                avoidOverflow: false,
-                                                                                                targetAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                                                followerAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                                 builder: (dialogContext) {
-                                                                                                  return Material(
-                                                                                                    color: Colors.transparent,
+                                                                                                  return Dialog(
+                                                                                                    insetPadding: EdgeInsets.zero,
+                                                                                                    backgroundColor: Colors.transparent,
+                                                                                                    alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                                     child: WebViewAware(
                                                                                                         child: GestureDetector(
                                                                                                       onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -1010,7 +1019,6 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                               currentState: 2,
                                                                                               currentLesson: allLesWithModuleItem,
                                                                                               userDoc: stackUsersRecord,
-                                                                                              isFree: widget.currentCourse!.isFree,
                                                                                             ),
                                                                                           ),
                                                                                         ),
@@ -1060,11 +1068,18 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                     highlightColor:
                                                         Colors.transparent,
                                                     onTap: () async {
-                                                      await action_blocks.cert(
+                                                      _model.pdfMobile =
+                                                          await actions
+                                                              .createPdf(
                                                         context,
-                                                        course: widget
-                                                            .currentCourse,
+                                                        '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.surname, '')}',
+                                                        functions.dateOnRussian(
+                                                            getCurrentTimestamp)!,
+                                                        widget.currentCourse!
+                                                            .name,
                                                       );
+
+                                                      setState(() {});
                                                     },
                                                     child: wrapWithModel(
                                                       model: _model
@@ -1189,7 +1204,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.00, 0.00),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             mainAxisAlignment:
@@ -1265,7 +1280,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                         setState(() {}),
                                                     child: ButtonWidget(
                                                       text:
-                                                          'Скачать сертификат 🔖',
+                                                          'Скачать сертификат',
                                                       btnColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -1297,7 +1312,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                   child: Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            -1.00, 0.00),
+                                                            -1.0, 0.0),
                                                     child: Container(
                                                       width: 1900.0,
                                                       height: 20.0,
@@ -1306,7 +1321,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                       child: Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -1.00, 0.00),
+                                                                -1.0, 0.0),
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.min,
@@ -1333,8 +1348,8 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      -1.00,
-                                                                      0.00),
+                                                                      -1.0,
+                                                                      0.0),
                                                               child: FutureBuilder<
                                                                   List<
                                                                       LessonsRecord>>(
@@ -1431,7 +1446,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                         Align(
                                                           alignment:
                                                               AlignmentDirectional(
-                                                                  -1.00, 0.00),
+                                                                  -1.0, 0.0),
                                                           child: FutureBuilder<
                                                               List<
                                                                   LessonsRecord>>(
@@ -1554,7 +1569,6 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                                 currentState: 0,
                                                                                                 currentLesson: allLessonsWithoutModuleItem,
                                                                                                 userDoc: stackUsersRecord,
-                                                                                                isFree: widget.currentCourse!.isFree,
                                                                                               ),
                                                                                             ),
                                                                                           if (valueOrDefault<bool>(
@@ -1568,16 +1582,14 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                                 hoverColor: Colors.transparent,
                                                                                                 highlightColor: Colors.transparent,
                                                                                                 onTap: () async {
-                                                                                                  await showAlignedDialog(
+                                                                                                  await showDialog(
                                                                                                     barrierDismissible: false,
                                                                                                     context: context,
-                                                                                                    isGlobal: true,
-                                                                                                    avoidOverflow: false,
-                                                                                                    targetAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                                                    followerAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                                     builder: (dialogContext) {
-                                                                                                      return Material(
-                                                                                                        color: Colors.transparent,
+                                                                                                      return Dialog(
+                                                                                                        insetPadding: EdgeInsets.zero,
+                                                                                                        backgroundColor: Colors.transparent,
+                                                                                                        alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                                         child: WebViewAware(
                                                                                                             child: GestureDetector(
                                                                                                           onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -1592,7 +1604,6 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                                   currentState: 1,
                                                                                                   currentLesson: allLessonsWithoutModuleItem,
                                                                                                   userDoc: stackUsersRecord,
-                                                                                                  isFree: widget.currentCourse!.isFree,
                                                                                                 ),
                                                                                               ),
                                                                                             ),
@@ -1608,16 +1619,14 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                           hoverColor: Colors.transparent,
                                                                                           highlightColor: Colors.transparent,
                                                                                           onTap: () async {
-                                                                                            await showAlignedDialog(
+                                                                                            await showDialog(
                                                                                               barrierDismissible: false,
                                                                                               context: context,
-                                                                                              isGlobal: true,
-                                                                                              avoidOverflow: false,
-                                                                                              targetAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                                              followerAnchor: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                               builder: (dialogContext) {
-                                                                                                return Material(
-                                                                                                  color: Colors.transparent,
+                                                                                                return Dialog(
+                                                                                                  insetPadding: EdgeInsets.zero,
+                                                                                                  backgroundColor: Colors.transparent,
+                                                                                                  alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                                                   child: WebViewAware(
                                                                                                       child: GestureDetector(
                                                                                                     onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
@@ -1632,7 +1641,6 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                             currentState: 2,
                                                                                             currentLesson: allLessonsWithoutModuleItem,
                                                                                             userDoc: stackUsersRecord,
-                                                                                            isFree: widget.currentCourse!.isFree,
                                                                                           ),
                                                                                         ),
                                                                                       ),
@@ -1710,7 +1718,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                         highlightColor:
                                                             Colors.transparent,
                                                         onTap: () async {
-                                                          _model.pdfMobile =
+                                                          _model.pdfMobileWithModules =
                                                               await actions
                                                                   .createPdf(
                                                             context,
@@ -1805,7 +1813,6 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                 currentLesson: allLessonWithoutModuleMobileItem,
                                                                                 index: allLessonWithoutModuleMobileIndex,
                                                                                 countLessons: modulesLessonsMobileLessonsRecordList.length,
-                                                                                isFree: widget.currentCourse!.isFree,
                                                                               ),
                                                                             ),
                                                                           if (valueOrDefault<
@@ -1846,7 +1853,6 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                                 currentLesson: allLessonWithoutModuleMobileItem,
                                                                                 index: allLessonWithoutModuleMobileIndex,
                                                                                 countLessons: modulesLessonsMobileLessonsRecordList.length,
-                                                                                isFree: widget.currentCourse!.isFree,
                                                                               ),
                                                                             ),
                                                                         ],
@@ -1915,9 +1921,6 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                                                               allLessonWithoutModuleMobileIndex,
                                                                           countLessons:
                                                                               modulesLessonsMobileLessonsRecordList.length,
-                                                                          isFree: widget
-                                                                              .currentCourse!
-                                                                              .isFree,
                                                                         ),
                                                                       ),
                                                                     ),
@@ -1942,7 +1945,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                                     ),
                                   ),
                                 Align(
-                                  alignment: AlignmentDirectional(0.00, -1.00),
+                                  alignment: AlignmentDirectional(0.0, -1.0),
                                   child: wrapWithModel(
                                     model: _model.appBarModel,
                                     updateCallback: () => setState(() {}),
@@ -1967,7 +1970,7 @@ class _ModulesWidgetState extends State<ModulesWidget>
                   phone: false,
                 ))
               Align(
-                alignment: AlignmentDirectional(1.00, 1.00),
+                alignment: AlignmentDirectional(1.0, 1.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

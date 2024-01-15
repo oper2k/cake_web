@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/api_requests/api_manager.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
@@ -9,10 +8,8 @@ import '/courses/take_first_less_mobile/take_first_less_mobile_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 
 Future navigationForOpenLesson(
@@ -42,10 +39,6 @@ Future navigationForOpenLesson(
         'tariff': serializeParam(
           tariff,
           ParamType.DocumentReference,
-        ),
-        'freeCourse': serializeParam(
-          false,
-          ParamType.bool,
         ),
       }.withoutNulls,
       extra: <String, dynamic>{
@@ -78,10 +71,6 @@ Future navigationForOpenLesson(
           'tariff': serializeParam(
             tariff,
             ParamType.DocumentReference,
-          ),
-          'freeCourse': serializeParam(
-            false,
-            ParamType.bool,
           ),
         }.withoutNulls,
         extra: <String, dynamic>{
@@ -127,44 +116,6 @@ Future navigationForOpenLesson(
         );
       }
     }
-  }
-}
-
-Future cert(
-  BuildContext context, {
-  CoursesRecord? course,
-}) async {
-  ApiCallResponse? apiResultsl12;
-
-  apiResultsl12 = await CertCall.call(
-    fio:
-        '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.surname, '')}',
-    kurs: course?.name,
-    date: dateTimeFormat(
-      'd/M/y',
-      getCurrentTimestamp,
-      locale: FFLocalizations.of(context).languageCode,
-    ),
-  );
-  if ((apiResultsl12?.succeeded ?? true)) {
-    await launchURL(CertCall.link(
-      (apiResultsl12?.jsonBody ?? ''),
-    ).toString());
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          (apiResultsl12?.statusCode ?? 200).toString(),
-          style: GoogleFonts.getFont(
-            'Inter',
-            color: FlutterFlowTheme.of(context).primaryText,
-            fontSize: 15.0,
-          ),
-        ),
-        duration: Duration(milliseconds: 4000),
-        backgroundColor: Color(0xFFEE8B60),
-      ),
-    );
   }
 }
 
@@ -258,24 +209,20 @@ Future sendHomework(
   int? indexLesson,
   ChatsRecord? currentChat,
   required DocumentReference? currentTariff,
-  required bool? freeCourse,
 }) async {
   ChatsRecord? newChatUser;
 
   if (currentChat != null) {
     if (MediaQuery.sizeOf(context).width >= kBreakpointLarge) {
-      await showAlignedDialog(
+      await showDialog(
         barrierDismissible: false,
         context: context,
-        isGlobal: true,
-        avoidOverflow: false,
-        targetAnchor:
-            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-        followerAnchor:
-            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
         builder: (dialogContext) {
-          return Material(
-            color: Colors.transparent,
+          return Dialog(
+            insetPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            alignment: AlignmentDirectional(0.0, 0.0)
+                .resolve(Directionality.of(context)),
             child: WebViewAware(
                 child: HomeworkAddDesktopWidget(
               onlyPhoto: currentLesson!.withPhotoHomework,
@@ -294,10 +241,6 @@ Future sendHomework(
           ),
           'photoOnly': serializeParam(
             currentLesson?.withPhotoHomework,
-            ParamType.bool,
-          ),
-          'courseFree': serializeParam(
-            freeCourse,
             ParamType.bool,
           ),
           'currentTariff': serializeParam(
@@ -341,18 +284,15 @@ Future sendHomework(
         chatsRecordReference);
     await Future.delayed(const Duration(milliseconds: 300));
     if (MediaQuery.sizeOf(context).width >= kBreakpointLarge) {
-      await showAlignedDialog(
+      await showDialog(
         barrierDismissible: false,
         context: context,
-        isGlobal: true,
-        avoidOverflow: false,
-        targetAnchor:
-            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-        followerAnchor:
-            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
         builder: (dialogContext) {
-          return Material(
-            color: Colors.transparent,
+          return Dialog(
+            insetPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            alignment: AlignmentDirectional(0.0, 0.0)
+                .resolve(Directionality.of(context)),
             child: WebViewAware(
                 child: HomeworkAddDesktopWidget(
               onlyPhoto: currentLesson!.withPhotoHomework,
@@ -373,10 +313,6 @@ Future sendHomework(
             currentLesson?.withPhotoHomework,
             ParamType.bool,
           ),
-          'courseFree': serializeParam(
-            freeCourse,
-            ParamType.bool,
-          ),
           'currentTariff': serializeParam(
             currentTariff,
             ParamType.DocumentReference,
@@ -391,112 +327,6 @@ Future sendHomework(
           ),
         },
       );
-    }
-  }
-}
-
-Future navigationForOpenLessonFree(
-  BuildContext context, {
-  required LessonsRecord? currentLesson,
-  required int? indexInList,
-  required UsersRecord? userDoc,
-  required int? countLessons,
-}) async {
-  if (indexInList == 0) {
-    context.pushNamed(
-      'Lesson',
-      queryParameters: {
-        'currentLesson': serializeParam(
-          currentLesson,
-          ParamType.Document,
-        ),
-        'lessonIndex': serializeParam(
-          indexInList,
-          ParamType.int,
-        ),
-        'countLessons': serializeParam(
-          countLessons,
-          ParamType.int,
-        ),
-        'freeCourse': serializeParam(
-          true,
-          ParamType.bool,
-        ),
-      }.withoutNulls,
-      extra: <String, dynamic>{
-        'currentLesson': currentLesson,
-        kTransitionInfoKey: TransitionInfo(
-          hasTransition: true,
-          transitionType: PageTransitionType.fade,
-          duration: Duration(milliseconds: 0),
-        ),
-      },
-    );
-  } else {
-    if (userDoc!.rlFinishedCourseFirstLesson
-        .contains(currentLesson?.parentReference)) {
-      context.pushNamed(
-        'Lesson',
-        queryParameters: {
-          'currentLesson': serializeParam(
-            currentLesson,
-            ParamType.Document,
-          ),
-          'lessonIndex': serializeParam(
-            indexInList,
-            ParamType.int,
-          ),
-          'countLessons': serializeParam(
-            countLessons,
-            ParamType.int,
-          ),
-          'freeCourse': serializeParam(
-            true,
-            ParamType.bool,
-          ),
-        }.withoutNulls,
-        extra: <String, dynamic>{
-          'currentLesson': currentLesson,
-          kTransitionInfoKey: TransitionInfo(
-            hasTransition: true,
-            transitionType: PageTransitionType.fade,
-            duration: Duration(milliseconds: 0),
-          ),
-        },
-      );
-    } else {
-      if (MediaQuery.sizeOf(context).width <= kBreakpointSmall) {
-        await showModalBottomSheet(
-          isScrollControlled: true,
-          backgroundColor: Colors.transparent,
-          isDismissible: false,
-          enableDrag: false,
-          useSafeArea: true,
-          context: context,
-          builder: (context) {
-            return WebViewAware(
-                child: Padding(
-              padding: MediaQuery.viewInsetsOf(context),
-              child: TakeFirstLessMobileWidget(),
-            ));
-          },
-        );
-      } else {
-        await showModalBottomSheet(
-          isScrollControlled: true,
-          backgroundColor: Colors.transparent,
-          isDismissible: false,
-          enableDrag: false,
-          context: context,
-          builder: (context) {
-            return WebViewAware(
-                child: Padding(
-              padding: MediaQuery.viewInsetsOf(context),
-              child: TakeFirstLessWidget(),
-            ));
-          },
-        );
-      }
     }
   }
 }

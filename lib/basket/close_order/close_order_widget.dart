@@ -5,6 +5,7 @@ import '/components/button_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -99,7 +100,7 @@ class _CloseOrderWidgetState extends State<CloseOrderWidget> {
                     height: 24.0,
                     decoration: BoxDecoration(),
                     child: Align(
-                      alignment: AlignmentDirectional(0.00, 0.00),
+                      alignment: AlignmentDirectional(0.0, 0.0),
                       child: Icon(
                         FFIcons.kdown,
                         color: FlutterFlowTheme.of(context).secondaryText,
@@ -171,7 +172,7 @@ class _CloseOrderWidgetState extends State<CloseOrderWidget> {
                                       final courseNameCoursesRecord =
                                           snapshot.data!;
                                       return Text(
-                                        'Курс \"${courseNameCoursesRecord.name}\"',
+                                        'Курс «${courseNameCoursesRecord.name}»',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall,
                                       );
@@ -236,37 +237,6 @@ class _CloseOrderWidgetState extends State<CloseOrderWidget> {
                               !UsersRecordDocumentEquality().equals(
                                   containerUsersRecord,
                                   _model.containerPreviousSnapshot)) {
-                            if (containerUsersRecord.rlBuyTariffs
-                                    .where((e) =>
-                                        FFAppState().basketTariffs.contains(e))
-                                    .toList()
-                                    .length ==
-                                FFAppState().basketTariffs.length) {
-                              if (Navigator.of(context).canPop()) {
-                                context.pop();
-                              }
-                              context.pushNamed(
-                                'Complete',
-                                queryParameters: {
-                                  'tariffsInBasket': serializeParam(
-                                    widget.tariffsDoc,
-                                    ParamType.Document,
-                                    true,
-                                  ),
-                                }.withoutNulls,
-                                extra: <String, dynamic>{
-                                  'tariffsInBasket': widget.tariffsDoc,
-                                  kTransitionInfoKey: TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                  ),
-                                },
-                              );
-                            } else {
-                              return;
-                            }
-
                             setState(() {});
                           }
                           _model.containerPreviousSnapshot =
@@ -299,6 +269,37 @@ class _CloseOrderWidgetState extends State<CloseOrderWidget> {
                               await actions.showPaymentWidget(
                                 widget.tariffsDoc!.toList(),
                               );
+                              if (containerUsersRecord.rlBuyTariffs
+                                      .where((e) => FFAppState()
+                                          .basketTariffs
+                                          .contains(e))
+                                      .toList()
+                                      .length ==
+                                  FFAppState().basketTariffs.length) {
+                                if (Navigator.of(context).canPop()) {
+                                  context.pop();
+                                }
+                                context.pushNamed(
+                                  'Complete',
+                                  queryParameters: {
+                                    'tariffsInBasket': serializeParam(
+                                      widget.tariffsDoc,
+                                      ParamType.Document,
+                                      true,
+                                    ),
+                                  }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    'tariffsInBasket': widget.tariffsDoc,
+                                    kTransitionInfoKey: TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 0),
+                                    ),
+                                  },
+                                );
+                              } else {
+                                return;
+                              }
                             },
                             child: wrapWithModel(
                               model: _model.buttonModel1,

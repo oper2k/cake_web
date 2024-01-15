@@ -68,7 +68,7 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Align(
-          alignment: AlignmentDirectional(-1.00, 0.00),
+          alignment: AlignmentDirectional(-1.0, 0.0),
           child: Text(
             'Корзина',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -83,7 +83,7 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
           ),
         ),
         Align(
-          alignment: AlignmentDirectional(-1.00, 0.00),
+          alignment: AlignmentDirectional(-1.0, 0.0),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 12.0),
             child: Text(
@@ -254,42 +254,6 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
                                               containerUsersRecord,
                                               _model
                                                   .containerPreviousSnapshot)) {
-                                        if (containerUsersRecord.rlBuyTariffs
-                                                .where((e) => FFAppState()
-                                                    .basketTariffs
-                                                    .contains(e))
-                                                .toList()
-                                                .length ==
-                                            FFAppState().basketTariffs.length) {
-                                          if (Navigator.of(context).canPop()) {
-                                            context.pop();
-                                          }
-                                          context.pushNamed(
-                                            'Complete',
-                                            queryParameters: {
-                                              'tariffsInBasket': serializeParam(
-                                                widget.tariffsDoc,
-                                                ParamType.Document,
-                                                true,
-                                              ),
-                                            }.withoutNulls,
-                                            extra: <String, dynamic>{
-                                              'tariffsInBasket':
-                                                  widget.tariffsDoc,
-                                              kTransitionInfoKey:
-                                                  TransitionInfo(
-                                                hasTransition: true,
-                                                transitionType:
-                                                    PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                              ),
-                                            },
-                                          );
-                                        } else {
-                                          return;
-                                        }
-
                                         setState(() {});
                                       }
                                       _model.containerPreviousSnapshot =
@@ -322,6 +286,45 @@ class _CoursesListBasketWidgetState extends State<CoursesListBasketWidget> {
                                           await actions.showPaymentWidget(
                                             widget.tariffsDoc!.toList(),
                                           );
+                                          if (containerUsersRecord.rlBuyTariffs
+                                                  .where((e) => FFAppState()
+                                                      .basketTariffs
+                                                      .contains(e))
+                                                  .toList()
+                                                  .length ==
+                                              FFAppState()
+                                                  .basketTariffs
+                                                  .length) {
+                                            if (Navigator.of(context)
+                                                .canPop()) {
+                                              context.pop();
+                                            }
+                                            context.pushNamed(
+                                              'Complete',
+                                              queryParameters: {
+                                                'tariffsInBasket':
+                                                    serializeParam(
+                                                  widget.tariffsDoc,
+                                                  ParamType.Document,
+                                                  true,
+                                                ),
+                                              }.withoutNulls,
+                                              extra: <String, dynamic>{
+                                                'tariffsInBasket':
+                                                    widget.tariffsDoc,
+                                                kTransitionInfoKey:
+                                                    TransitionInfo(
+                                                  hasTransition: true,
+                                                  transitionType:
+                                                      PageTransitionType.fade,
+                                                  duration:
+                                                      Duration(milliseconds: 0),
+                                                ),
+                                              },
+                                            );
+                                          } else {
+                                            return;
+                                          }
                                         },
                                         child: wrapWithModel(
                                           model: _model.buttonModel1,

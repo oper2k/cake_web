@@ -1,3 +1,4 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/app_bar_widget.dart';
@@ -20,7 +21,6 @@ import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'modules_widget.dart' show ModulesWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +60,8 @@ class ModulesModel extends FlutterFlowModel<ModulesWidget> {
   FFUploadedFile? pdfTablet;
   // Model for infoCourseCompMobile component.
   late InfoCourseCompMobileModel infoCourseCompMobileModel1;
+  // Stores action output result for [Custom Action - createPdf] action in infoCourseCompMobile widget.
+  FFUploadedFile? pdfMobile;
   // Model for button component.
   late ButtonModel buttonModel2;
   // Stores action output result for [Custom Action - createPdf] action in button widget.
@@ -67,7 +69,7 @@ class ModulesModel extends FlutterFlowModel<ModulesWidget> {
   // Model for infoCourseCompMobile component.
   late InfoCourseCompMobileModel infoCourseCompMobileModel2;
   // Stores action output result for [Custom Action - createPdf] action in infoCourseCompMobile widget.
-  FFUploadedFile? pdfMobile;
+  FFUploadedFile? pdfMobileWithModules;
   // Model for appBar component.
   late AppBarModel appBarModel;
   // Model for infoCourseCompleted component.

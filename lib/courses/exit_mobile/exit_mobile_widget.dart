@@ -46,7 +46,7 @@ class _ExitMobileWidgetState extends State<ExitMobileWidget> {
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.00, 1.00),
+      alignment: AlignmentDirectional(0.0, 1.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -59,7 +59,7 @@ class _ExitMobileWidgetState extends State<ExitMobileWidget> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
+          padding: EdgeInsets.all(24.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

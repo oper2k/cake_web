@@ -94,7 +94,7 @@ class _BasketWidgetState extends State<BasketWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Align(
-          alignment: AlignmentDirectional(0.00, -1.00),
+          alignment: AlignmentDirectional(0.0, -1.0),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
             child: FutureBuilder<List<TariffsRecord>>(
@@ -240,7 +240,7 @@ class _BasketWidgetState extends State<BasketWidget> {
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -1.00, 0.00),
+                                                                -1.0, 0.0),
                                                         child: Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
@@ -423,48 +423,6 @@ class _BasketWidgetState extends State<BasketWidget> {
                                                                         !UsersRecordDocumentEquality().equals(
                                                                             containerUsersRecord,
                                                                             _model.containerPreviousSnapshot)) {
-                                                                      if (containerUsersRecord
-                                                                              .rlBuyTariffs
-                                                                              .where((e) => FFAppState().basketTariffs.contains(
-                                                                                  e))
-                                                                              .toList()
-                                                                              .length ==
-                                                                          FFAppState()
-                                                                              .basketTariffs
-                                                                              .length) {
-                                                                        if (Navigator.of(context)
-                                                                            .canPop()) {
-                                                                          context
-                                                                              .pop();
-                                                                        }
-                                                                        context
-                                                                            .pushNamed(
-                                                                          'Complete',
-                                                                          queryParameters:
-                                                                              {
-                                                                            'tariffsInBasket':
-                                                                                serializeParam(
-                                                                              containerTariffsRecordList.where((e) => FFAppState().basketTariffs.contains(e.reference)).toList(),
-                                                                              ParamType.Document,
-                                                                              true,
-                                                                            ),
-                                                                          }.withoutNulls,
-                                                                          extra: <String,
-                                                                              dynamic>{
-                                                                            'tariffsInBasket':
-                                                                                containerTariffsRecordList.where((e) => FFAppState().basketTariffs.contains(e.reference)).toList(),
-                                                                            kTransitionInfoKey:
-                                                                                TransitionInfo(
-                                                                              hasTransition: true,
-                                                                              transitionType: PageTransitionType.fade,
-                                                                              duration: Duration(milliseconds: 0),
-                                                                            ),
-                                                                          },
-                                                                        );
-                                                                      } else {
-                                                                        return;
-                                                                      }
-
                                                                       setState(
                                                                           () {});
                                                                     }
@@ -521,6 +479,36 @@ class _BasketWidgetState extends State<BasketWidget> {
                                                                               .where((e) => FFAppState().basketTariffs.contains(e.reference))
                                                                               .toList(),
                                                                         );
+                                                                        if (containerUsersRecord.rlBuyTariffs.where((e) => FFAppState().basketTariffs.contains(e)).toList().length ==
+                                                                            FFAppState().basketTariffs.length) {
+                                                                          if (Navigator.of(context)
+                                                                              .canPop()) {
+                                                                            context.pop();
+                                                                          }
+                                                                          context
+                                                                              .pushNamed(
+                                                                            'Complete',
+                                                                            queryParameters:
+                                                                                {
+                                                                              'tariffsInBasket': serializeParam(
+                                                                                containerTariffsRecordList.where((e) => FFAppState().basketTariffs.contains(e.reference)).toList(),
+                                                                                ParamType.Document,
+                                                                                true,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                            extra: <String,
+                                                                                dynamic>{
+                                                                              'tariffsInBasket': containerTariffsRecordList.where((e) => FFAppState().basketTariffs.contains(e.reference)).toList(),
+                                                                              kTransitionInfoKey: TransitionInfo(
+                                                                                hasTransition: true,
+                                                                                transitionType: PageTransitionType.fade,
+                                                                                duration: Duration(milliseconds: 0),
+                                                                              ),
+                                                                            },
+                                                                          );
+                                                                        } else {
+                                                                          return;
+                                                                        }
                                                                       },
                                                                       child:
                                                                           wrapWithModel(

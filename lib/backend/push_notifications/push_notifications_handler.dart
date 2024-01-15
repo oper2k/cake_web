@@ -152,7 +152,6 @@ final parametersBuilderMap =
           'photoOnly': getParameter<bool>(data, 'photoOnly'),
           'currentChat': await getDocumentParameter<ChatsRecord>(
               data, 'currentChat', ChatsRecord.fromSnapshot),
-          'courseFree': getParameter<bool>(data, 'courseFree'),
           'currentTariff':
               getParameter<DocumentReference>(data, 'currentTariff'),
         },
@@ -164,7 +163,6 @@ final parametersBuilderMap =
               data, 'currentLesson', LessonsRecord.fromSnapshot),
           'countLesson': getParameter<int>(data, 'countLesson'),
           'lessonIndx': getParameter<int>(data, 'lessonIndx'),
-          'courseFree': getParameter<bool>(data, 'courseFree'),
           'currentTariff':
               getParameter<DocumentReference>(data, 'currentTariff'),
         },
@@ -176,7 +174,6 @@ final parametersBuilderMap =
           'lessonIndex': getParameter<int>(data, 'lessonIndex'),
           'countLessons': getParameter<int>(data, 'countLessons'),
           'tariff': getParameter<DocumentReference>(data, 'tariff'),
-          'freeCourse': getParameter<bool>(data, 'freeCourse'),
         },
       ),
   'Homework': (data) async => ParameterData(
@@ -189,16 +186,9 @@ final parametersBuilderMap =
           'tariff': getParameter<DocumentReference>(data, 'tariff'),
         },
       ),
-  'ModulesFree': (data) async => ParameterData(
-        allParams: {
-          'currentCourse': await getDocumentParameter<CoursesRecord>(
-              data, 'currentCourse', CoursesRecord.fromSnapshot),
-        },
-      ),
   'Gallerry': (data) async => ParameterData(
         allParams: {
           'currentIndex': getParameter<int>(data, 'currentIndex'),
-          'courseFree': getParameter<bool>(data, 'courseFree'),
           'tariff': getParameter<DocumentReference>(data, 'tariff'),
         },
       ),

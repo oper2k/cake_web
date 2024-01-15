@@ -1,3 +1,4 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/app_bar_widget.dart';
@@ -23,14 +24,12 @@ class HomeworkConfirmedMobileWidget extends StatefulWidget {
     this.currentLesson,
     required this.countLesson,
     required this.lessonIndx,
-    required this.courseFree,
     required this.currentTariff,
   }) : super(key: key);
 
   final LessonsRecord? currentLesson;
   final int? countLesson;
   final int? lessonIndx;
-  final bool? courseFree;
   final DocumentReference? currentTariff;
 
   @override
@@ -51,18 +50,20 @@ class _HomeworkConfirmedMobileWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (widget.courseFree == true) {
+      if (loggedIn) {
+        if ((currentUserDocument?.rlBuyTariffs?.toList() ?? [])
+            .contains(widget.currentTariff)) {
+          return;
+        }
+
+        context.pushNamed('Courses_Old');
+
+        return;
+      } else {
+        context.pushNamed('Log_In');
+
         return;
       }
-
-      if ((currentUserDocument?.rlBuyTariffs?.toList() ?? [])
-          .contains(widget.currentTariff)) {
-        return;
-      }
-
-      context.pushNamed('Courses_Old');
-
-      return;
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -141,7 +142,7 @@ class _HomeworkConfirmedMobileWidgetState
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(-1.00, 0.00),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,8 +154,17 @@ class _HomeworkConfirmedMobileWidgetState
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context.safePop();
-                                        setState(() {
-                                          FFAppState().agreeRules = 0;
+
+                                        await columnUsersRecord.reference
+                                            .update({
+                                          ...mapToFirestore(
+                                            {
+                                              'rl_confirmed_rules_lessons':
+                                                  FieldValue.arrayRemove([
+                                                widget.currentLesson?.reference
+                                              ]),
+                                            },
+                                          ),
                                         });
                                       },
                                       child: Container(
@@ -339,15 +349,27 @@ class _HomeworkConfirmedMobileWidgetState
                                   children: [
                                     Stack(
                                       children: [
-                                        if (FFAppState().agreeRules == 0)
+                                        if (!columnUsersRecord
+                                            .rlConfirmedRulesLessons
+                                            .contains(widget
+                                                .currentLesson?.reference))
                                           InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              FFAppState().update(() {
-                                                FFAppState().agreeRules = 1;
+                                              await columnUsersRecord.reference
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'rl_confirmed_rules_lessons':
+                                                        FieldValue.arrayUnion([
+                                                      widget.currentLesson
+                                                          ?.reference
+                                                    ]),
+                                                  },
+                                                ),
                                               });
                                             },
                                             child: Container(
@@ -368,15 +390,27 @@ class _HomeworkConfirmedMobileWidgetState
                                               ),
                                             ),
                                           ),
-                                        if (FFAppState().agreeRules == 1)
+                                        if (columnUsersRecord
+                                            .rlConfirmedRulesLessons
+                                            .contains(widget
+                                                .currentLesson?.reference))
                                           InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              FFAppState().update(() {
-                                                FFAppState().agreeRules = 0;
+                                              await columnUsersRecord.reference
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'rl_confirmed_rules_lessons':
+                                                        FieldValue.arrayRemove([
+                                                      widget.currentLesson
+                                                          ?.reference
+                                                    ]),
+                                                  },
+                                                ),
                                               });
                                             },
                                             child: Container(
@@ -432,7 +466,8 @@ class _HomeworkConfirmedMobileWidgetState
                         ),
                       ),
                     ),
-                    if (FFAppState().agreeRules == 1)
+                    if (columnUsersRecord.rlConfirmedRulesLessons
+                        .contains(widget.currentLesson?.reference))
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 80.0),
@@ -443,7 +478,7 @@ class _HomeworkConfirmedMobileWidgetState
                                     [])
                                 .contains(widget.currentLesson?.reference))
                               Align(
-                                alignment: AlignmentDirectional(0.00, 1.00),
+                                alignment: AlignmentDirectional(0.0, 1.0),
                                 child: AuthUserStreamWidget(
                                   builder: (context) => wrapWithModel(
                                     model: _model.buttonModel1,
@@ -461,7 +496,7 @@ class _HomeworkConfirmedMobileWidgetState
                             if (!columnUsersRecord.rlFinishedLessons
                                 .contains(widget.currentLesson?.reference))
                               Align(
-                                alignment: AlignmentDirectional(0.00, 1.00),
+                                alignment: AlignmentDirectional(0.0, 1.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,

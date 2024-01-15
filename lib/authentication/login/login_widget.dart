@@ -239,7 +239,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(1.00, 0.00),
+                alignment: AlignmentDirectional(1.0, 0.0),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                   child: InkWell(

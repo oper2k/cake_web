@@ -5,7 +5,6 @@ import '/courses/tariff_close_mobile/tariff_close_mobile_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/actions/actions.dart' as action_blocks;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -200,290 +199,159 @@ class _MoodMobileWidgetState extends State<MoodMobileWidget> {
                   ),
                 ),
                 collapsed: Container(),
-                expanded: Stack(
-                  children: [
-                    if (widget.currentCourse?.isFree == true)
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 20.0, 0.0),
-                        child: Builder(
-                          builder: (context) {
-                            final allLessons =
-                                containerLessonsRecordList.toList();
-                            return Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: List.generate(allLessons.length,
-                                      (allLessonsIndex) {
-                                final allLessonsItem =
-                                    allLessons[allLessonsIndex];
-                                return Stack(
-                                  children: [
-                                    if (valueOrDefault<bool>(
-                                      (functions.returnDiffInDaysUserCreate(
-                                                  widget.userDoc!) ==
-                                              null) ||
-                                          (functions.addSomeDaysToDate(
-                                                  functions
-                                                      .returnDiffInDaysUserCreate(
-                                                          widget.userDoc!)!,
-                                                  allLessonsItem.openDay) <
-                                              getCurrentTimestamp),
-                                      true,
-                                    ))
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          await action_blocks
-                                              .navigationForOpenLessonFree(
-                                            context,
-                                            currentLesson: allLessonsItem,
-                                            indexInList: allLessonsIndex,
+                expanded: Visibility(
+                  visible: widget.currentCourse?.isFree != true,
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                    child: Builder(
+                      builder: (context) {
+                        final allLessons = containerLessonsRecordList.toList();
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: List.generate(allLessons.length,
+                                  (allLessonsIndex) {
+                            final allLessonsItem = allLessons[allLessonsIndex];
+                            return Stack(
+                              children: [
+                                if (allLessonsItem.rlTariff
+                                        .contains(widget.courseTariff) ||
+                                    widget.userDoc!.rlBonusLessons
+                                        .contains(allLessonsItem.reference))
+                                  Stack(
+                                    children: [
+                                      if (valueOrDefault<bool>(
+                                        (allLessonsItem.openDate == null) ||
+                                            (allLessonsItem.openDate! <
+                                                getCurrentTimestamp),
+                                        true,
+                                      ))
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await action_blocks
+                                                .navigationForOpenLesson(
+                                              context,
+                                              lessonIndexInList:
+                                                  allLessonsIndex,
+                                              currentLesson: allLessonsItem,
+                                              userDoc: widget.userDoc,
+                                              countLessons:
+                                                  containerLessonsRecordList
+                                                      .length,
+                                              tariff: widget.courseTariff,
+                                            );
+                                          },
+                                          child: LesMobileWidget(
+                                            key: Key(
+                                                'Keylzo_${allLessonsIndex}_of_${allLessons.length}'),
+                                            currentState: 0,
                                             userDoc: widget.userDoc,
+                                            currentLesson: allLessonsItem,
+                                            index: allLessonsIndex,
                                             countLessons:
                                                 containerLessonsRecordList
                                                     .length,
-                                          );
-                                        },
-                                        child: LesMobileWidget(
-                                          key: Key(
-                                              'Keysqg_${allLessonsIndex}_of_${allLessons.length}'),
-                                          currentState: 0,
-                                          userDoc: widget.userDoc,
-                                          currentLesson: allLessonsItem,
-                                          index: allLessonsIndex,
-                                          countLessons:
-                                              containerLessonsRecordList.length,
-                                          isFree: widget.currentCourse!.isFree,
+                                          ),
                                         ),
-                                      ),
-                                    if (valueOrDefault<bool>(
-                                      (functions.returnDiffInDaysUserCreate(
-                                                  widget.userDoc!) !=
-                                              null) &&
-                                          (functions.addSomeDaysToDate(
-                                                  functions
-                                                      .returnDiffInDaysUserCreate(
-                                                          widget.userDoc!)!,
-                                                  allLessonsItem.openDay) >
-                                              getCurrentTimestamp),
-                                      false,
-                                    ))
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            isDismissible: false,
-                                            enableDrag: false,
-                                            useSafeArea: true,
-                                            context: context,
-                                            builder: (context) {
-                                              return WebViewAware(
-                                                  child: Padding(
-                                                padding:
-                                                    MediaQuery.viewInsetsOf(
-                                                        context),
-                                                child:
-                                                    TariffCloseMobileWidget(),
-                                              ));
-                                            },
-                                          ).then(
-                                              (value) => safeSetState(() {}));
-                                        },
-                                        child: LesMobileWidget(
-                                          key: Key(
-                                              'Keykvp_${allLessonsIndex}_of_${allLessons.length}'),
-                                          currentState: 1,
-                                          userDoc: widget.userDoc,
-                                          currentLesson: allLessonsItem,
-                                          index: allLessonsIndex,
-                                          countLessons:
-                                              containerLessonsRecordList.length,
-                                          isFree: widget.currentCourse!.isFree,
-                                        ),
-                                      ),
-                                  ],
-                                );
-                              })
-                                  .divide(SizedBox(height: 16.0))
-                                  .addToStart(SizedBox(height: 16.0))
-                                  .addToEnd(SizedBox(height: 20.0)),
-                            );
-                          },
-                        ),
-                      ),
-                    if (widget.currentCourse?.isFree != true)
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 20.0, 0.0),
-                        child: Builder(
-                          builder: (context) {
-                            final allLessons =
-                                containerLessonsRecordList.toList();
-                            return Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: List.generate(allLessons.length,
-                                      (allLessonsIndex) {
-                                final allLessonsItem =
-                                    allLessons[allLessonsIndex];
-                                return Stack(
-                                  children: [
-                                    if (allLessonsItem.rlTariff
-                                            .contains(widget.courseTariff) ||
-                                        widget.userDoc!.rlBonusLessons
-                                            .contains(allLessonsItem.reference))
-                                      Stack(
-                                        children: [
-                                          if (valueOrDefault<bool>(
-                                            (allLessonsItem.openDate == null) ||
-                                                (allLessonsItem.openDate! <
-                                                    getCurrentTimestamp),
-                                            true,
-                                          ))
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
+                                      if (valueOrDefault<bool>(
+                                        (allLessonsItem.openDate != null) &&
+                                            (allLessonsItem.openDate! >
+                                                getCurrentTimestamp),
+                                        false,
+                                      ))
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
                                                   Colors.transparent,
-                                              onTap: () async {
-                                                await action_blocks
-                                                    .navigationForOpenLesson(
-                                                  context,
-                                                  lessonIndexInList:
-                                                      allLessonsIndex,
-                                                  currentLesson: allLessonsItem,
-                                                  userDoc: widget.userDoc,
-                                                  countLessons:
-                                                      containerLessonsRecordList
-                                                          .length,
-                                                  tariff: widget.courseTariff,
-                                                );
+                                              isDismissible: false,
+                                              enableDrag: false,
+                                              useSafeArea: true,
+                                              context: context,
+                                              builder: (context) {
+                                                return WebViewAware(
+                                                    child: Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child:
+                                                      TariffCloseMobileWidget(),
+                                                ));
                                               },
-                                              child: LesMobileWidget(
-                                                key: Key(
-                                                    'Keylzo_${allLessonsIndex}_of_${allLessons.length}'),
-                                                currentState: 0,
-                                                userDoc: widget.userDoc,
-                                                currentLesson: allLessonsItem,
-                                                index: allLessonsIndex,
-                                                countLessons:
-                                                    containerLessonsRecordList
-                                                        .length,
-                                                isFree: widget
-                                                    .currentCourse!.isFree,
-                                              ),
-                                            ),
-                                          if (valueOrDefault<bool>(
-                                            (allLessonsItem.openDate != null) &&
-                                                (allLessonsItem.openDate! >
-                                                    getCurrentTimestamp),
-                                            false,
-                                          ))
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  isDismissible: false,
-                                                  enableDrag: false,
-                                                  useSafeArea: true,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return WebViewAware(
-                                                        child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
-                                                      child:
-                                                          TariffCloseMobileWidget(),
-                                                    ));
-                                                  },
-                                                ).then((value) =>
-                                                    safeSetState(() {}));
-                                              },
-                                              child: LesMobileWidget(
-                                                key: Key(
-                                                    'Key256_${allLessonsIndex}_of_${allLessons.length}'),
-                                                currentState: 1,
-                                                userDoc: widget.userDoc,
-                                                currentLesson: allLessonsItem,
-                                                index: allLessonsIndex,
-                                                countLessons:
-                                                    containerLessonsRecordList
-                                                        .length,
-                                                isFree: widget
-                                                    .currentCourse!.isFree,
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                    if (!(allLessonsItem.rlTariff
-                                            .contains(widget.courseTariff) ||
-                                        widget.userDoc!.rlBonusLessons.contains(
-                                            allLessonsItem.reference)))
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            isDismissible: false,
-                                            enableDrag: false,
-                                            useSafeArea: true,
-                                            context: context,
-                                            builder: (context) {
-                                              return WebViewAware(
-                                                  child: Padding(
-                                                padding:
-                                                    MediaQuery.viewInsetsOf(
-                                                        context),
-                                                child:
-                                                    TariffChangeMobileWidget(),
-                                              ));
-                                            },
-                                          ).then(
-                                              (value) => safeSetState(() {}));
-                                        },
-                                        child: LesMobileWidget(
-                                          key: Key(
-                                              'Key3qf_${allLessonsIndex}_of_${allLessons.length}'),
-                                          currentState: 2,
-                                          userDoc: widget.userDoc,
-                                          currentLesson: allLessonsItem,
-                                          index: allLessonsIndex,
-                                          countLessons:
-                                              containerLessonsRecordList.length,
-                                          isFree: widget.currentCourse!.isFree,
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          },
+                                          child: LesMobileWidget(
+                                            key: Key(
+                                                'Key256_${allLessonsIndex}_of_${allLessons.length}'),
+                                            currentState: 1,
+                                            userDoc: widget.userDoc,
+                                            currentLesson: allLessonsItem,
+                                            index: allLessonsIndex,
+                                            countLessons:
+                                                containerLessonsRecordList
+                                                    .length,
+                                          ),
                                         ),
-                                      ),
-                                  ],
-                                );
-                              })
-                                  .divide(SizedBox(height: 16.0))
-                                  .addToStart(SizedBox(height: 16.0))
-                                  .addToEnd(SizedBox(height: 20.0)),
+                                    ],
+                                  ),
+                                if (!(allLessonsItem.rlTariff
+                                        .contains(widget.courseTariff) ||
+                                    widget.userDoc!.rlBonusLessons
+                                        .contains(allLessonsItem.reference)))
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        isDismissible: false,
+                                        enableDrag: false,
+                                        useSafeArea: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return WebViewAware(
+                                              child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: TariffChangeMobileWidget(),
+                                          ));
+                                        },
+                                      ).then((value) => safeSetState(() {}));
+                                    },
+                                    child: LesMobileWidget(
+                                      key: Key(
+                                          'Key3qf_${allLessonsIndex}_of_${allLessons.length}'),
+                                      currentState: 2,
+                                      userDoc: widget.userDoc,
+                                      currentLesson: allLessonsItem,
+                                      index: allLessonsIndex,
+                                      countLessons:
+                                          containerLessonsRecordList.length,
+                                    ),
+                                  ),
+                              ],
                             );
-                          },
-                        ),
-                      ),
-                  ],
+                          })
+                              .divide(SizedBox(height: 16.0))
+                              .addToStart(SizedBox(height: 16.0))
+                              .addToEnd(SizedBox(height: 20.0)),
+                        );
+                      },
+                    ),
+                  ),
                 ),
                 theme: ExpandableThemeData(
                   tapHeaderToExpand: true,
